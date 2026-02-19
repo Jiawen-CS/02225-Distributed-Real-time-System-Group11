@@ -1,0 +1,4 @@
+## python 3.12.11
+pandas==2.3.0
+matplotlib==3.10.6
+numpy==2.2.6

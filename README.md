@@ -1,2 +1,3 @@
-# 02225-Distributed-Real-time-System-Group11
-This is a project for DTU course 02225, made by group11.
+## How to run
+Modify the variable named taskFile in main.py to run the taskset as you want
+The result will show on the terminal
