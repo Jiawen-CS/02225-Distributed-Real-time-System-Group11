@@ -12,13 +12,6 @@ def check_ll_bound(tasks):
     bound = n * (2**(1/n) - 1)
     return u <= bound, u, bound
 
-# def check_hyperbolic_bound(tasks):
-#     """Hyperbolic Bound: Product(Ui + 1) <= 2"""
-#     prod = 1.0
-#     for t in tasks:
-#         prod *= (t.utilization() + 1)
-#     return prod <= 2, prod
-
 def calculate_exact_wcrt_rm(task: Task, higher_priority_tasks: list[Task]):
     """
     Calculates the Worst-Case Response Time (Ri) for a task under RM
@@ -57,6 +50,31 @@ def perform_rm_analysis(tasks):
         results[task.id] = {
             "Task": f"Task {task.id}",
             "Period": task.period,
+            "WCET": task.wcet,
+            "WCRT_Analytic": wcrt,
+            "Schedulable": schedulable
+        }
+    return results
+
+def perform_dm_analysis(tasks):
+    """
+    Performs full Response Time Analysis (RTA) for DM (Deadline Monotonic).
+    """
+    # Sort by Deadline (Deadline Monotonic: Shorter Relative Deadline = Higher Priority)
+    # Tie-breaker: ID
+    sorted_tasks = sorted(tasks, key=lambda x: (x.deadline, x.id))
+    
+    results = {}
+    
+    for i, task in enumerate(sorted_tasks):
+        hp_tasks = sorted_tasks[:i]
+        # We can reuse the calculation function as the interference logic is the same for any static priority
+        wcrt = calculate_exact_wcrt_rm(task, hp_tasks)
+        schedulable = wcrt <= task.deadline
+        results[task.id] = {
+            "Task": f"Task {task.id}",
+            "Period": task.period,
+            "Deadline": task.deadline,
             "WCET": task.wcet,
             "WCRT_Analytic": wcrt,
             "Schedulable": schedulable

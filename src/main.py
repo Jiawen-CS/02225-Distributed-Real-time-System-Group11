@@ -5,7 +5,7 @@ import matplotlib.patches as mpatches
 from matplotlib import MatplotlibDeprecationWarning
 
 from model import Task
-from analysis import perform_rm_analysis, check_ll_bound, calculate_utilization
+from analysis import perform_rm_analysis, check_ll_bound, calculate_utilization, perform_dm_analysis
 from simulation import Scheduler
 
 import warnings
@@ -127,6 +127,12 @@ def main(task_file):
     df_analytic = pd.DataFrame(rm_analysis).T
     print("\n--- RM Exact WCRT Analysis ---")
     print(df_analytic[['Period', 'WCET', 'WCRT_Analytic', 'Schedulable']])
+    
+    # DM Exact Analysis (WCRT)
+    dm_analysis = perform_dm_analysis(tasks)
+    df_analytic_dm = pd.DataFrame(dm_analysis).T
+    print("\n--- DM Exact WCRT Analysis ---")
+    print(df_analytic_dm[['Period', 'Deadline', 'WCET', 'WCRT_Analytic', 'Schedulable']])
 
     # 3. Simulation Part
     print("\n" + "="*30)
@@ -149,6 +155,12 @@ def main(task_file):
     edf_jobs, edf_history = edf_sim.run(duration)
     edf_stats = edf_sim.analyze_results()
     plot_gantt(edf_history, tasks, "EDF", duration)
+    
+    # --- DM Simulation ---
+    dm_sim = Scheduler(tasks, algorithm="DM")
+    dm_jobs, dm_history = dm_sim.run(duration)
+    dm_stats = dm_sim.analyze_results()
+    plot_gantt(dm_history, tasks, "DM", duration)
 
     # 4. Comparison & Validation
     print("\n" + "="*30)
@@ -161,37 +173,49 @@ def main(task_file):
         # Safe access to stats with default values in case of mismatch
         rm_stat = rm_stats.get(t_id, {"Sim_WCRT": -1, "Missed": -1})
         edf_stat = edf_stats.get(t_id, {"Sim_WCRT": -1, "Missed": -1})
+        dm_stat = dm_stats.get(t_id, {"Sim_WCRT": -1, "Missed": -1})
         
         row = {
             "Task": f"T{t_id}",
             "Analytic_WCRT(RM)": rm_analysis[t_id]['WCRT_Analytic'],
+            "Analytic_WCRT(DM)": dm_analysis[t_id]['WCRT_Analytic'],
             "Sim_WCRT(RM)": rm_stat['Sim_WCRT'],
             "Sim_WCRT(EDF)": edf_stat['Sim_WCRT'],
+            "Sim_WCRT(DM)": dm_stat['Sim_WCRT'],
             "RM_Missed": rm_stat['Missed'],
-            "EDF_Missed": edf_stat['Missed']
+            "EDF_Missed": edf_stat['Missed'],
+            "DM_Missed": dm_stat['Missed']
         }
         comparison_data.append(row)
     
     df_comp = pd.DataFrame(comparison_data)
-    print(df_comp)
     
+    with pd.option_context(
+    'display.max_columns', None,
+    'display.width', None,
+    'display.max_colwidth', None
+    ):
+        print(df_comp)
+    
+    # Validation Check
     # Validation Check
     print("\n--- Validation Note ---")
     valid = True
     for index, row in df_comp.iterrows():
-        if row['Sim_WCRT(RM)'] == -1:
-            print(f"ERROR: Simulation stats missing for {row['Task']}")
-            continue
-
-        # Analytic WCRT should be >= Observed Sim WCRT
+        # Analytic WCRT should be >= Observed Sim WCRT for RM
         if row['Analytic_WCRT(RM)'] < row['Sim_WCRT(RM)']:
-            print(f"DISCREPANCY: Task {row['Task']} simulated response {row['Sim_WCRT(RM)']} > predicted {row['Analytic_WCRT(RM)']}!")
+            print(f"DISCREPANCY (RM): Task {row['Task']} simulated response {row['Sim_WCRT(RM)']} > predicted {row['Analytic_WCRT(RM)']}!")
+            valid = False
+        
+        # Analytic WCRT should be >= Observed Sim WCRT for DM
+        if row['Analytic_WCRT(DM)'] < row['Sim_WCRT(DM)']:
+            print(f"DISCREPANCY (DM): Task {row['Task']} simulated response {row['Sim_WCRT(DM)']} > predicted {row['Analytic_WCRT(DM)']}!")
             valid = False
             
     if valid:
-        print("Validation Successful: Analytic WCRT bounds held true for RM simulation.")
+        print("Validation Successful: Analytic WCRT bounds held true for RM and DM simulations.")
     else:
-        print("Validation Failed: Simulation exceeded analytic bounds (check simulation duration or arrival patterns).")
+        print("Validation Failed: Simulation exceeded analytic bounds.")
 
 if __name__ == "__main__":
     TASKSETS1_DIR = BASE_DIR / "tasksets/uunifast-utilDist/uniform-discrete-perDist/1-core/25-task/0-jitter"

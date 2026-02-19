@@ -22,12 +22,17 @@ class Scheduler:
             self.tasks.sort(key=lambda t: t.period)
             for i, t in enumerate(self.tasks):
                 t.priority = i
+        elif algorithm == "DM":
+            # Sort tasks by deadline (shortest deadline first)
+            self.tasks.sort(key=lambda t: t.deadline)
+            for i, t in enumerate(self.tasks):
+                t.priority = i
 
     def _get_active_job(self):
         if not self.ready_queue:
             return None
         
-        if self.algorithm == "RM":
+        if self.algorithm in ["RM", "DM"]:
             # Filter queue for ready jobs, sort by static priority
             return min(self.ready_queue, key=lambda j: self.get_task(j.task_id).priority)
         
