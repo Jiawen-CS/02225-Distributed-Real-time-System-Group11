@@ -26,16 +26,15 @@ def load_tasks_from_csv(filename):
             reader = csv.DictReader(f, skipinitialspace=True)
             for row in reader:
                 # Skip if TaskID is empty (handling trailing lines)
-                if not row.get('TaskID'): continue
+                if not row.get('Task'): continue
                 
                 tasks.append(Task(
-                    id=int(row['TaskID']),
-                    jitter=int(row.get('Jitter')),
+                    id=int(row['Task']),
                     bcet=int(row.get('BCET')),
                     wcet=int(row['WCET']),
                     period=int(row['Period']),
                     deadline=int(row['Deadline']),
-                    pe=int(row.get('PE'))
+                    priority=int(row.get('Priority'))
                 ))
     except FileNotFoundError:
         print("CSV not found, please check your file path.")
@@ -218,9 +217,9 @@ def main(task_file):
         print("Validation Failed: Simulation exceeded analytic bounds.")
 
 if __name__ == "__main__":
-    TASKSETS1_DIR = BASE_DIR / "tasksets/uunifast-utilDist/uniform-discrete-perDist/1-core/25-task/0-jitter"
+    TASKSETS_NS_DIR = BASE_DIR / "tasksets/not_schedulable"
+    TASKSETS_S_DIR = BASE_DIR / "tasksets/schedulable"
     
-    TASKSETS2_DIR = BASE_DIR / "tasksets/automotive-utilDist/automotive-perDist/1-core/25-task/0-jitter/"
-    # taskFile = TASKSETS1_DIR / "0.10-util/tasksets/uniform-discrete_0.csv"
-    taskFile = TASKSETS2_DIR/"0.10-util/tasksets/automotive_0.csv"
+    taskFile = TASKSETS_S_DIR/"Full_Utilization_NonUnique_Periods_taskset.csv"
+    print(f"filedir: {taskFile}")
     main(taskFile)

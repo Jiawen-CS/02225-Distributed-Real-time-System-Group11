@@ -3,13 +3,11 @@ import dataclasses
 @dataclasses.dataclass
 class Task:
     id: int
+    bcet: int = 0  # Best Case Execution Time
     wcet: int      # Worst Case Execution Time (Ci)
     period: int    # Period (Ti)
     deadline: int  # Relative Deadline (Di)
     priority: int = 0 # Lower number = Higher priority (for RM)
-    jitter: int = 0 
-    bcet: int = 0  # Best Case Execution Time
-    pe: int = 1    # Processing Element (CPU Core)
 
     def utilization(self):
         return self.wcet / self.period

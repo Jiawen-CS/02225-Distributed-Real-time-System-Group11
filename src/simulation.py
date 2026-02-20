@@ -17,12 +17,12 @@ class Scheduler:
         self.hyperperiod = math.lcm(*periods) if periods else 0
         
         # Pre-assign static priorities for RM
-        if algorithm == "RM":
-            # Sort tasks by period (shortest period first)
-            self.tasks.sort(key=lambda t: t.period)
-            for i, t in enumerate(self.tasks):
-                t.priority = i
-        elif algorithm == "DM":
+        # if algorithm == "RM":
+        #     # Sort tasks by period (shortest period first)
+        #     self.tasks.sort(key=lambda t: t.period)
+        #     for i, t in enumerate(self.tasks):
+        #         t.priority = i
+        if algorithm == "DM":
             # Sort tasks by deadline (shortest deadline first)
             self.tasks.sort(key=lambda t: t.deadline)
             for i, t in enumerate(self.tasks):
