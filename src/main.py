@@ -28,8 +28,12 @@ def load_tasks_from_csv(filename):
                 # Skip if TaskID is empty (handling trailing lines)
                 if not row.get('Task'): continue
                 
+                name=str(row['Task'])
+                id=int(name.split("_")[1])
+                
                 tasks.append(Task(
-                    id=int(row['Task']),
+                    name=name,
+                    id=id,
                     bcet=int(row.get('BCET')),
                     wcet=int(row['WCET']),
                     period=int(row['Period']),

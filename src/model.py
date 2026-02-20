@@ -2,12 +2,13 @@ import dataclasses
 
 @dataclasses.dataclass
 class Task:
-    id: int
-    bcet: int = 0  # Best Case Execution Time
+    name: str
+    id: int # split from the task name
+    bcet: int  # Best Case Execution Time
     wcet: int      # Worst Case Execution Time (Ci)
-    period: int    # Period (Ti)
+    period: int   # Period (Ti)
     deadline: int  # Relative Deadline (Di)
-    priority: int = 0 # Lower number = Higher priority (for RM)
+    priority: int # Lower number = Higher priority (for RM)
 
     def utilization(self):
         return self.wcet / self.period
