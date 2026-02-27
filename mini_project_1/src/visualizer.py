@@ -156,7 +156,7 @@ def plot_wcrt_comparison(
         
         # Add deadline label
         ax.annotate(
-            f'$D_{i}$={deadline}',
+            f'$D_{{{i}}}$={deadline}',
             xy=(i + 0.48, deadline),
             fontsize=8,
             color=line_color,
@@ -197,7 +197,7 @@ def plot_wcrt_comparison(
     ax.set_ylabel('Response Time (time units)', fontweight='bold')
     ax.set_title(title, fontweight='bold', pad=15)
     ax.set_xticks(x)
-    ax.set_xticklabels([f'$\\tau_{i}$' for i in range(n_tasks)], fontsize=12)
+    ax.set_xticklabels([f'$\\tau_{{{i}}}$' for i in range(n_tasks)], fontsize=12)
     
     # Custom legend
     legend_elements = [
