@@ -360,22 +360,137 @@ def plot_preemption_comparison(
 
 
 # ============================================================================
+# Chart 3: Gantt Chart
+# ============================================================================
+
+def plot_gantt_chart(
+    result: SimulationResult,
+    tasks: List[Task],
+    algorithm_name: str,
+    duration: Optional[int] = None,
+    output_path: Optional[str] = None,
+    show: bool = True
+) -> plt.Figure:
+    """
+    Generate a Gantt chart showing task execution over time.
+    
+    Shows:
+    - Horizontal bars for each task's execution periods
+    - Color-coded by task
+    - Consolidated execution blocks for performance
+    
+    Args:
+        result: SimulationResult from DiscreteTimeSimulator
+        tasks: List of Task objects
+        algorithm_name: Name of the scheduling algorithm (for title)
+        duration: Duration to display (defaults to simulation duration)
+        output_path: Path to save PNG file (optional)
+        show: Whether to display the plot
+        
+    Returns:
+        matplotlib Figure object
+    """
+    if duration is None:
+        duration = result.duration
+    
+    # Limit displayed duration for readability
+    max_display = min(duration, 600)
+    
+    fig, ax = plt.subplots(figsize=(14, max(6, len(tasks) * 0.6)))
+    
+    # Color map - use tab10 for up to 10 tasks, tab20 for more
+    n_tasks = len(tasks)
+    if n_tasks <= 10:
+        colors = plt.colormaps.get_cmap('tab10')
+    else:
+        colors = plt.colormaps.get_cmap('tab20')
+    
+    task_colors = {t.id: colors(i) for i, t in enumerate(tasks)}
+    
+    # Filter and merge consecutive execution blocks
+    history = [(t, tid) for t, tid in result.history if t < max_display]
+    
+    merged_blocks = []
+    if history:
+        current_start = history[0][0]
+        current_task = history[0][1]
+        
+        for t, task_id in history:
+            if task_id != current_task:
+                if current_task is not None:
+                    merged_blocks.append((current_start, t - current_start, current_task))
+                current_task = task_id
+                current_start = t
+        
+        # Add final block
+        if current_task is not None:
+            end_time = min(history[-1][0] + 1, max_display)
+            merged_blocks.append((current_start, end_time - current_start, current_task))
+    
+    # Plot consolidated blocks
+    for start, length, task_id in merged_blocks:
+        ax.broken_barh(
+            [(start, length)], 
+            (task_id * 10, 9), 
+            facecolors=task_colors.get(task_id, 'gray')
+        )
+    
+    # Labels and formatting
+    task_ids = sorted([t.id for t in tasks])
+    ax.set_ylim(-5, max(task_ids) * 10 + 15)
+    ax.set_xlim(0, max_display)
+    ax.set_xlabel('Time', fontweight='bold')
+    ax.set_ylabel('Task ID', fontweight='bold')
+    ax.set_yticks([tid * 10 + 4.5 for tid in task_ids])
+    ax.set_yticklabels([f'$\\tau_{{{tid}}}$' for tid in task_ids])
+    ax.set_title(f'Gantt Chart - {algorithm_name} Scheduling (Duration: {max_display})', 
+                 fontweight='bold', pad=15)
+    ax.grid(True, axis='x', alpha=0.3)
+    
+    # Add legend
+    legend_patches = [
+        mpatches.Patch(color=task_colors[t.id], label=f'$\\tau_{{{t.id}}}$ (T={t.period}, D={t.deadline})')
+        for t in tasks
+    ]
+    ax.legend(handles=legend_patches, loc='upper right', fontsize=8, ncol=2)
+    
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    
+    plt.tight_layout()
+    
+    # Save if path provided
+    if output_path:
+        fig.savefig(output_path, dpi=300, bbox_inches='tight', facecolor='white')
+        print(f"  ✓ Saved: {output_path}")
+    
+    if show:
+        plt.show()
+    
+    return fig
+
+
+# ============================================================================
 # Combined Visualization Function
 # ============================================================================
+
 
 def generate_all_charts(
     output_dir: str = "../resultplots",
     seed: int = 42,
-    n_tasks: int = 5,
+    n_tasks: int = 12,
     sim_duration: int = 50000,
     show: bool = True
-) -> Tuple[plt.Figure, plt.Figure]:
+) -> Tuple[plt.Figure, plt.Figure, plt.Figure, plt.Figure, plt.Figure]:
     """
     Generate all visualization charts from Step 4.
     
     Runs the complete analysis and simulation pipeline, then generates:
     1. WCRT Comparison chart (Theory vs Simulation for High U, DM)
     2. Preemption Comparison chart (DM vs EDF across utilization levels)
+    3. Gantt Chart for RM scheduling
+    4. Gantt Chart for DM scheduling
+    5. Gantt Chart for EDF scheduling
     
     Args:
         output_dir: Directory to save PNG files
@@ -385,7 +500,7 @@ def generate_all_charts(
         show: Whether to display plots
         
     Returns:
-        Tuple of (wcrt_fig, preemption_fig)
+        Tuple of (wcrt_fig, preemption_fig, gantt_rm_fig, gantt_dm_fig, gantt_edf_fig)
     """
     print("=" * 80)
     print(" DRTS Mini-Project Step 4: Visualization")
@@ -454,14 +569,20 @@ def generate_all_charts(
     sim_edf_high = DiscreteTimeSimulator(
         high_u_tasks, SchedulingAlgorithm.EDF, seed=seed, max_duration=sim_duration
     )
+    sim_rm_high = DiscreteTimeSimulator(
+        high_u_tasks, SchedulingAlgorithm.RM, seed=seed, max_duration=sim_duration
+    )
     
     result_dm_high = sim_dm_high.run()
     result_edf_high = sim_edf_high.run()
+    result_rm_high = sim_rm_high.run()
     
     print(f"  High U DM:  Preemptions={result_dm_high.total_preemptions}, "
           f"Misses={result_dm_high.total_jobs_missed}")
     print(f"  High U EDF: Preemptions={result_edf_high.total_preemptions}, "
           f"Misses={result_edf_high.total_jobs_missed}")
+    print(f"  High U RM:  Preemptions={result_rm_high.total_preemptions}, "
+          f"Misses={result_rm_high.total_jobs_missed}")
     
     # ========================================================================
     # Step 4: Generate Charts
@@ -519,6 +640,38 @@ def generate_all_charts(
         show=False
     )
     
+    # ------------------------------------------------------------------------
+    # Chart 3-5: Gantt Charts (RM, DM and EDF for High U)
+    # ------------------------------------------------------------------------
+    print("\n  [Chart 3-5] Gantt Charts: RM, DM and EDF Scheduling")
+    
+    gantt_rm_fig = plot_gantt_chart(
+        result_rm_high,
+        high_u_tasks,
+        "RM",
+        duration=600,  # Show first 600 ticks for readability
+        output_path=os.path.join(output_dir, "gantt_RM.png"),
+        show=False
+    )
+    
+    gantt_dm_fig = plot_gantt_chart(
+        result_dm_high,
+        high_u_tasks,
+        "DM",
+        duration=600,
+        output_path=os.path.join(output_dir, "gantt_DM.png"),
+        show=False
+    )
+    
+    gantt_edf_fig = plot_gantt_chart(
+        result_edf_high,
+        high_u_tasks,
+        "EDF",
+        duration=600,
+        output_path=os.path.join(output_dir, "gantt_EDF.png"),
+        show=False
+    )
+    
     # ========================================================================
     # Summary
     # ========================================================================
@@ -528,6 +681,9 @@ def generate_all_charts(
     print(f"\n  Charts saved to: {os.path.abspath(output_dir)}/")
     print(f"    • wcrt_comparison.png")
     print(f"    • preemption_comparison.png")
+    print(f"    • gantt_RM.png")
+    print(f"    • gantt_DM.png")
+    print(f"    • gantt_EDF.png")
     print("\n  Key Findings:")
     print(f"    • DM failed for τ_0 in high U (WCRT={dm_high.task_results[0].wcrt} > D={high_u_tasks[0].deadline})")
     print(f"    • EDF successfully scheduled all tasks")
@@ -539,7 +695,7 @@ def generate_all_charts(
     if show:
         plt.show()
     
-    return wcrt_fig, preemption_fig
+    return wcrt_fig, preemption_fig, gantt_rm_fig, gantt_dm_fig, gantt_edf_fig
 
 
 # ============================================================================
@@ -559,7 +715,7 @@ if __name__ == "__main__":
     generate_all_charts(
         output_dir="../resultplots",
         seed=42,
-        n_tasks=5,
+        n_tasks=12,
         sim_duration=50000,
         show=True
     )
