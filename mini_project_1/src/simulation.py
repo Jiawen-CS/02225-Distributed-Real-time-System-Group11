@@ -133,7 +133,7 @@ class SimulationResult:
     task_stats: Dict[int, TaskSimStats] = field(default_factory=dict)
     
     # Global metrics
-    total_preemptions: int = 0      # Number of context switches
+    total_preemptions: int = 0      # Number of preemptions (task-to-task switches only, excludes idle transitions)
     total_jobs_completed: int = 0
     total_jobs_missed: int = 0
     idle_time: int = 0              # Time processor was idle

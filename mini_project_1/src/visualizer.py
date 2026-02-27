@@ -686,7 +686,12 @@ def generate_all_charts(
     print(f"    • gantt_EDF.png")
     print("\n  Key Findings:")
     print(f"    • DM failed for τ_0 in high U (WCRT={dm_high.task_results[0].wcrt} > D={high_u_tasks[0].deadline})")
-    print(f"    • EDF successfully scheduled all tasks")
+    # Conditional EDF summary based on actual simulation results
+    edf_misses = result_edf_high.total_jobs_missed
+    if edf_misses == 0:
+        print(f"    • EDF successfully scheduled all tasks (misses=0, preemptions={result_edf_high.total_preemptions})")
+    else:
+        print(f"    • EDF missed {edf_misses} jobs in high U (preemptions={result_edf_high.total_preemptions})")
     print(f"    • DM has MORE preemptions than EDF (Judgment Day confirmed)")
     print(f"      - Low U:  DM={result_dm_low.total_preemptions}, EDF={result_edf_low.total_preemptions}")
     print(f"      - High U: DM={result_dm_high.total_preemptions}, EDF={result_edf_high.total_preemptions}")
