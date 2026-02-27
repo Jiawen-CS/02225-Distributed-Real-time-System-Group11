@@ -108,7 +108,7 @@ class TaskSimStats:
     jobs_completed: int = 0
     jobs_missed: int = 0
     max_response_time: int = 0      # Simulated WCRT
-    min_response_time: int = float('inf')
+    min_response_time: float = float('inf')
     total_response_time: int = 0    # For average calculation
     
     @property
