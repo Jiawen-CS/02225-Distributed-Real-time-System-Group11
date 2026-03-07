@@ -1,11 +1,13 @@
 import os
-from loader import load_topology, load_streams, load_routes
-from simulation import Simulator
-from analysis import calculate_wcrt, calculate_wcrt_sp
+import argparse
+from .loader import load_topology, load_streams, load_routes
+from .simulation import Simulator
+from .analysis import calculate_wcrt, calculate_wcrt_sp
 
-def main():
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    test_case_dir = os.path.join(base_dir, 'testcases/test-case-1')
+def main(case_id):
+    base_src_dir = os.path.dirname(os.path.abspath(__file__))
+    root_dir = os.path.dirname(base_src_dir)
+    test_case_dir = os.path.join(root_dir, f'testcases/test_case_{case_id}')
     
     topo_file = os.path.join(test_case_dir, 'topology.json')
     streams_file = os.path.join(test_case_dir, 'streams.json')
@@ -73,4 +75,9 @@ def main():
     print(f"\nResults saved to {output_csv}")
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("case_id", type=int)
+    args = parser.parse_args()
+    print(f'------------ Start to execute case {args.case_id} ------------')
+    main(args.case_id)
+    print(f'------------ Finish case {args.case_id} ------------')

@@ -1,6 +1,6 @@
 import json
 import os
-from model import Link, Node, Stream, Route
+from .model import Link, Node, Stream, Route
 
 def load_topology(file_path):
     with open(file_path, 'r') as f:

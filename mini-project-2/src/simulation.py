@@ -1,6 +1,6 @@
 import heapq
-from model import Frame
-from scheduler import PortScheduler
+from .model import Frame
+from .scheduler import PortScheduler
 
 class Event:
     def __init__(self, time, type, frame, node_id):
@@ -72,12 +72,12 @@ class Simulator:
         # Schedule initial generations
         for stream in self.streams:
             t = 0.0
-            pkt_count = 0
+            frame_count = 0
             while t < duration:
-                pkt = (pkt_count, stream.id, stream.size, t, stream.pcp)
-                self.schedule_event(Event(t, "GENERATION", pkt, stream.source))
+                frame = Frame(frame_count, stream.id, stream.size, t, stream.pcp)
+                self.schedule_event(Event(t, "GENERATION", frame, stream.source))
                 t += stream.period
-                pkt_count += 1
+                frame_count += 1
         
         while self.events:
             event = heapq.heappop(self.events)
@@ -135,14 +135,14 @@ class Simulator:
         if self.current_time < scheduler.busy_until:
             return
 
-        pkt, priority = scheduler.get_next_frame(self.current_time)
-        if pkt:
+        frame, priority = scheduler.get_next_frame(self.current_time)
+        if frame:
             # Notify scheduler of transmission start (for CBS credit update)
-            scheduler.on_transmission_start(priority, pkt.size, self.current_time)
+            scheduler.on_transmission_start(priority, frame.size, self.current_time)
             
-            trans_time = scheduler.transmission_time(pkt.size)
+            trans_time = scheduler.transmission_time(frame.size)
             scheduler.busy_until = self.current_time + trans_time
-            self.schedule_event(Event(self.current_time + trans_time, "DEPARTURE", pkt, node_id))
+            self.schedule_event(Event(self.current_time + trans_time, "DEPARTURE", frame, node_id))
 
     def handle_departure(self, event):
         frame = event.frame

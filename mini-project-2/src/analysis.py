@@ -1,5 +1,5 @@
-from model import Stream, Link
-from loader import load_topology, load_streams, load_routes
+from .model import Stream, Link
+from .loader import load_topology, load_streams, load_routes
 import math
 
 def calculate_wcrt(nodes, links, streams, routes):
