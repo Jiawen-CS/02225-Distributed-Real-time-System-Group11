@@ -79,6 +79,7 @@ class Simulator:
                 t += stream.period
                 frame_count += 1
         
+        # Keep running, process events
         while self.events:
             event = heapq.heappop(self.events)
             if event.time > duration:

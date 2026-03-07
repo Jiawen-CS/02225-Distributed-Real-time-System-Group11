@@ -2,6 +2,7 @@ import json
 import os
 from .model import Link, Node, Stream, Route
 
+## 没有加载domain，没有记录link的destinationPort
 def load_topology(file_path):
     with open(file_path, 'r') as f:
         data = json.load(f)
@@ -33,6 +34,7 @@ def load_streams(file_path):
         streams.append(Stream(s['id'], s['source'], dests, s['size'], s['period'], s['PCP'], deadline))
     return streams
 
+## 潜规则: paths的list只有一个元素
 def load_routes(file_path):
     with open(file_path, 'r') as f:
         data = json.load(f)

@@ -42,6 +42,7 @@ def main(case_id):
     print("\nComparison Results (End-to-End Latency in us):")
     print(f"{'Stream ID':<10} {'PCP':<5} {'Sim(CBS)':<10} {'Sim(SP)':<10} {'Ana(CBS)':<10} {'Ana(SP)':<10}")
     
+    ## 4. print and save result
     for stream in streams:
         sid = stream.id
         

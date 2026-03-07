@@ -99,10 +99,8 @@ def calculate_wcrt(nodes, links, streams, routes):
                     # Max of B and BE
                     LPI = max(C_B_max, C_BE_max)
                     
-                    # HPI (Higher Priority)
-                    HPI = 0.0
-                    
-                    node_delay = SPI + HPI + LPI + C_i
+                    # HPI (Higher Priority) = 0.0
+                    node_delay = SPI + LPI + C_i
                     
                 elif cls == 'B':
                     sum_C_B = sum([t['C'] for t in traffic['B']])
@@ -115,11 +113,12 @@ def calculate_wcrt(nodes, links, streams, routes):
                     
                     # HPI (From Class A)
                     if linkRate > idleSlope_A:
-                        HPI = C_BE_max * (linkRate / (linkRate - idleSlope_A)) + C_A_max
+                        sendSlope_A = linkRate - idleSlope_A
+                        HPI = LPI * (idleSlope_A / sendSlope_A) + C_A_max
                     else:
                         HPI = float('inf') # Unstable
-                        
-                    node_delay = SPI + C_i + C_BE_max * (linkRate / (linkRate - idleSlope_A)) + C_A_max
+
+                    node_delay = SPI + HPI + LPI + C_i
                     
                 else: # BE
                     # Iterative RTA for BE in CBS mode (simplified as SP with interference)
