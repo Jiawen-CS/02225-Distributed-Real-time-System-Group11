@@ -55,6 +55,22 @@ class Simulator:
                     # Add fraction
                     reservations[(node_id, port_id)][stream.pcp] += stream_bw / link_bw
 
+        # Apply 75% Bandwidth Allocation Strategy (Match Analysis)
+        AVB_LIMIT = 0.75
+        for port_key, res in reservations.items():
+            req_A = res.get(2, 0.0) # PCP 2 = Class A
+            req_B = res.get(1, 0.0) # PCP 1 = Class B
+            
+            total_req = req_A + req_B
+            
+            if total_req > 0:
+                # Distribute 75% proportionally
+                res[2] = (req_A / total_req) * AVB_LIMIT
+                res[1] = (req_B / total_req) * AVB_LIMIT
+            else:
+                res[2] = 0.0
+                res[1] = 0.0
+
         for node_id, node in nodes.items():
             for port, link in node.outgoing_links.items():
                 port_res = reservations.get((node_id, port), {})

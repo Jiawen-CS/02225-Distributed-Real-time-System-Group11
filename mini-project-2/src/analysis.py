@@ -53,6 +53,32 @@ def calculate_wcrt(nodes, links, streams, routes):
                 elif cls == 'B':
                     link_params[link_id]['idleSlope_B'] += s_bw
 
+    # This increases idleSlope if load is low, reducing latency (expansion factor).
+    AVB_BANDWIDTH_PERCENTAGE = 0.75
+    for link_id, params in link_params.items():
+        req_A = params['idleSlope_A']
+        req_B = params['idleSlope_B']
+        link_rate = params['linkRate']
+        
+        total_avb_req = req_A + req_B
+        available_avb_bw = link_rate * AVB_BANDWIDTH_PERCENTAGE
+        
+        if total_avb_req > 0:
+            # If requested load > available, we are overloaded, but we cap at available.
+            # If requested load < available, we scale up to use the full available bandwidth.
+            # This follows the PPT logic: alpha = (U_j / Sum_U_AVB) * (1 - U_BE)
+            # Here (1 - U_BE) is fixed at 0.75.
+            
+            # Scale factor to distribute available BW
+            # Note: The PPT implies we use the *available* bandwidth for slopes, not just the *required*.
+            # This means idleSlope will be > required_bandwidth, which is good for latency.
+            
+            params['idleSlope_A'] = (req_A / total_avb_req) * available_avb_bw
+            params['idleSlope_B'] = (req_B / total_avb_req) * available_avb_bw
+        else:
+            params['idleSlope_A'] = 0.0
+            params['idleSlope_B'] = 0.0
+            
     # 2. Calculate WCRT per stream
     wcrts = {}
     
