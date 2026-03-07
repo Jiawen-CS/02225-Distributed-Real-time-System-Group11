@@ -17,4 +17,4 @@ python -m src.main <case_id>
 ```
 case_id specifies the test case:
 - 1–3: normal cases
-- 4–6: starvation cases
+- 4–6: starvation cases -- have't now, as the tool can't work
