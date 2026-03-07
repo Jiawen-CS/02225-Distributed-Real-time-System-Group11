@@ -43,7 +43,7 @@ def main():
     test_case_dir = os.path.join(root_dir, 'testcases/')
     
     # List of test case directories
-    test_cases = ['test_case_1', 'test_case_2', 'test_case_3']
+    test_cases = ['test_case_1', 'test_case_2', 'test_case_3', 'test_case_4']
     
     for case in test_cases:
         streams_file = os.path.join(test_case_dir, case, 'streams.json')

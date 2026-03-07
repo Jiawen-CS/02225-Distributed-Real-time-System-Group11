@@ -7,6 +7,38 @@ def calculate_wcrt(nodes, links, streams, routes):
     link_traffic = {link_id: {'A': [], 'B': [], 'BE': []} for link_id in links}
     link_params = {link_id: {'idleSlope_A': 0.0, 'idleSlope_B': 0.0, 'linkRate': 0.0} for link_id in links}
     
+    # Check link utilization
+    for link_id in links:
+        total_utilization = 0.0
+        link_bw = links[link_id].bandwidth_mbps
+        
+        for s in streams:
+            if s.id not in routes:
+                continue
+            route = routes[s.id]
+            
+            # Check if stream uses this link
+            uses_link = False
+            for hop in route.path:
+                node_id = hop['node']
+                port_id = hop['port']
+                if node_id in nodes and port_id in nodes[node_id].outgoing_links:
+                    if nodes[node_id].outgoing_links[port_id].id == link_id:
+                        uses_link = True
+                        break
+            
+            if uses_link:
+                # Bandwidth in Mbps
+                bw = (s.size * 8.0) / s.period
+                total_utilization += bw
+        
+        utilization_ratio = total_utilization / link_bw
+        if utilization_ratio > 1.0:
+            print(f"WARNING: Link {link_id} is OVERLOADED! Utilization: {utilization_ratio*100:.2f}%")
+            # In overload, WCRT is theoretically infinite
+            return {s.id: float('inf') for s in streams}
+
+    
     # Map PCPs to Classes (Assumption based on problem description and typical AVB)
     # Adjust based on observed PCPs in streams.json: 2, 1, 0.
     # We'll assume 2=Class A, 1=Class B, 0=BE.
@@ -274,7 +306,7 @@ def calculate_wcrt_sp(nodes, links, streams, routes):
                             break
                         
                         if R_new > 200000: # Safety break
-                            R = R_new
+                            R = float('inf')
                             break
                             
                         R = R_new
