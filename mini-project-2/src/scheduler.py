@@ -79,8 +79,8 @@ class PortScheduler:
                     shaper.update_credit(current_time, is_transmitting=False)
                     
                     if shaper.credit >= 0:
-                        pkt = self.queues[p].pop(0)
-                        return pkt, p # Return frame and priority to handle credit update after transmission
+                        frame = self.queues[p].pop(0)
+                        return frame, p # Return frame and priority to handle credit update after transmission
                     else:
                         # Credit negative, cannot transmit. 
                         # In pure CBS, we might wait. In SP+CBS, we check lower priorities?
