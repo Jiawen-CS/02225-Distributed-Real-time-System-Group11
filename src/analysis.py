@@ -92,6 +92,9 @@ def perform_edf_analysis(tasks):
     This gives the exact theoretical upper bound for the synchronous,
     strictly-periodic task model.
     """
+
+    U = sum(task.utilization() for task in tasks)
+
     periods = [t.period for t in tasks]
     H = math.lcm(*periods)
 
@@ -112,17 +115,30 @@ def perform_edf_analysis(tasks):
 
     # --- Step 2: Simulate EDF ---
     # Run until H plus a margin (one extra WCET) to let the last jobs finish
-    max_wcet = max(t.wcet for t in tasks)
-    for t in range(H + max_wcet):
+    # max_wcet = max(t.wcet for t in tasks)
+    t = 0
+    EPS = 1e-9
+    while True:
         # Collect jobs that have arrived and are not yet finished
         ready = [j for j in all_jobs if j["release"] <= t and j["finish"] == -1]
-        if not ready:
-            continue
-        # EDF rule: pick job with earliest absolute deadline (tie-break: earlier release)
-        job = min(ready, key=lambda j: (j["deadline"], j["release"]))
-        job["remaining"] -= 1
-        if job["remaining"] == 0:
-            job["finish"] = t + 1   # Job completes at the end of time slot t
+        if ready:
+            # EDF rule: pick job with the earliest absolute deadline (tie-break: earlier release)
+            job = min(ready, key=lambda j: (j["deadline"], j["release"]))
+            job["remaining"] -= 1
+            if job["remaining"] == 0:
+                job["finish"] = t + 1   # Job completes at the end of time slot t
+        # --- stopping conditions ---
+        if U > 1 + EPS:
+            if t >=H:
+                break
+        elif U < 1:
+            if t >= H:
+                break
+        elif abs(U - 1) <= EPS:  # U == 1
+            if t >= H and not ready:
+                break
+
+        t += 1
 
     # --- Step 3: Compute per-task WCRT ---
     results = {}

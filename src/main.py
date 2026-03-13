@@ -147,6 +147,8 @@ def main(task_file):
 
     # EDF exact WCRT (per project appendix algorithm)
     edf_analysis    = perform_edf_analysis(tasks)
+    if edf_analysis == False:
+        print(task_file)
     df_edf_analytic = pd.DataFrame(edf_analysis).T
     print("\n--- EDF Exact WCRT Analysis (Hyperperiod Simulation with WCET) ---")
     print(df_edf_analytic[['Period', 'Deadline', 'WCET', 'WCRT_Analytic', 'Schedulable']])
