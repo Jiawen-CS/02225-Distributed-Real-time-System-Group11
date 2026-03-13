@@ -114,8 +114,6 @@ def perform_edf_analysis(tasks):
             k += 1
 
     # --- Step 2: Simulate EDF ---
-    # Run until H plus a margin (one extra WCET) to let the last jobs finish
-    # max_wcet = max(t.wcet for t in tasks)
     t = 0
     EPS = 1e-9
     while True:
@@ -128,12 +126,15 @@ def perform_edf_analysis(tasks):
             if job["remaining"] == 0:
                 job["finish"] = t + 1   # Job completes at the end of time slot t
         # --- stopping conditions ---
+        # If utilization is more than 1, i.e., cannot be done on a single CPU
         if U > 1 + EPS:
             if t >=H:
                 break
+        # If utilization is less than 1, hence stop after t == H
         elif U < 1:
             if t >= H:
                 break
+        # If utilization is equal to 1, continue doing the job until the cpu is idle.
         elif abs(U - 1) <= EPS:  # U == 1
             if t >= H and not ready:
                 break
