@@ -1,0 +1,345 @@
+
+==================================================
+  SCHEDULABLE TASK SETS
+==================================================
+
+>>> Full_Utilization_Unique_Periods_taskset.csv
+Loading task set...
+
+========================================
+          ANALYTICAL RESULTS
+========================================
+Total Utilization U   : 1.0000
+Liu & Layland Bound   : 0.7798
+Schedulable by LL Test: Inconclusive (Exact Analysis Required)
+
+--- RM Exact WCRT Analysis ---
+  Period WCET WCRT_Analytic Schedulable
+2     20    9             9        True
+0     50   21            39        True
+1    100   13           100        True
+
+--- DM Exact WCRT Analysis ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+2     20       20    9             9        True
+0     50       50   21            39        True
+1    100      100   13           100        True
+
+--- EDF Exact WCRT Analysis (Hyperperiod Simulation with WCET) ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+0     50       50   21            41        True
+1    100      100   13            70        True
+2     20       20    9            20        True
+
+========================================
+          SIMULATION RESULTS
+========================================
+Hyperperiod (LCM): 100
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\resultplots\gantt_RM_Full_Utilization_Unique_Periods_taskset.png
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\resultplots\gantt_EDF_Full_Utilization_Unique_Periods_taskset.png
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\resultplots\gantt_DM_Full_Utilization_Unique_Periods_taskset.png
+
+========================================
+          COMPARISON REPORT
+========================================
+  Task  Analytic_WCRT(RM)  Analytic_WCRT(DM)  Analytic_WCRT(EDF)  Sim_WCRT(RM)  Sim_WCRT(EDF)  Sim_WCRT(DM)  RM_Missed  EDF_Missed  DM_Missed
+0   T0                 39                 39                  41            29             29            23          0           0          0
+1   T1                100                100                  70            35             46            37          0           0          0
+2   T2                  9                  9                  20             9              9             9          0           0          0
+
+--- Validation ---
+Validation passed.
+
+>>> High_Utilization_NonUnique_Periods_taskset.csv
+Loading task set...
+
+========================================
+          ANALYTICAL RESULTS
+========================================
+Total Utilization U   : 0.8000
+Liu & Layland Bound   : 0.7136
+Schedulable by LL Test: Inconclusive (Exact Analysis Required)
+
+--- RM Exact WCRT Analysis ---
+   Period WCET WCRT_Analytic Schedulable
+9      10    1             1        True
+11     10    1             2        True
+5      20    1             3        True
+2      25    1             4        True
+4      25    2             6        True
+6      25    1             7        True
+8      50    3            10        True
+0     100    7            19        True
+7     100    1            20        True
+10    100   11            40        True
+3     200    6            49        True
+1     300   33           148        True
+
+--- DM Exact WCRT Analysis ---
+   Period Deadline WCET WCRT_Analytic Schedulable
+9      10       10    1             1        True
+11     10       10    1             2        True
+5      20       20    1             3        True
+2      25       25    1             4        True
+4      25       25    2             6        True
+6      25       25    1             7        True
+8      50       50    3            10        True
+0     100      100    7            19        True
+7     100      100    1            20        True
+10    100      100   11            40        True
+3     200      200    6            49        True
+1     300      300   33           148        True
+
+--- EDF Exact WCRT Analysis (Hyperperiod Simulation with WCET) ---
+   Period Deadline WCET WCRT_Analytic Schedulable
+0     100      100    7            19        True
+1     300      300   33           148        True
+2      25       25    1             4        True
+3     200      200    6            49        True
+4      25       25    2             6        True
+5      20       20    1             3        True
+6      25       25    1             7        True
+7     100      100    1            20        True
+8      50       50    3            10        True
+9      10       10    1             1        True
+10    100      100   11            40        True
+11     10       10    1             2        True
+
+========================================
+          SIMULATION RESULTS
+========================================
+Hyperperiod (LCM): 600
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\resultplots\gantt_RM_High_Utilization_NonUnique_Periods_taskset.png
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\resultplots\gantt_EDF_High_Utilization_NonUnique_Periods_taskset.png
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\resultplots\gantt_DM_High_Utilization_NonUnique_Periods_taskset.png
+
+========================================
+          COMPARISON REPORT
+========================================
+   Task  Analytic_WCRT(RM)  Analytic_WCRT(DM)  Analytic_WCRT(EDF)  Sim_WCRT(RM)  Sim_WCRT(EDF)  Sim_WCRT(DM)  RM_Missed  EDF_Missed  DM_Missed
+0    T0                 19                 19                  19            17             16            18          0           0          0
+1    T1                148                148                 148            59             60            59          0           0          0
+2    T2                  4                  4                   4             4              4             4          0           0          0
+3    T3                 49                 49                  49            37             39            39          0           0          0
+4    T4                  6                  6                   6             6              6             6          0           0          0
+5    T5                  3                  3                   3             3              3             3          0           0          0
+6    T6                  7                  7                   7             7              7             7          0           0          0
+7    T7                 20                 20                  20            18             17            19          0           0          0
+8    T8                 10                 10                  10            10              9             9          0           0          0
+9    T9                  1                  1                   1             1              1             1          0           0          0
+10  T10                 40                 40                  40            37             35            37          0           0          0
+11  T11                  2                  2                   2             2              2             2          0           0          0
+
+--- Validation ---
+Validation passed.
+
+==================================================
+  NOT SCHEDULABLE BY RM (EDF may still schedule)
+==================================================
+
+>>> Unschedulable_Full_Utilization_NonUnique_Periods_taskset.csv
+Loading task set...
+
+========================================
+          ANALYTICAL RESULTS
+========================================
+Total Utilization U   : 1.0028
+Liu & Layland Bound   : 0.7177
+Schedulable by LL Test: Inconclusive (Exact Analysis Required)
+WARNING: U > 1 — system is overloaded, deadlines will be missed.
+
+--- RM Exact WCRT Analysis ---
+  Period WCET WCRT_Analytic Schedulable
+1      5    1             1        True
+2     25    3             4        True
+4     25    1             5        True
+5     25    3             9        True
+6     25    1            10        True
+9     50    7            19        True
+0     97    9            40        True
+3    100    9            70        True
+7    100    3            74        True
+8    100   13           109       False
+
+--- DM Exact WCRT Analysis ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+1      5        5    1             1        True
+2     25       25    3             4        True
+4     25       25    1             5        True
+5     25       25    3             9        True
+6     25       25    1            10        True
+9     50       50    7            19        True
+0     97       97    9            40        True
+3    100      100    9            70        True
+7    100      100    3            74        True
+8    100      100   13           109       False
+
+--- EDF Exact WCRT Analysis (Hyperperiod Simulation with WCET) ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+0     97       97    9           inf       False
+1      5        5    1           inf       False
+2     25       25    3           inf       False
+3    100      100    9            84        True
+4     25       25    1           inf       False
+5     25       25    3           inf       False
+6     25       25    1           inf       False
+7    100      100    3            88        True
+8    100      100   13           inf       False
+9     50       50    7           inf       False
+
+========================================
+          SIMULATION RESULTS
+========================================
+Hyperperiod (LCM): 9700
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\resultplots\gantt_RM_Unschedulable_Full_Utilization_NonUnique_Periods_taskset.png
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\resultplots\gantt_EDF_Unschedulable_Full_Utilization_NonUnique_Periods_taskset.png
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\resultplots\gantt_DM_Unschedulable_Full_Utilization_NonUnique_Periods_taskset.png
+
+========================================
+          COMPARISON REPORT
+========================================
+  Task  Analytic_WCRT(RM)  Analytic_WCRT(DM)  Analytic_WCRT(EDF)  Sim_WCRT(RM)  Sim_WCRT(EDF)  Sim_WCRT(DM)  RM_Missed  EDF_Missed  DM_Missed
+0   T0                 40                 40                 inf            25             70            32          0           0          0
+1   T1                  1                  1                 inf             1              1             1          0           0          0
+2   T2                  4                  4                 inf             4              4             4          0           0          0
+3   T3                 70                 70                84.0            45             37            47          0           0          0
+4   T4                  5                  5                 inf             5              5             5          0           0          0
+5   T5                  9                  9                 inf             9              9             9          0           0          0
+6   T6                 10                 10                 inf            10             10            10          0           0          0
+7   T7                 74                 74                88.0            48             39            49          0           0          0
+8   T8                109                109                 inf            83             60            93          0           0          0
+9   T9                 19                 19                 inf            19             19            19          0           0          0
+
+--- Validation ---
+Validation passed.
+
+>>> Unschedulable_Full_Utilization_Unique_Periods_taskset.csv
+Loading task set...
+
+========================================
+          ANALYTICAL RESULTS
+========================================
+Total Utilization U   : 1.0000
+Liu & Layland Bound   : 0.7177
+Schedulable by LL Test: Inconclusive (Exact Analysis Required)
+
+--- RM Exact WCRT Analysis ---
+  Period WCET WCRT_Analytic Schedulable
+9     10    1             1        True
+0     20    3             4        True
+2     50    9            14        True
+7     60    3            17        True
+1    100   11            33        True
+3    200   18            73        True
+5    300   33           148        True
+4    400   24           195        True
+8    600   12           277        True
+6    900  117           905       False
+
+--- DM Exact WCRT Analysis ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+9     10       10    1             1        True
+0     20       20    3             4        True
+2     50       50    9            14        True
+7     60       60    3            17        True
+1    100      100   11            33        True
+3    200      200   18            73        True
+5    300      300   33           148        True
+4    400      400   24           195        True
+8    600      600   12           277        True
+6    900      900  117           905       False
+
+--- EDF Exact WCRT Analysis (Hyperperiod Simulation with WCET) ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+0     20       20    3            19        True
+1    100      100   11            84        True
+2     50       50    9            46        True
+3    200      200   18           172        True
+4    400      400   24           292        True
+5    300      300   33           248        True
+6    900      900  117           788        True
+7     60       60    3            47        True
+8    600      600   12           472        True
+9     10       10    1            10        True
+
+========================================
+          SIMULATION RESULTS
+========================================
+Hyperperiod (LCM): 3600
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\resultplots\gantt_RM_Unschedulable_Full_Utilization_Unique_Periods_taskset.png
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\resultplots\gantt_EDF_Unschedulable_Full_Utilization_Unique_Periods_taskset.png
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\resultplots\gantt_DM_Unschedulable_Full_Utilization_Unique_Periods_taskset.png
+
+========================================
+          COMPARISON REPORT
+========================================
+  Task  Analytic_WCRT(RM)  Analytic_WCRT(DM)  Analytic_WCRT(EDF)  Sim_WCRT(RM)  Sim_WCRT(EDF)  Sim_WCRT(DM)  RM_Missed  EDF_Missed  DM_Missed
+0   T0                  4                  4                  19             4              4             4          0           0          0
+1   T1                 33                 33                  84            28             29            30          0           0          0
+2   T2                 14                 14                  46            14             14            14          0           0          0
+3   T3                 73                 73                 172            47             39            45          0           0          0
+4   T4                195                195                 292           119            128           138          0           0          0
+5   T5                148                148                 248            78             89            89          0           0          0
+6   T6                905                905                 788           267            294           300          0           0          0
+7   T7                 17                 17                  47            15             16            15          0           0          0
+8   T8                277                277                 472           138            135           158          0           0          0
+9   T9                  1                  1                  10             1              1             1          0           0          0
+
+--- Validation ---
+Validation passed.
+
+>>> Unschedulable_High_Utilization_NonUnique_Periods_taskset.csv
+Loading task set...
+
+========================================
+          ANALYTICAL RESULTS
+========================================
+Total Utilization U   : 0.8474
+Liu & Layland Bound   : 0.7177
+Schedulable by LL Test: Inconclusive (Exact Analysis Required)
+
+--- RM Exact WCRT Analysis ---
+  Period WCET WCRT_Analytic Schedulable
+1     10    1             1        True
+2     25    1             2        True
+5     25    2             4        True
+9     25    3             7        True
+0     31    1             8        True
+3     31    3            12        True
+4     37    1            13        True
+6     37    5            18        True
+7     37    5            24        True
+8     37    3            38       False
+
+--- DM Exact WCRT Analysis ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+1     10       10    1             1        True
+2     25       25    1             2        True
+5     25       25    2             4        True
+9     25       25    3             7        True
+0     31       31    1             8        True
+3     31       31    3            12        True
+4     37       37    1            13        True
+6     37       37    5            18        True
+7     37       37    5            24        True
+8     37       37    3            38       False
+
+--- EDF Exact WCRT Analysis (Hyperperiod Simulation with WCET) ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+0     31       31    1            18        True
+1     10       10    1             1        True
+2     25       25    1             9        True
+3     31       31    3            21        True
+4     37       37    1            13        True
+5     25       25    2            12        True
+6     37       37    5            18        True
+7     37       37    5            24        True
+8     37       37    3            27        True
+9     25       25    3            15        True
+
+========================================
+          SIMULATION RESULTS
+========================================
+Hyperperiod (LCM): 57350
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\resultplots\gantt_RM_Unschedulable_High_Utilization_NonUnique_Periods_taskset.png
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\resultplots\gantt_EDF_Unschedulable_High_Utilization_NonUnique_Periods_taskset.png
