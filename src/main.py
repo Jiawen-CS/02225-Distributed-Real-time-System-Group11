@@ -261,36 +261,36 @@ if __name__ == "__main__":
         LOG_FILE.unlink()
 
     TASKSETS_NS_DIR = BASE_DIR / "tasksets" / "not_schedulable"
-    TASKSETS_S_DIR  = BASE_DIR / "tasksets" / "schedulable"
+    # TASKSETS_S_DIR  = BASE_DIR / "tasksets" / "schedulable"
 
-    schedulable_files = [
-        "Full_Utilization_Unique_Periods_taskset.csv",
-        "High_Utilization_NonUnique_Periods_taskset.csv",
-    ]
+    # schedulable_files = [
+    #     "Full_Utilization_Unique_Periods_taskset.csv",
+    #     "High_Utilization_NonUnique_Periods_taskset.csv",
+    # ]
 
     not_schedulable_files = [
-        "Unschedulable_Full_Utilization_NonUnique_Periods_taskset.csv",
-        "Unschedulable_Full_Utilization_Unique_Periods_taskset.csv",
-        "Unschedulable_High_Utilization_NonUnique_Periods_taskset.csv",
+        # "Unschedulable_Full_Utilization_NonUnique_Periods_taskset.csv",
+        # "Unschedulable_Full_Utilization_Unique_Periods_taskset.csv",
+        # "Unschedulable_High_Utilization_NonUnique_Periods_taskset.csv",
         "Unschedulable_High_Utilization_Unique_Periods_taskset.csv",
     ]
 
-    print("\n" + "=" * 50)
-    log_only("\n" + "=" * 50)
-    print("  SCHEDULABLE TASK SETS")
-    log_only("  SCHEDULABLE TASK SETS")
-    print("=" * 50)
-    log_only("=" * 50)
+    # print("\n" + "=" * 50)
+    # log_only("\n" + "=" * 50)
+    # print("  SCHEDULABLE TASK SETS")
+    # log_only("  SCHEDULABLE TASK SETS")
+    # print("=" * 50)
+    # log_only("=" * 50)
 
-    for name in schedulable_files:
-        f = TASKSETS_S_DIR / name
-        if f.exists():
-            print(f"\n>>> {f.name}")
-            log_only(f"\n>>> {f.name}")
-            main(f)
-        else:
-            print(f"WARNING: File not found: {f}")
-            log_only(f"WARNING: File not found: {f}")
+    # for name in schedulable_files:
+    #     f = TASKSETS_S_DIR / name
+    #     if f.exists():
+    #         print(f"\n>>> {f.name}")
+    #         log_only(f"\n>>> {f.name}")
+    #         main(f)
+    #     else:
+    #         print(f"WARNING: File not found: {f}")
+    #         log_only(f"WARNING: File not found: {f}")
 
     print("\n" + "=" * 50)
     log_only("\n" + "=" * 50)

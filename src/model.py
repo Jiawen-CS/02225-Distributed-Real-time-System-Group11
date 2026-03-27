@@ -33,7 +33,8 @@ class Job:
 
     @property
     def is_missed(self):
-        # A job that never finished naturally is always a deadline miss
+        if self.force_finished:
+            return True
         if self.finish_time == -1:
             return True
         return self.finish_time > self.absolute_deadline

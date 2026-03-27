@@ -1,5 +1,5 @@
 # simulation.py
-from model import Task, Job
+from model import Job
 import math
 import copy
 import random
@@ -121,7 +121,7 @@ class Scheduler:
         # Mark them as force-finished so they are excluded from WCRT calculation
         # but still counted as missed deadlines
         for job in self.ready_queue:
-            job.finish_time = duration
+            # job.finish_time = duration
             job.force_finished = True   # Did not finish naturally
             self.completed_jobs.append(job)
         self.ready_queue.clear()
