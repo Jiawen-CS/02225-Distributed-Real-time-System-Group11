@@ -1,5 +1,5 @@
-# analysis.py
 import math
+import heapq
 from model import Task
 
 
@@ -9,21 +9,30 @@ def calculate_utilization(tasks):
 
 
 def check_ll_bound(tasks):
-    """Liu & Layland schedulability bound: U <= n * (2^(1/n) - 1)."""
+    """
+    Liu & Layland schedulability bound for RM:
+        U <= n * (2^(1/n) - 1)
+
+    This bound is sufficient but not necessary.
+    """
     n = len(tasks)
     u = calculate_utilization(tasks)
     bound = n * (2 ** (1 / n) - 1)
     return u <= bound, u, bound
 
 
-def calculate_exact_wcrt_rm(task: Task, higher_priority_tasks: list[Task]):
+def calculate_exact_wcrt_fp(task: Task, higher_priority_tasks: list[Task]):
     """
-    Iterative fixed-point algorithm for Worst-Case Response Time under
-    static-priority scheduling (used by both RM and DM):
-        R = Ci + Sum( ceil(R / Tj) * Cj )  for all higher-priority tasks j
-    Returns R when converged, or R > Di if unschedulable.
+    Fixed-priority exact response-time analysis (used by RM and DM):
+
+        R_i = C_i + sum( ceil(R_i / T_j) * C_j )
+
+    Returns:
+        - converged WCRT if schedulable
+        - first value exceeding deadline if unschedulable
     """
     R_curr = task.wcet
+
     while True:
         interference = sum(
             math.ceil(R_curr / hp.period) * hp.wcet
@@ -32,121 +41,168 @@ def calculate_exact_wcrt_rm(task: Task, higher_priority_tasks: list[Task]):
         R_new = task.wcet + interference
 
         if R_new > task.deadline:
-            return R_new        # Unschedulable: exceeded deadline
+            return R_new  # enough to conclude unschedulable
         if R_new == R_curr:
-            return R_new        # Converged to fixed point
+            return R_new  # converged
+
         R_curr = R_new
 
 
 def perform_rm_analysis(tasks):
     """
-    Full Response Time Analysis for Rate Monotonic scheduling.
-    Priority order: shorter period -> higher priority (tie-break by ID).
+    Exact WCRT analysis for Rate Monotonic.
+    Priority: shorter period -> higher priority.
     """
     sorted_tasks = sorted(tasks, key=lambda x: (x.period, x.id))
     results = {}
+
     for i, task in enumerate(sorted_tasks):
         hp_tasks = sorted_tasks[:i]
-        wcrt = calculate_exact_wcrt_rm(task, hp_tasks)
+        wcrt = calculate_exact_wcrt_fp(task, hp_tasks)
+
         results[task.id] = {
-            "Task":           f"Task {task.id}",
-            "Period":         task.period,
-            "WCET":           task.wcet,
-            "WCRT_Analytic":  wcrt,
-            "Schedulable":    wcrt <= task.deadline,
+            "Task": f"Task {task.id}",
+            "Period": task.period,
+            "Deadline": task.deadline,
+            "WCET": task.wcet,
+            "WCRT_Analytic": wcrt,
+            "Schedulable": wcrt <= task.deadline,
         }
+
     return results
 
 
 def perform_dm_analysis(tasks):
     """
-    Full Response Time Analysis for Deadline Monotonic scheduling.
-    Priority order: shorter relative deadline -> higher priority (tie-break by ID).
+    Exact WCRT analysis for Deadline Monotonic.
+    Priority: shorter relative deadline -> higher priority.
     """
     sorted_tasks = sorted(tasks, key=lambda x: (x.deadline, x.id))
     results = {}
+
     for i, task in enumerate(sorted_tasks):
         hp_tasks = sorted_tasks[:i]
-        wcrt = calculate_exact_wcrt_rm(task, hp_tasks)   # Same interference formula
+        wcrt = calculate_exact_wcrt_fp(task, hp_tasks)
+
         results[task.id] = {
-            "Task":           f"Task {task.id}",
-            "Period":         task.period,
-            "Deadline":       task.deadline,
-            "WCET":           task.wcet,
-            "WCRT_Analytic":  wcrt,
-            "Schedulable":    wcrt <= task.deadline,
+            "Task": f"Task {task.id}",
+            "Period": task.period,
+            "Deadline": task.deadline,
+            "WCET": task.wcet,
+            "WCRT_Analytic": wcrt,
+            "Schedulable": wcrt <= task.deadline,
         }
+
     return results
 
 
 def perform_edf_analysis(tasks):
     """
-    Exact WCRT analysis for EDF over one hyperperiod, as specified in the
-    project appendix:
-      1. Compute H = lcm of all periods.
-      2. Generate every job released in [0, H).
-      3. Simulate EDF (earliest absolute deadline first) with every job
-         running for exactly its WCET (worst-case load).
-      4. WCRT_i = max response time observed among all jobs of task i.
+    Exact EDF WCRT analysis aligned with the teacher's appendix:
 
-    This gives the exact theoretical upper bound for the synchronous,
-    strictly-periodic task model.
+    Assumptions:
+      - strictly periodic tasks
+      - synchronous release (all first jobs released at t=0)
+      - D_i <= T_i
+      - every job executes exactly WCET
+      - single processor
+
+    Method:
+      1. Compute H = lcm(T1, ..., Tn)
+      2. Generate all jobs released in [0, H)
+      3. Construct EDF schedule
+      4. Record finish times
+      5. WCRT_i = max(response times of all jobs of task i)
+
+    Stopping rule:
+      - if U < 1: simulate until H
+      - if U == 1: simulate until CPU becomes idle after H
+      - if U > 1: overloaded, whole task set unschedulable on one CPU
     """
+    if not tasks:
+        return {}
 
-    U = sum(task.utilization() for task in tasks)
-
+    EPS = 1e-9
+    U = calculate_utilization(tasks)
     periods = [t.period for t in tasks]
     H = math.lcm(*periods)
 
-    # --- Step 1: Generate all jobs in [0, H) ---
+    # Overloaded system: EDF cannot schedule all jobs on one CPU
+    if U > 1 + EPS:
+        return {
+            task.id: {
+                "Task": f"Task {task.id}",
+                "Period": task.period,
+                "Deadline": task.deadline,
+                "WCET": task.wcet,
+                "Hyperperiod": H,
+                "WCRT_Analytic": float("inf"),
+                "Schedulable": False,
+            }
+            for task in tasks
+        }
+
+    # Generate all jobs released in [0, H) and bucket them by release time
     all_jobs = []
+    release_buckets = {}
     for task in tasks:
         k = 0
         while k * task.period < H:
             release = k * task.period
-            all_jobs.append({
-                "task_id":   task.id,
-                "release":   release,
-                "deadline":  release + task.deadline,
+            job = {
+                "task_id": task.id,
+                "release": release,
+                "deadline": release + task.deadline,
                 "remaining": task.wcet,
-                "finish":    -1,
-            })
+                "finish": -1,
+            }
+            all_jobs.append(job)
+            release_buckets.setdefault(release, []).append(job)
             k += 1
 
-    # --- Step 2: Simulate EDF ---
+    # Simulate EDF with a priority heap instead of scanning every job each tick
     t = 0
-    EPS = 1e-9
+    ready = []
     while True:
-        # Collect jobs that have arrived and are not yet finished
-        ready = [j for j in all_jobs if j["release"] <= t and j["finish"] == -1]
+        for job in release_buckets.get(t, []):
+            heapq.heappush(
+                ready,
+                ((job["deadline"], job["release"], job["task_id"]), job),
+            )
+
         if ready:
-            # EDF rule: pick job with the earliest absolute deadline (tie-break: earlier release)
-            job = min(ready, key=lambda j: (j["deadline"], j["release"]))
+            # EDF + deterministic tie-breaking
+            _, job = heapq.heappop(ready)
             job["remaining"] -= 1
             if job["remaining"] == 0:
-                job["finish"] = t + 1   # Job completes at the end of time slot t
-        # --- stopping conditions ---
-        # If utilization is more than 1, i.e., cannot be done on a single CPU
-        if U > 1 + EPS:
-            if t >=H:
+                job["finish"] = t + 1
+            else:
+                heapq.heappush(
+                    ready,
+                    ((job["deadline"], job["release"], job["task_id"]), job),
+                )
+
+        # Stop rules
+        if U < 1 - EPS:
+            if t + 1 >= H:
                 break
-        # If utilization is less than 1, hence stop after t == H
-        elif U < 1:
-            if t >= H:
-                break
-        # If utilization is equal to 1, continue doing the job until the cpu is idle.
-        elif abs(U - 1) <= EPS:  # U == 1
-            if t >= H and not ready:
+        else:
+            # U == 1 approximately: continue until no unfinished jobs released in [0, H)
+            unfinished = any(
+                j["release"] < H and j["finish"] == -1
+                for j in all_jobs
+            )
+            if t + 1 >= H and not unfinished:
                 break
 
         t += 1
 
-    # --- Step 3: Compute per-task WCRT ---
+    # Compute per-task WCRT
     results = {}
     for task in tasks:
         jobs = [j for j in all_jobs if j["task_id"] == task.id]
+
         if not jobs or any(j["finish"] == -1 for j in jobs):
-            # Some jobs never finished -> unschedulable
             wcrt = float("inf")
             schedulable = False
         else:
@@ -155,11 +211,13 @@ def perform_edf_analysis(tasks):
             schedulable = wcrt <= task.deadline
 
         results[task.id] = {
-            "Task":          f"Task {task.id}",
-            "Period":        task.period,
-            "Deadline":      task.deadline,
-            "WCET":          task.wcet,
+            "Task": f"Task {task.id}",
+            "Period": task.period,
+            "Deadline": task.deadline,
+            "WCET": task.wcet,
+            "Hyperperiod": H,
             "WCRT_Analytic": wcrt,
-            "Schedulable":   schedulable,
+            "Schedulable": schedulable,
         }
+
     return results

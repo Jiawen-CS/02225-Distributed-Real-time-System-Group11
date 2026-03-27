@@ -1,131 +1,163 @@
-# simulation.py
-from model import Task, Job
+from model import Job
 import math
 import copy
 import random
+import heapq
 
 
 class Scheduler:
-    def __init__(self, tasks, algorithm="RM"):
-        # Deep-copy to avoid mutating the original task objects (e.g. priority fields)
+    def __init__(self, tasks, algorithm="RM", execution_mode="wcet", seed=42):
+        """
+        execution_mode:
+            - "wcet": every job executes exactly WCET
+            - "random": execution time sampled uniformly from [BCET, WCET]
+
+        seed:
+            used for reproducibility in random mode
+        """
         self.tasks = copy.deepcopy(tasks)
         self.algorithm = algorithm
+        self.execution_mode = execution_mode
+        self.rng = random.Random(seed)
+        self.task_map = {}
+
         self.time = 0
-        self.ready_queue = []
-        self.history = []           # (time, task_id) pairs used for Gantt chart
+        self.history = []          # (time, task_id)
         self.completed_jobs = []
 
-        # Hyperperiod = LCM of all periods -> simulation length
         periods = [t.period for t in self.tasks]
         self.hyperperiod = math.lcm(*periods) if periods else 0
 
-        # Assign static priorities based on algorithm
+        # Static priorities for RM / DM
         if algorithm == "RM":
-            # Rate Monotonic: shorter period -> higher priority (lower number)
             self.tasks.sort(key=lambda t: (t.period, t.id))
             for i, t in enumerate(self.tasks):
                 t.priority = i
 
         elif algorithm == "DM":
-            # Deadline Monotonic: shorter relative deadline -> higher priority
             self.tasks.sort(key=lambda t: (t.deadline, t.id))
             for i, t in enumerate(self.tasks):
                 t.priority = i
 
-        # EDF has no static priority; scheduling decision is made dynamically
+        elif algorithm == "EDF":
+            pass
+        else:
+            raise ValueError(f"Unknown algorithm: {algorithm}")
+
+        self.task_map = {t.id: t for t in self.tasks}
 
     # ------------------------------------------------------------------
-    # Internal helpers
+    # Helpers
     # ------------------------------------------------------------------
 
-    def _get_active_job(self):
-        """Return the highest-priority ready job according to the algorithm."""
-        if not self.ready_queue:
-            return None
+    def _get_exec_time(self, task):
+        """
+        In discrete-time simulation, execution time must be at least 1.
+        This avoids jobs with 0 execution that would never complete correctly.
+        """
+        if self.execution_mode == "wcet":
+            return task.wcet
+        elif self.execution_mode == "random":
+            low = min(task.bcet, task.wcet)
+            high = max(task.bcet, task.wcet)
+            return max(1, self.rng.randint(low, high))
+        else:
+            raise ValueError(f"Unknown execution_mode: {self.execution_mode}")
 
+    def _job_priority(self, job):
         if self.algorithm in ["RM", "DM"]:
-            # Static priority: lowest number wins
-            return min(self.ready_queue,
-                       key=lambda j: self.get_task(j.task_id).priority)
+            return (
+                self.task_map[job.task_id].priority,
+                job.arrival_time,
+                job.task_id,
+                job.job_id,
+            )
 
-        elif self.algorithm == "EDF":
-            # Dynamic priority: earliest absolute deadline wins
-            return min(self.ready_queue,
-                       key=lambda j: (j.absolute_deadline, j.arrival_time))
+        if self.algorithm == "EDF":
+            return (
+                job.absolute_deadline,
+                job.arrival_time,
+                job.task_id,
+                job.job_id,
+            )
 
-        return None
+        raise ValueError(f"Unknown algorithm: {self.algorithm}")
 
     def get_task(self, task_id):
-        """Look up a Task object by its ID."""
-        for t in self.tasks:
-            if t.id == task_id:
-                return t
-        raise ValueError(f"Task with ID {task_id} not found in scheduler.")
+        try:
+            return self.task_map[task_id]
+        except KeyError as exc:
+            raise ValueError(f"Task with ID {task_id} not found.") from exc
 
     # ------------------------------------------------------------------
-    # Main simulation loop
+    # Main simulation
     # ------------------------------------------------------------------
 
-    def run(self, duration=None):
+    def run(self, duration=None, record_history=True):
         if duration is None:
             duration = self.hyperperiod
 
-        print(f"--- Running {self.algorithm} Simulation for {duration} cycles ---")
+        print(
+            f"--- Running {self.algorithm} simulation "
+            f"({self.execution_mode}) for {duration} cycles ---"
+        )
 
-        current_job = None
+        self.time = 0
+        self.history = []
+        self.completed_jobs = []
+
+        release_buckets = {}
+        for task in self.tasks:
+            job_id = 0
+            while job_id * task.period < duration:
+                release_time = job_id * task.period
+                exec_time = self._get_exec_time(task)
+                release_buckets.setdefault(release_time, []).append(
+                    Job(
+                        task_id=task.id,
+                        job_id=job_id,
+                        arrival_time=release_time,
+                        absolute_deadline=release_time + task.deadline,
+                        remaining_time=exec_time,
+                    )
+                )
+                job_id += 1
+
+        ready_heap = []
 
         for t in range(duration):
             self.time = t
 
-            # 1. Release new jobs at each task's period boundary
-            for task in self.tasks:
-                if t % task.period == 0:
-                    # Sample execution time uniformly in [BCET, WCET].
-                    # Use max(1, ...) to guarantee at least 1 cycle of work,
-                    # preventing zero-execution jobs that never complete.
-                    exec_time = max(1, random.randint(task.bcet, task.wcet))
-                    new_job = Job(
-                        task_id=task.id,
-                        job_id=int(t / task.period),
-                        arrival_time=t,
-                        absolute_deadline=t + task.deadline,
-                        remaining_time=exec_time
-                    )
-                    self.ready_queue.append(new_job)
+            # Release new jobs
+            for job in release_buckets.get(t, []):
+                heapq.heappush(ready_heap, (self._job_priority(job), job))
 
-            # 2. Select the next job to run
-            next_job = self._get_active_job()
+            # Execute one time unit
+            if ready_heap:
+                _, current_job = heapq.heappop(ready_heap)
 
-            # 3. Handle context switch / preemption
-            if next_job != current_job:
-                if next_job is not None and next_job.start_time == -1:
-                    next_job.start_time = t
-                current_job = next_job
+                if current_job.start_time == -1:
+                    current_job.start_time = t
 
-            # 4. Execute for one time unit
-            if current_job:
-                self.history.append((t, current_job.task_id))
+                if record_history:
+                    self.history.append((t, current_job.task_id))
                 current_job.remaining_time -= 1
 
-                # 5. Job completion check
                 if current_job.remaining_time == 0:
                     current_job.finish_time = t + 1
-                    current_job.force_finished = False  # Completed naturally
+                    current_job.force_finished = False
                     self.completed_jobs.append(current_job)
-                    self.ready_queue.remove(current_job)
-                    current_job = None
+                else:
+                    heapq.heappush(ready_heap, (self._job_priority(current_job), current_job))
             else:
-                self.history.append((t, None))  # CPU idle
+                if record_history:
+                    self.history.append((t, None))
 
-        # 6. Handle jobs still in the queue at end of simulation (deadline misses)
-        # Mark them as force-finished so they are excluded from WCRT calculation
-        # but still counted as missed deadlines
-        for job in self.ready_queue:
-            job.finish_time = duration
-            job.force_finished = True   # Did not finish naturally
+        # Jobs still unfinished at simulation end
+        for _, job in ready_heap:
+            job.force_finished = True
+            job.finish_time = -1
             self.completed_jobs.append(job)
-        self.ready_queue.clear()
-
         return self.completed_jobs, self.history
 
     # ------------------------------------------------------------------
@@ -134,36 +166,27 @@ class Scheduler:
 
     def analyze_results(self):
         """
-        Compute per-task statistics from completed jobs:
-          - Sim_WCRT   : worst observed response time among naturally completed jobs
-          - Sim_Avg_RT : average response time among naturally completed jobs
-          - Missed     : number of jobs that exceeded their absolute deadline
-        
-        Jobs that were force-finished at simulation end are excluded from
-        WCRT/Avg_RT (their response time is meaningless), but are still
-        counted as missed deadlines.
+        Returns per-task statistics:
+            - Sim_WCRT: worst observed response time among naturally completed jobs
+            - Sim_Avg_RT: average response time among naturally completed jobs
+            - Missed: number of missed / unfinished jobs
         """
         stats = {}
+
         for task in self.tasks:
             jobs = [j for j in self.completed_jobs if j.task_id == task.id]
-            if not jobs:
-                stats[task.id] = {"Sim_WCRT": 0, "Sim_Avg_RT": 0, "Missed": 0}
-                continue
 
-            # Only use naturally completed jobs for response time statistics
             natural_jobs = [j for j in jobs if not j.force_finished]
-            valid_rts = [j.response_time for j in natural_jobs
-                         if j.response_time is not None]
+            valid_rts = [j.response_time for j in natural_jobs if j.response_time is not None]
 
-            max_response = max(valid_rts) if valid_rts else 0
-            avg_response = sum(valid_rts) / len(valid_rts) if valid_rts else 0
-
-            # All jobs (including force-finished) count toward missed deadlines
+            sim_wcrt = max(valid_rts) if valid_rts else 0
+            sim_avg = sum(valid_rts) / len(valid_rts) if valid_rts else 0
             missed = sum(1 for j in jobs if j.is_missed)
 
             stats[task.id] = {
-                "Sim_WCRT":   max_response,
-                "Sim_Avg_RT": avg_response,
-                "Missed":     missed,
+                "Sim_WCRT": sim_wcrt,
+                "Sim_Avg_RT": sim_avg,
+                "Missed": missed,
             }
+
         return stats
