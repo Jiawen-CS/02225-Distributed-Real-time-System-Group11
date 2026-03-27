@@ -340,47 +340,20 @@ if __name__ == "__main__":
     TASKSETS_NS_DIR = BASE_DIR / "tasksets" / "not_schedulable"
     TASKSETS_S_DIR = BASE_DIR / "tasksets" / "schedulable"
 
-    schedulable_files = [
-        "Full_Utilization_Unique_Periods_taskset.csv",
-        "High_Utilization_NonUnique_Periods_taskset.csv",
-    ]
-
-    rm_unsched_but_edf_possible_files = [
-        "Unschedulable_Full_Utilization_Unique_Periods_taskset.csv",
-        "Unschedulable_High_Utilization_NonUnique_Periods_taskset.csv",
-        "Unschedulable_High_Utilization_Unique_Periods_taskset.csv",
-    ]
-
-    overloaded_files = [
-        "Unschedulable_Full_Utilization_NonUnique_Periods_taskset.csv",
-    ]
+    schedulable_files = sorted(TASKSETS_S_DIR.glob("*.csv"))
+    not_schedulable_files = sorted(
+        f for f in TASKSETS_NS_DIR.glob("*.csv")
+        if f.name != "small_example.csv"
+    )
 
     print_and_log("\n" + "=" * 60)
     print_and_log("  TASK SETS SCHEDULABLE BY RM/DM AND EDF")
     print_and_log("=" * 60)
-    for name in schedulable_files:
-        f = TASKSETS_S_DIR / name
-        if f.exists():
-            main(f)
-        else:
-            print_and_log(f"WARNING: File not found: {f}")
+    for f in schedulable_files:
+        main(f)
 
     print_and_log("\n" + "=" * 60)
-    print_and_log("  TASK SETS NOT SCHEDULABLE BY RM/DM (EDF MAY SUCCEED)")
+    print_and_log("  TASK SETS FROM NOT_SCHEDULABLE DIRECTORY")
     print_and_log("=" * 60)
-    for name in rm_unsched_but_edf_possible_files:
-        f = TASKSETS_NS_DIR / name
-        if f.exists():
-            main(f)
-        else:
-            print_and_log(f"WARNING: File not found: {f}")
-
-    print_and_log("\n" + "=" * 60)
-    print_and_log("  OVERLOADED TASK SETS (NOT SCHEDULABLE ON ONE CPU)")
-    print_and_log("=" * 60)
-    for name in overloaded_files:
-        f = TASKSETS_NS_DIR / name
-        if f.exists():
-            main(f)
-        else:
-            print_and_log(f"WARNING: File not found: {f}")
+    for f in not_schedulable_files:
+        main(f)
