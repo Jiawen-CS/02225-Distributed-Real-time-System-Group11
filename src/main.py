@@ -181,7 +181,10 @@ def main(task_file):
     print("=" * 40)
     log_only("=" * 40)
 
-    duration = math.lcm(*[t.period for t in tasks]) if tasks else 100
+    # duration = math.lcm(*[t.period for t in tasks]) if tasks else 100
+    H = math.lcm(*[t.period for t in tasks])
+    # max_deadline = max(t.deadline for t in tasks)
+    duration = H
     print(f"Hyperperiod (LCM): {duration}")
     log_only(f"Hyperperiod (LCM): {duration}")
 
