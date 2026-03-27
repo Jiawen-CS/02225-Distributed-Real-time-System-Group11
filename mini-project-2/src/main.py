@@ -58,7 +58,7 @@ def main(case_id):
         print(f"{sid:<10} {stream.pcp:<5} {max_cbs:<10.2f} {max_sp:<10.2f} {ana_cbs:<10.2f} {ana_sp:<10.2f}")
 
     # 4. Save to CSV
-    output_csv = os.path.join(test_case_dir, 'WCRTs_Comparison.csv')
+    output_csv = os.path.join(test_case_dir, f'Case-{case_id}-WCRTs_Comparison.csv')
     with open(output_csv, 'w') as f:
         f.write("StreamID,PCP,SimMax_CBS,SimMax_SP,AnaWCRT_CBS,AnaWCRT_SP\n")
         for stream in streams:
