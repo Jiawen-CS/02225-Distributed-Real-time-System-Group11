@@ -83,7 +83,8 @@ class Scheduler:
                     # Sample execution time uniformly in [BCET, WCET].
                     # Use max(1, ...) to guarantee at least 1 cycle of work,
                     # preventing zero-execution jobs that never complete.
-                    exec_time = max(1, random.randint(task.bcet, task.wcet))
+                    # exec_time = max(1, random.randint(task.bcet, task.wcet))
+                    exec_time = task.wcet  # For worst-case load testing, use WCET directly
                     new_job = Job(
                         task_id=task.id,
                         job_id=int(t / task.period),
