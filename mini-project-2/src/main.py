@@ -24,7 +24,7 @@ def setup_output_logging(case_id, duration):
     sys.stdout = Tee(sys.stdout, log_file)
     sys.stderr = Tee(sys.stderr, log_file)
     
-def main(case_id, duration = 20000.0):
+def main(case_id, duration):
     base_src_dir = os.path.dirname(os.path.abspath(__file__))
     root_dir = os.path.dirname(base_src_dir)
     test_case_dir = os.path.join(root_dir, f'testcases/test_case_{case_id}')
@@ -98,8 +98,10 @@ def main(case_id, duration = 20000.0):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("case_id", type=int)
+    parser.add_argument("duration", type=float, nargs="?", default=2000000.0)
     args = parser.parse_args()
-    duration=20000.0
+    
+    duration = args.duration
     setup_output_logging(args.case_id, duration)
     
     print(f'------------ Start to execute case {args.case_id} ------------')
