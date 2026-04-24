@@ -98,7 +98,7 @@ def main(case_id, duration):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("case_id", type=int)
-    parser.add_argument("duration", type=float, nargs="?", default=2000000.0)
+    parser.add_argument("duration", type=float, nargs="?", default=4000000.0)
     args = parser.parse_args()
     
     duration = args.duration

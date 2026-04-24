@@ -14,7 +14,7 @@
         "type": "ISOCHRONOUS",
         "PCP": 2,
         "size": 1500,
-        "period": 400,
+        "period": 300,
         "redundancy": 0
     },
     {
@@ -30,7 +30,7 @@
         "type": "ISOCHRONOUS",
         "PCP": 2,
         "size": 1500,
-        "period": 400,
+        "period": 300,
         "redundancy": 0
     },
     {
@@ -46,7 +46,7 @@
         "type": "ISOCHRONOUS",
         "PCP": 2,
         "size": 1500,
-        "period": 400,
+        "period": 300,
         "redundancy": 0
     },
     {

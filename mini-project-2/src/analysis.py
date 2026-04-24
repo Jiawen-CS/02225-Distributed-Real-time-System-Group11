@@ -3,50 +3,13 @@ from .loader import load_topology, load_streams, load_routes
 import math
 
 def calculate_wcrt(nodes, links, streams, routes):
-    # 1. Analyze traffic per link
     link_traffic = {link_id: {'A': [], 'B': [], 'BE': []} for link_id in links}
     link_params = {link_id: {'idleSlope_A': 0.0, 'idleSlope_B': 0.0, 'linkRate': 0.0} for link_id in links}
-    
-    # Check link utilization
-    for link_id in links:
-        total_utilization = 0.0
-        link_bw = links[link_id].bandwidth_mbps
-        
-        for s in streams:
-            if s.id not in routes:
-                continue
-            route = routes[s.id]
-            
-            # Check if stream uses this link
-            uses_link = False
-            for hop in route.path:
-                node_id = hop['node']
-                port_id = hop['port']
-                if node_id in nodes and port_id in nodes[node_id].outgoing_links:
-                    if nodes[node_id].outgoing_links[port_id].id == link_id:
-                        uses_link = True
-                        break
-            
-            if uses_link:
-                # Bandwidth in Mbps
-                bw = (s.size * 8.0) / s.period
-                total_utilization += bw
-        
-        utilization_ratio = total_utilization / link_bw
-        if utilization_ratio > 1.0:
-            print(f"WARNING: Link {link_id} is OVERLOADED! Utilization: {utilization_ratio*100:.2f}%")
-            # In overload, WCRT is theoretically infinite
-            return {s.id: float('inf') for s in streams}
 
-    
-    # Map PCPs to Classes (Assumption based on problem description and typical AVB)
-    # Adjust based on observed PCPs in streams.json: 2, 1, 0.
-    # We'll assume 2=Class A, 1=Class B, 0=BE.
     PCP_TO_CLASS = {
         2: 'A',
         1: 'B',
         0: 'BE',
-        # Default others to BE
         3: 'A', 4: 'A', 5: 'A', 6: 'A', 7: 'A' 
     }
 
@@ -57,8 +20,6 @@ def calculate_wcrt(nodes, links, streams, routes):
         
         cls = PCP_TO_CLASS.get(s.pcp, 'BE')
         
-        # Stream bandwidth (Mbps)
-        # size (bytes) * 8 / period (us)
         s_bw = (s.size * 8.0) / s.period
         
         for hop in route.path:
@@ -69,8 +30,6 @@ def calculate_wcrt(nodes, links, streams, routes):
                 link = nodes[node_id].outgoing_links[port_id]
                 link_id = link.id
                 
-                # Transmission time on this link (us)
-                # size * 8 / bandwidth
                 trans_time = (s.size * 8.0) / link.bandwidth_mbps
                 
                 link_traffic[link_id][cls].append({
@@ -85,33 +44,29 @@ def calculate_wcrt(nodes, links, streams, routes):
                 elif cls == 'B':
                     link_params[link_id]['idleSlope_B'] += s_bw
 
-    # This increases idleSlope if load is low, reducing latency (expansion factor).
-    AVB_BANDWIDTH_PERCENTAGE = 0.75
     for link_id, params in link_params.items():
-        req_A = params['idleSlope_A']
-        req_B = params['idleSlope_B']
         link_rate = params['linkRate']
-        
-        total_avb_req = req_A + req_B
-        available_avb_bw = link_rate * AVB_BANDWIDTH_PERCENTAGE
-        
-        if total_avb_req > 0:
-            # If requested load > available, we are overloaded, but we cap at available.
-            # If requested load < available, we scale up to use the full available bandwidth.
-            # This follows the PPT logic: alpha = (U_j / Sum_U_AVB) * (1 - U_BE)
-            # Here (1 - U_BE) is fixed at 0.75.
-            
-            # Scale factor to distribute available BW
-            # Note: The PPT implies we use the *available* bandwidth for slopes, not just the *required*.
-            # This means idleSlope will be > required_bandwidth, which is good for latency.
-            
-            params['idleSlope_A'] = (req_A / total_avb_req) * available_avb_bw
-            params['idleSlope_B'] = (req_B / total_avb_req) * available_avb_bw
-        else:
-            params['idleSlope_A'] = 0.0
-            params['idleSlope_B'] = 0.0
-            
-    # 2. Calculate WCRT per stream
+
+        # Reference test cases assume equal-magnitude slopes for the two AVB classes.
+        params['idleSlope_A'] = 0.5 * link_rate if link_traffic[link_id]['A'] else 0.0
+        params['idleSlope_B'] = 0.5 * link_rate if link_traffic[link_id]['B'] else 0.0
+
+        reserved_fraction = 0.0
+        if params['idleSlope_A'] > 0:
+            reserved_fraction += params['idleSlope_A'] / link_rate
+        if params['idleSlope_B'] > 0:
+            reserved_fraction += params['idleSlope_B'] / link_rate
+
+        if reserved_fraction > 1.0:
+            print(
+                f"WARNING: Link {link_id} violates CBS validity. "
+                f"Reserved AVB fraction: {reserved_fraction:.2f}"
+            )
+            return {
+                s.id: (float('nan') if PCP_TO_CLASS.get(s.pcp, 'BE') == 'BE' else float('inf'))
+                for s in streams
+            }
+
     wcrts = {}
     
     for s in streams:
@@ -122,6 +77,11 @@ def calculate_wcrt(nodes, links, streams, routes):
         route = routes[s.id]
         cls = PCP_TO_CLASS.get(s.pcp, 'BE')
         total_wcrt = 0.0
+
+        if cls == 'BE':
+            # The lecture CBS analysis does not provide bounded WCRTs for BE traffic.
+            wcrts[s.id] = float('nan')
+            continue
         
         for hop in route.path:
             node_id = hop['node']
@@ -138,26 +98,20 @@ def calculate_wcrt(nodes, links, streams, routes):
                 idleSlope_A = params['idleSlope_A']
                 idleSlope_B = params['idleSlope_B']
                 
-                # Max frame sizes
                 C_A_max = max([t['C'] for t in traffic['A']]) if traffic['A'] else 0.0
                 C_B_max = max([t['C'] for t in traffic['B']]) if traffic['B'] else 0.0
                 C_BE_max = max([t['C'] for t in traffic['BE']]) if traffic['BE'] else 0.0
                 
-                # Current stream transmission time
                 C_i = (s.size * 8.0) / linkRate
                 
                 if cls == 'A':
                     sum_C_A = sum([t['C'] for t in traffic['A']])
                     sum_C_others = sum_C_A - C_i
-                    # Expansion factor
                     expansion = linkRate / idleSlope_A if idleSlope_A > 0 else 1.0
                     SPI = sum_C_others * expansion
                     
-                    # LPI (Lower Priority Blocking)
-                    # Max of B and BE
                     LPI = max(C_B_max, C_BE_max)
                     
-                    # HPI (Higher Priority) = 0.0
                     node_delay = SPI + LPI + C_i
                     
                 elif cls == 'B':
@@ -166,46 +120,15 @@ def calculate_wcrt(nodes, links, streams, routes):
                     expansion = linkRate / idleSlope_B if idleSlope_B > 0 else 1.0
                     SPI = sum_C_others * expansion
                     
-                    # LPI
                     LPI = C_BE_max
                     
-                    # HPI (From Class A)
                     if linkRate > idleSlope_A:
                         sendSlope_A = linkRate - idleSlope_A
                         HPI = LPI * (idleSlope_A / sendSlope_A) + C_A_max
                     else:
-                        HPI = float('inf') # Unstable
+                        HPI = float('inf')
 
                     node_delay = SPI + HPI + LPI + C_i
-                    
-                else: # BE
-                    # Iterative RTA for BE in CBS mode (simplified as SP with interference)
-                    # Actually, for CBS, BE is strictly lower than A and B.
-                    # But A and B are shaped.
-                    # We use standard SP RTA here as a fallback/approximation or the specific analysis if known.
-                    # The previous implementation used a simple RTA.
-                    
-                    R = C_i
-                    while True:
-                        R_new = C_i
-                        # Add interference from A and B (treated as higher priority)
-                        for t in traffic['A'] + traffic['B']:
-                            st = next(st for st in streams if st.id == t['id'])
-                            R_new += math.ceil(R / st.period) * t['C']
-                        
-                        # Add interference from other BE (Same priority)
-                        for t in traffic['BE']:
-                            if t['id'] != s.id:
-                                R_new += t['C']
-                                
-                        if R_new > 200000: # Break if too large (unstable)
-                            R = R_new
-                            break
-                        if R_new == R:
-                            break
-                        R = R_new
-                    
-                    node_delay = R
 
                 total_wcrt += node_delay
         

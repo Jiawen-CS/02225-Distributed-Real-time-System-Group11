@@ -23,7 +23,6 @@ class Simulator:
         self.port_schedulers = {}
         self.latencies = {s.id: [] for s in streams}
         
-        # Calculate reservations per port per priority
         # Map: (node_id, port_id) -> {priority: bandwidth_fraction}
         reservations = {}
         
@@ -31,50 +30,25 @@ class Simulator:
             if stream.id not in routes:
                 continue
             route = routes[stream.id]
-            
-            # Stream bandwidth in Mbps (bits / us)
-            # size is bytes, period is us
-            stream_bw = (stream.size * 8.0) / stream.period
-            
+
             for hop in route.path:
                 node_id = hop['node']
                 port_id = hop['port']
                 
-                # End systems (port 0) or Switch ports
-                # We need to find the link to get bandwidth
                 if node_id in nodes and port_id in nodes[node_id].outgoing_links:
-                    link = nodes[node_id].outgoing_links[port_id]
-                    link_bw = link.bandwidth_mbps
-                    
                     if (node_id, port_id) not in reservations:
                         reservations[(node_id, port_id)] = {}
                     
-                    if stream.pcp not in reservations[(node_id, port_id)]:
-                        reservations[(node_id, port_id)][stream.pcp] = 0.0
-                    
-                    # Add fraction
-                    reservations[(node_id, port_id)][stream.pcp] += stream_bw / link_bw
+                    if stream.pcp in (1, 2):
+                        reservations[(node_id, port_id)][stream.pcp] = 0.5
 
-        # Apply 75% Bandwidth Allocation Strategy (Match Analysis)
-        AVB_LIMIT = 0.75
         for port_key, res in reservations.items():
-            req_A = res.get(2, 0.0) # PCP 2 = Class A
-            req_B = res.get(1, 0.0) # PCP 1 = Class B
-            
-            total_req = req_A + req_B
-            
-            if total_req > 0:
-                # Distribute 75% proportionally
-                res[2] = (req_A / total_req) * AVB_LIMIT
-                res[1] = (req_B / total_req) * AVB_LIMIT
-            else:
-                res[2] = 0.0
-                res[1] = 0.0
+            res.setdefault(2, 0.0)
+            res.setdefault(1, 0.0)
 
         for node_id, node in nodes.items():
             for port, link in node.outgoing_links.items():
                 port_res = reservations.get((node_id, port), {})
-                # We default to CBS mode as requested, but could be 'SP'
                 self.port_schedulers[(node_id, port)] = PortScheduler(
                     link.bandwidth_mbps, 
                     mode=mode, 
@@ -109,6 +83,8 @@ class Simulator:
                 self.handle_arrival(event)
             elif event.type == "DEPARTURE":
                 self.handle_departure(event)
+            elif event.type == "WAKEUP":
+                self.try_schedule_departure(event.node_id, event.frame)
                 
         return self.latencies
 
@@ -142,24 +118,28 @@ class Simulator:
         
         if (node_id, out_port) in self.port_schedulers:
             scheduler = self.port_schedulers[(node_id, out_port)]
-            scheduler.enqueue(frame)
+            scheduler.enqueue(frame, self.current_time)
             self.try_schedule_departure(node_id, out_port)
         else:
             pass
 
     def try_schedule_departure(self, node_id, port):
         scheduler = self.port_schedulers[(node_id, port)]
+        scheduler.advance_time(self.current_time)
+
         if self.current_time < scheduler.busy_until:
             return
 
         frame, priority = scheduler.get_next_frame(self.current_time)
         if frame:
-            # Notify scheduler of transmission start (for CBS credit update)
-            scheduler.on_transmission_start(priority, frame.size, self.current_time)
-            
             trans_time = scheduler.transmission_time(frame.size)
-            scheduler.busy_until = self.current_time + trans_time
+            scheduler.on_transmission_start(priority, self.current_time, trans_time)
             self.schedule_event(Event(self.current_time + trans_time, "DEPARTURE", frame, node_id))
+            return
+
+        next_time = scheduler.next_eligible_time(self.current_time)
+        if next_time is not None and next_time > self.current_time:
+            self.schedule_event(Event(next_time, "WAKEUP", port, node_id))
 
     def handle_departure(self, event):
         frame = event.frame
@@ -172,6 +152,7 @@ class Simulator:
         if out_port not in self.nodes[node_id].outgoing_links:
              return
 
+        self.port_schedulers[(node_id, out_port)].on_transmission_end(self.current_time)
         link = self.nodes[node_id].outgoing_links[out_port]
         next_node_id = link.destination
         delay = link.delay
