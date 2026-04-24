@@ -191,7 +191,7 @@ def calculate_wcrt(nodes, links, streams, routes):
                         # Add interference from A and B (treated as higher priority)
                         for t in traffic['A'] + traffic['B']:
                             st = next(st for st in streams if st.id == t['id'])
-                            R_new += (int(R / st.period) + 1) * t['C']
+                            R_new += math.ceil(R / st.period) * t['C']
                         
                         # Add interference from other BE (Same priority)
                         for t in traffic['BE']:

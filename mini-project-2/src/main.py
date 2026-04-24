@@ -4,6 +4,26 @@ from .loader import load_topology, load_streams, load_routes
 from .simulation import Simulator
 from .analysis import calculate_wcrt, calculate_wcrt_sp
 
+def setup_output_logging(case_id):
+    import sys
+
+    class Tee:
+        def __init__(self, *files):
+            self.files = files
+
+        def write(self, obj):
+            for f in self.files:
+                f.write(obj)
+                f.flush()
+
+        def flush(self):
+            for f in self.files:
+                f.flush()
+
+    log_file = open(f"results/Case-{case_id}.log", "w")
+    sys.stdout = Tee(sys.stdout, log_file)
+    sys.stderr = Tee(sys.stderr, log_file)
+    
 def main(case_id):
     base_src_dir = os.path.dirname(os.path.abspath(__file__))
     root_dir = os.path.dirname(base_src_dir)
@@ -58,7 +78,8 @@ def main(case_id):
         print(f"{sid:<10} {stream.pcp:<5} {max_cbs:<10.2f} {max_sp:<10.2f} {ana_cbs:<10.2f} {ana_sp:<10.2f}")
 
     # 4. Save to CSV
-    output_csv = os.path.join(test_case_dir, f'Case-{case_id}-WCRTs_Comparison.csv')
+    output_csv = f"results/Case-{case_id}-WCRTs_Comparison.csv"
+    # output_csv = os.path.join(test_case_dir, f'Case-{case_id}-WCRTs_Comparison.csv')
     with open(output_csv, 'w') as f:
         f.write("StreamID,PCP,SimMax_CBS,SimMax_SP,AnaWCRT_CBS,AnaWCRT_SP\n")
         for stream in streams:
@@ -79,6 +100,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("case_id", type=int)
     args = parser.parse_args()
+    setup_output_logging(args.case_id)
+    
     print(f'------------ Start to execute case {args.case_id} ------------')
     main(args.case_id)
     print(f'------------ Finish case {args.case_id} ------------')
