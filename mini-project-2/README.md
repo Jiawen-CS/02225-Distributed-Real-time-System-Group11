@@ -21,6 +21,7 @@ python -m src.main <case_id> [duration]
 - `case_id` specifies the test case:
 - 1–3: normal cases
 - 4: starvation of SP case
+
 - `duration` is the simulation time in microseconds.
 - If `duration` is not provided, the default value is `2000000.0`.
 
