@@ -1,0 +1,20 @@
+------------ Start to execute case 4 ------------
+Loading configuration...
+Loaded 3 nodes, 4 links, 7 streams.
+Starting CBS simulation for 4000000.0 us...
+Starting SP simulation for 4000000.0 us...
+Running WCRT Analysis (CBS)...
+Running WCRT Analysis (SP)...
+
+Comparison Results (End-to-End Latency in us):
+Stream ID  PCP   Sim(CBS)   Sim(SP)    Ana(CBS)   Ana(SP)   
+0          2     5600354.06 800234.06  1360.00    880.00    
+1          2     5600594.06 800354.06  1360.00    880.00    
+2          2     5600414.06 800474.06  1360.00    880.00    
+3          1     614.06     4800454.06 1040.00    inf       
+4          1     814.06     4800534.06 1040.00    inf       
+5          0     774.06     5440454.06 nan        inf       
+6          0     974.06     5440534.06 nan        inf       
+
+Results saved to results/Case-4-4000000.0-WCRTs_Comparison.csv
+------------ Finish case 4 ------------
