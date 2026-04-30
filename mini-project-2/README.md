@@ -54,6 +54,7 @@ The log file contains the full terminal output, and the CSV file contains the la
 
 - The simulator runs for a user-specified duration. If no duration is provided, the default is `4000000.0` microseconds.
 - The topology loader uses `topology.default_bandwidth_mbps` as the uniform link rate for the test cases. This matches the provided reference WCRTs, which assume 100 Mbps on every link.
-- The reported simulated value is the maximum observed end-to-end latency for each stream within the simulation horizon.
+- Frames are released only within the user-specified duration, and the simulator then continues until all previously released frames finish.
+- The reported simulated value is the maximum observed end-to-end latency for each stream over those completed frames.
 - In the CBS analysis, only AVB traffic is analytically bounded. Best Effort traffic is reported as `NaN` in the `AnaWCRT_CBS` column because the lecture CBS formulas do not provide a bound for BE traffic.
 - The analytical CBS configuration follows the reference assumption with equal-magnitude slopes for AVB classes: `idleSlope = 0.5C` and `sendSlope = -0.5C`.

@@ -3,14 +3,32 @@ from .model import Frame
 from .scheduler import PortScheduler
 
 class Event:
+    _counter = 0
+    _TYPE_PRIORITY = {
+        "DEPARTURE": 0,
+        "ARRIVAL": 1,
+        "WAKEUP": 2,
+        "GENERATION": 3,
+    }
+
     def __init__(self, time, type, frame, node_id):
         self.time = time
         self.type = type # GENERATION, ARRIVAL, DEPARTURE
         self.frame = frame
         self.node_id = node_id
+        self.sequence = Event._counter
+        Event._counter += 1
         
     def __lt__(self, other):
-        return self.time < other.time
+        if self.time != other.time:
+            return self.time < other.time
+
+        self_priority = self._TYPE_PRIORITY.get(self.type, 99)
+        other_priority = self._TYPE_PRIORITY.get(other.type, 99)
+        if self_priority != other_priority:
+            return self_priority < other_priority
+
+        return self.sequence < other.sequence
 
 class Simulator:
     def __init__(self, nodes, links, streams, routes, mode='CBS'):
@@ -59,7 +77,7 @@ class Simulator:
         heapq.heappush(self.events, event)
 
     def run(self, duration):
-        # Schedule initial generations
+        # Schedule all releases that occur within the observation window.
         for stream in self.streams:
             t = 0.0
             frame_count = 0
@@ -69,12 +87,10 @@ class Simulator:
                 t += stream.period
                 frame_count += 1
         
-        # Keep running, process events
+        # After the release window closes, we keep processing queued events so
+        # frames released before the cutoff can still complete end-to-end.
         while self.events:
             event = heapq.heappop(self.events)
-            if event.time > duration:
-                break
-            
             self.current_time = event.time
             
             if event.type == "GENERATION":
