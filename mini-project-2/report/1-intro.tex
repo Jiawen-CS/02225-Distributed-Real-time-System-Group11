@@ -1,0 +1,89 @@
+\section{Introduction}
+
+\subsection{Objectives}
+
+The objectives of this project are as follows:
+
+\begin{enumerate}
+\item Develop a simulation framework to analyze and compute the Worst-Case Delays (WCDs) of different scheduling algorithms in Time-Sensitive Networking (TSN).
+
+\item Compare the analytically calculated WCDs with the response times observed in simulations of the Credit-Based Shaper (CBS) algorithm.
+
+\item Compare the analytically calculated WCDs with the response times observed in simulations of the Strict Priority (SP) algorithm, including the extension presented in Extension 2.
+
+\item Evaluate and compare the performance of CBS and SP in terms of delay characteristics, and discuss their advantages, disadvantages, and limitations.
+\end{enumerate}
+
+\subsection{Time-Sensitive Networking(TSN)}
+
+\subsubsection{Overview}
+
+TSN provides mechanisms for deterministic communication over Ethernet networks, enabling bounded latency and reliable transmission for real-time traffic.
+
+However, in practical Ethernet systems (e.g., automotive and industrial networks), it is often unrealistic to assume that the characteristics of all interfering traffic are known. As systems grow and components are developed independently, this challenges traditional busy-period based analysis, which relies on complete knowledge of interference.
+
+Prior work has highlighted this limitation and proposed independent analysis techniques based on eligible intervals, which do not require full information about interfering streams while still providing tight delay bounds~\cite{Cao2016-IndependentTightWCRT, Cao2018-IndependentWCRTAnalysis}.
+
+\subsubsection{Simplified Model}
+
+For this project, a simplified TSN model is considered with the following assumptions:
+
+\begin{itemize}
+
+\item \textbf{Linear topology:} The network is modeled as a linear topology.
+
+\item \textbf{No TAS component:} The Time-Aware Shaper (TAS) is not included.
+
+\item \textbf{Three priority queues:}  
+The system uses three priority queues. The two highest-priority queues carry AVB traffic and are shaped using the Credit-Based Shaper (CBS), while the lowest-priority queue carries Best Effort (BE) traffic.
+
+\item \textbf{Stream model:} 
+A stream is defined by the sequence of links along its path. 
+The end-to-end delay is computed as the sum of node delays along the path. 
+Switch processing delay is ignored.
+
+\end{itemize}
+
+\subsection{Credit-Based Shape(CBS)}
+
+\subsubsection{Overview}
+CBS is a traffic shaping mechanism defined in \textit{IEEE 802.1Qav} for TSN. 
+It regulates the transmission of AVB traffic using a credit mechanism, 
+ensuring bounded latency while allowing lower-priority traffic to share 
+the remaining bandwidth.
+
+\subsubsection{Simplified Implementation Details}
+
+\begin{itemize}
+
+\item \textbf{Simulation.}
+The simulator updates credit values in an event-driven manner. 
+Whenever a scheduling event occurs, the credit is updated based on the current queue state (transmitting or idle). 
+The link capacity is shared between AVB classes such that \textbf{Class~A and Class~B are each allocated 50\% of the bandwidth}. 
+BE traffic is served when bandwidth is available.
+
+\item \textbf{Analytical computation.}
+The node delay is computed according to the lecture-based formulas considering Same Priority Interference (SPI), Higher Priority Interference (HPI), and Lower Priority Interference (LPI). 
+The system is simplified to three queues: Class A, Class B. The analysis assumes that \textbf{Class~A and Class~B each receive 50\% of the link capacity}.
+There is no calculation for BE streams.
+
+\end{itemize}
+
+\subsection{Strict Priority(SP)}
+
+\subsubsection{Overview}
+SP scheduling always serves frames from the highest-priority queue first. 
+A frame can only be transmitted when all higher-priority queues are empty. 
+As a result, lower-priority traffic may experience blocking and interference from higher-priority streams.
+
+\subsubsection{Simplified Implementation Details}
+
+\begin{itemize}
+
+\item \textbf{Simulation.}
+The simulator implements SP scheduling by always selecting the first available frame from the highest-priority non-empty queue whenever a transmission opportunity occurs.
+
+\item \textbf{Analytical computation.}
+The worst-case delay is computed using response time analysis (RTA), considering the transmission time of the frame, blocking from lower-priority traffic, same-priority interference, and interference from higher-priority streams.
+
+\end{itemize}

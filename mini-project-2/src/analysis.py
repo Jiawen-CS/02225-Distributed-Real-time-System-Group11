@@ -2,6 +2,12 @@ from .model import Stream, Link
 from .loader import load_topology, load_streams, load_routes
 import math
 
+
+def iter_egress_hops(route):
+    # The last route entry identifies the destination end system and is not an
+    # egress transmission of the current stream.
+    return route.path[:-1]
+
 def calculate_wcrt(nodes, links, streams, routes):
     link_traffic = {link_id: {'A': [], 'B': [], 'BE': []} for link_id in links}
     link_params = {link_id: {'idleSlope_A': 0.0, 'idleSlope_B': 0.0, 'linkRate': 0.0} for link_id in links}
@@ -22,7 +28,7 @@ def calculate_wcrt(nodes, links, streams, routes):
         
         s_bw = (s.size * 8.0) / s.period
         
-        for hop in route.path:
+        for hop in iter_egress_hops(route):
             node_id = hop['node']
             port_id = hop['port']
             
@@ -83,7 +89,7 @@ def calculate_wcrt(nodes, links, streams, routes):
             wcrts[s.id] = float('nan')
             continue
         
-        for hop in route.path:
+        for hop in iter_egress_hops(route):
             node_id = hop['node']
             port_id = hop['port']
             
@@ -146,7 +152,7 @@ def calculate_wcrt_sp(nodes, links, streams, routes):
             continue
         route = routes[s.id]
         
-        for hop in route.path:
+        for hop in iter_egress_hops(route):
             node_id = hop['node']
             port_id = hop['port']
             
@@ -174,7 +180,7 @@ def calculate_wcrt_sp(nodes, links, streams, routes):
         route = routes[s.id]
         total_wcrt = 0.0
         
-        for hop in route.path:
+        for hop in iter_egress_hops(route):
             node_id = hop['node']
             port_id = hop['port']
             

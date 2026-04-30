@@ -8,6 +8,7 @@ def load_topology(file_path):
         data = json.load(f)
     
     topo = data['topology']
+    default_bandwidth = topo.get('default_bandwidth_mbps')
     nodes = {}
     for sw in topo['switches']:
         nodes[sw['id']] = Node(sw['id'], sw['ports'])
@@ -16,7 +17,10 @@ def load_topology(file_path):
         
     links = {}
     for l in topo['links']:
-        link = Link(l['id'], l['source'], l['destination'], l['bandwidth_mbps'], l['delay'])
+        # The reference test cases use a uniform bandwidth configured at the
+        # topology level. When it is present, we apply it to every link.
+        bandwidth = default_bandwidth if default_bandwidth is not None else l['bandwidth_mbps']
+        link = Link(l['id'], l['source'], l['destination'], bandwidth, l['delay'])
         links[l['id']] = link
         if l['source'] in nodes:
             nodes[l['source']].outgoing_links[l['sourcePort']] = link

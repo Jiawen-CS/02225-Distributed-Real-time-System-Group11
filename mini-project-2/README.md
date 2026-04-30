@@ -23,7 +23,7 @@ python -m src.main <case_id> [duration]
 - 4: starvation of SP case
 
 - `duration` is the simulation time in microseconds.
-- If `duration` is not provided, the default value is `2000000.0`.
+- If `duration` is not provided, the default value is `4000000.0`.
 
 Examples:
 
@@ -52,7 +52,8 @@ The log file contains the full terminal output, and the CSV file contains the la
 
 ### 4. Notes on the Current Implementation
 
-- The simulator runs for a user-specified duration. If no duration is provided, the default is `2000000.0` microseconds.
+- The simulator runs for a user-specified duration. If no duration is provided, the default is `4000000.0` microseconds.
+- The topology loader uses `topology.default_bandwidth_mbps` as the uniform link rate for the test cases. This matches the provided reference WCRTs, which assume 100 Mbps on every link.
 - The reported simulated value is the maximum observed end-to-end latency for each stream within the simulation horizon.
 - In the CBS analysis, only AVB traffic is analytically bounded. Best Effort traffic is reported as `NaN` in the `AnaWCRT_CBS` column because the lecture CBS formulas do not provide a bound for BE traffic.
 - The analytical CBS configuration follows the reference assumption with equal-magnitude slopes for AVB classes: `idleSlope = 0.5C` and `sendSlope = -0.5C`.
