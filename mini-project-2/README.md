@@ -35,6 +35,7 @@ python -m src.main 4 4000000.0
 
 ### 3. How to get the result
 The input files are the test cases, which are under the `testcases/` folder.
+
 The program writes the following output files to the `results/` folder:
 
 - Log file:
