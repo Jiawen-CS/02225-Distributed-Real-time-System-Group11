@@ -2,7 +2,7 @@ from pathlib import Path
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-LOG_FILE = BASE_DIR / "logs" / "Unschedulable_given.txt"
+LOG_FILE = BASE_DIR / "logs" / "simulation_get_hyperiods.txt"
 
 
 
