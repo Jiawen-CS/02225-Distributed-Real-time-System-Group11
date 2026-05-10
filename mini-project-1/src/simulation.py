@@ -119,7 +119,9 @@ class Scheduler:
 
         no_improve = 0
 
+        max_hp = 0
         for hp in range(max_hyperperiods):
+            max_hp = hp
             self.run(duration=self.hyperperiod, record_history=False)
             stats = self.analyze_results()
 
@@ -139,9 +141,10 @@ class Scheduler:
 
             if no_improve >= patience:
                 print("WCRT converged.")
+                max_hp = hp
                 break
 
-        return global_wcrt
+        return global_wcrt, max_hp
 
     # def run(self, duration=None, record_history=True):
     #     if duration is None:

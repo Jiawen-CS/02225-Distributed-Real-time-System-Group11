@@ -265,7 +265,7 @@ def main(task_file):
     rm_sim_rand = Scheduler(tasks, algorithm="RM", execution_mode="random", seed=42)
     # rm_sim_rand.run(duration, record_history=False)
     # rm_sim_rand.run_with_wcrt_tracking(10)
-    observed_wcrt = rm_sim_rand.run_until_wcrt_converges()
+    _, observed_wcrt = rm_sim_rand.run_until_wcrt_converges()
     if (observed_wcrt > max_wcrt):
         max_wcrt = observed_wcrt
     rm_stats_rand = rm_sim_rand.analyze_results()
@@ -273,7 +273,7 @@ def main(task_file):
     edf_sim_rand = Scheduler(tasks, algorithm="EDF", execution_mode="random", seed=42)
     # edf_sim_rand.run(duration, record_history=False)
     # edf_sim_rand.run_with_wcrt_tracking(10)
-    observed_wcrt = edf_sim_rand.run_until_wcrt_converges()
+    _, observed_wcrt = edf_sim_rand.run_until_wcrt_converges()
     if (observed_wcrt > max_wcrt):
         max_wcrt = observed_wcrt
     edf_stats_rand = edf_sim_rand.analyze_results()
@@ -281,7 +281,7 @@ def main(task_file):
     dm_sim_rand = Scheduler(tasks, algorithm="DM", execution_mode="random", seed=42)
     # dm_sim_rand.run(duration, record_history=False)
     # dm_sim_rand.run_with_wcrt_tracking(10)
-    observed_wcrt = edf_sim_rand.run_until_wcrt_converges()
+    _, observed_wcrt = edf_sim_rand.run_until_wcrt_converges()
     if (observed_wcrt > max_wcrt):
         max_wcrt = observed_wcrt
     dm_stats_rand = dm_sim_rand.analyze_results()
