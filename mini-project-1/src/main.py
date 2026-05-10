@@ -371,7 +371,7 @@ if __name__ == "__main__":
         LOG_FILE.unlink()
 
     TASKSETS_NS_DIR = BASE_DIR / "tasksets" / "unschedulable"
-    TASKSETS_S_DIR = BASE_DIR / "tasksets" / "simulation"
+    TASKSETS_S_DIR = BASE_DIR / "tasksets" / "simulation_tasksets"
 
     schedulable_files = [
         f for f in os.listdir(TASKSETS_S_DIR)
