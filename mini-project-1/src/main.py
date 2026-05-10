@@ -176,7 +176,7 @@ def main(task_file):
     if not tasks:
         print_and_log("No tasks loaded. Exiting.")
         return
-    #
+
     # # --------------------------------------------------------------
     # # Analytical results
     # # --------------------------------------------------------------
@@ -258,27 +258,34 @@ def main(task_file):
     #     plot_gantt(dm_hist_wcet, tasks, "DM", duration, prefix=prefix, mode="wcet")
 
     # # Random simulation: for BCET~WCET runtime behavior
+    max_wcrt = -1
     print("=" * 40)
     print('RANDOM SIMULATION MODE ACTIVATED')
     print("=" * 40)
     rm_sim_rand = Scheduler(tasks, algorithm="RM", execution_mode="random", seed=42)
     # rm_sim_rand.run(duration, record_history=False)
     # rm_sim_rand.run_with_wcrt_tracking(10)
-    rm_sim_rand.run_until_wcrt_converges()
+    observed_wcrt = rm_sim_rand.run_until_wcrt_converges()
+    if (observed_wcrt > max_wcrt):
+        max_wcrt = observed_wcrt
     rm_stats_rand = rm_sim_rand.analyze_results()
 
     edf_sim_rand = Scheduler(tasks, algorithm="EDF", execution_mode="random", seed=42)
     # edf_sim_rand.run(duration, record_history=False)
     # edf_sim_rand.run_with_wcrt_tracking(10)
-    edf_sim_rand.run_until_wcrt_converges(10)
+    observed_wcrt = edf_sim_rand.run_until_wcrt_converges()
+    if (observed_wcrt > max_wcrt):
+        max_wcrt = observed_wcrt
     edf_stats_rand = edf_sim_rand.analyze_results()
 
     dm_sim_rand = Scheduler(tasks, algorithm="DM", execution_mode="random", seed=42)
     # dm_sim_rand.run(duration, record_history=False)
     # dm_sim_rand.run_with_wcrt_tracking(10)
-    edf_sim_rand.run_until_wcrt_converges()
+    observed_wcrt = edf_sim_rand.run_until_wcrt_converges()
+    if (observed_wcrt > max_wcrt):
+        max_wcrt = observed_wcrt
     dm_stats_rand = dm_sim_rand.analyze_results()
-
+    #
     # # # --------------------------------------------------------------
     # # # Comparison report
     # # # --------------------------------------------------------------
@@ -361,6 +368,7 @@ def main(task_file):
     #         f"Upper-bound validation FAILED "
     #         f"({checked} checks, {skipped} skipped unschedulable/infinite cases)."
     #     )
+    return max_wcrt
 
 
 # ----------------------------------------------------------------------
@@ -371,7 +379,7 @@ if __name__ == "__main__":
         LOG_FILE.unlink()
 
     TASKSETS_NS_DIR = BASE_DIR / "tasksets" / "unschedulable"
-    TASKSETS_S_DIR = BASE_DIR / "tasksets" / "unschedulable" / "DM_unschedulable"
+    TASKSETS_S_DIR = BASE_DIR / "tasksets" / "simulation_tasksets"
 
     schedulable_files = [
         f for f in os.listdir(TASKSETS_S_DIR)
@@ -391,10 +399,13 @@ if __name__ == "__main__":
     print_and_log("\n" + "=" * 60)
     print_and_log("  TASK SETS SCHEDULABLE BY RM/DM AND EDF")
     print_and_log("=" * 60)
+    max_wrct = -1
     for name in schedulable_files:
         f = TASKSETS_S_DIR / name
         if f.exists():
-            main(f)
+            observed_wcrt = main(f)
+            if (observed_wcrt > max_wrct):
+                max_wcrt = observed_wcrt
         else:
             print_and_log(f"WARNING: File not found: {f}")
 
@@ -417,3 +428,4 @@ if __name__ == "__main__":
     #         main(f)
     #     else:
     #         print_and_log(f"WARNING: File not found: {f}")
+        print(max_wcrt)

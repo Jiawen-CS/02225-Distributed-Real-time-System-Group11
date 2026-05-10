@@ -1,0 +1,292 @@
+
+============================================================
+  TASK SETS SCHEDULABLE BY RM/DM AND EDF
+============================================================
+
+>>> DM_unschedulable_not_pass_LL_bound
+Loading task set...
+
+========================================
+          ANALYTICAL RESULTS
+========================================
+Total Utilization U   : 0.5879
+Liu & Layland Bound   : 0.7348
+Schedulable by LL Test: Yes
+
+--- RM Exact WCRT Analysis ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+4     21       21    2             2        True
+2     40       30    2             4        True
+1     60       33   20            26        True
+5     65       21    2            26       False
+3     70       21    2            28       False
+0    100       20    5            33       False
+
+--- DM Exact WCRT Analysis ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+0    100       20    5             5        True
+3     70       21    2             7        True
+4     21       21    2             9        True
+5     65       21    2            11        True
+2     40       30    2            13        True
+1     60       33   20            35       False
+
+--- EDF Exact WCRT Analysis (Appendix-based hyperperiod schedule with WCET) ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+0    100       20    5            13        True
+1     60       33   20            33        True
+2     40       30    2            15        True
+3     70       21    2            13        True
+4     21       21    2            19        True
+5     65       21    2            18        True
+
+Task-set classification: Not schedulable by RM/DM, but schedulable by EDF
+
+========================================
+          SIMULATION RESULTS
+========================================
+Hyperperiod (LCM): 54600
+
+============================================================
+  TASK SETS SCHEDULABLE BY RM/DM AND EDF
+============================================================
+
+>>> Unschedulable_High_Utilization_Unique_Periods_taskset
+Loading task set...
+
+========================================
+          ANALYTICAL RESULTS
+========================================
+Total Utilization U   : 0.9600
+Liu & Layland Bound   : 0.7177
+Schedulable by LL Test: Inconclusive (Exact Analysis Required)
+
+--- RM Exact WCRT Analysis ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+0     10       10    1             1        True
+2     20       20    1             2        True
+7     25       25    2             4        True
+5     30       30    3             7        True
+3     40       40    2             9        True
+8     50       50    4            14        True
+1    100      100   11            29        True
+4    100      100   13            50        True
+9    100      100   16            85        True
+6    120      120   12           149       False
+
+--- DM Exact WCRT Analysis ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+0     10       10    1             1        True
+2     20       20    1             2        True
+7     25       25    2             4        True
+5     30       30    3             7        True
+3     40       40    2             9        True
+8     50       50    4            14        True
+1    100      100   11            29        True
+4    100      100   13            50        True
+9    100      100   16            85        True
+6    120      120   12           149       False
+
+--- EDF Exact WCRT Analysis (Appendix-based hyperperiod schedule with WCET) ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+0     10       10    1             1        True
+1    100      100   11            30        True
+2     20       20    1             3        True
+3     40       40    2            19        True
+4    100      100   13            50        True
+5     30       30    3            12        True
+6    120      120   12            96        True
+7     25       25    2             7        True
+8     50       50    4            29        True
+9    100      100   16            75        True
+
+Task-set classification: Not schedulable by RM/DM, but schedulable by EDF
+
+========================================
+          SIMULATION RESULTS
+========================================
+Hyperperiod (LCM): 600
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\mini-project-1\resultplots_customTest\gantt_RM_wcet_Unschedulable_High_Utilization_Unique_Periods_taskset.png
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\mini-project-1\resultplots_customTest\gantt_EDF_wcet_Unschedulable_High_Utilization_Unique_Periods_taskset.png
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\mini-project-1\resultplots_customTest\gantt_DM_wcet_Unschedulable_High_Utilization_Unique_Periods_taskset.png
+
+========================================
+          COMPARISON REPORT
+========================================
+Task  Analytic_WCRT(RM)  Analytic_WCRT(DM)  Analytic_WCRT(EDF)  Sim_WCRT_WCET(RM)  Sim_WCRT_WCET(DM)  Sim_WCRT_WCET(EDF)  RM_Missed_WCET  DM_Missed_WCET  EDF_Missed_WCET
+  T0                  1                  1                   1                  1                  1                   1               0               0                0
+  T1                 29                 29                  30                 29                 29                  30               0               0                0
+  T2                  2                  2                   3                  2                  2                   3               0               0                0
+  T3                  9                  9                  19                  9                  9                  19               0               0                0
+  T4                 50                 50                  50                 50                 50                  50               0               0                0
+  T5                  7                  7                  12                  7                  7                  12               0               0                0
+  T6                149                149                  96                179                179                  96               1               1                0
+  T7                  4                  4                   7                  4                  4                   7               0               0                0
+  T8                 14                 14                  29                 14                 14                  29               0               0                0
+  T9                 85                 85                  75                 85                 85                  75               0               0                0
+
+--- Upper-bound validation against WCET simulation ---
+Upper-bound validation passed for analytically schedulable tasks (28 checks, 2 skipped unschedulable/infinite cases).
+
+============================================================
+  TASK SETS SCHEDULABLE BY RM/DM AND EDF
+============================================================
+
+>>> Unschedulable_High_Utilization_Unique_Periods_taskset
+Loading task set...
+
+========================================
+          ANALYTICAL RESULTS
+========================================
+Total Utilization U   : 0.9500
+Liu & Layland Bound   : 0.7177
+Schedulable by LL Test: Inconclusive (Exact Analysis Required)
+
+--- RM Exact WCRT Analysis ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+0     10       10    1             1        True
+2     20       20    1             2        True
+7     25       25    2             4        True
+5     30       30    3             7        True
+3     40       40    2             9        True
+8     50       50    4            14        True
+1    100      100   10            28        True
+4    100      100   13            49        True
+9    100      100   16            80        True
+6    120      120   12           100        True
+
+--- DM Exact WCRT Analysis ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+0     10       10    1             1        True
+2     20       20    1             2        True
+7     25       25    2             4        True
+5     30       30    3             7        True
+3     40       40    2             9        True
+8     50       50    4            14        True
+1    100      100   10            28        True
+4    100      100   13            49        True
+9    100      100   16            80        True
+6    120      120   12           100        True
+
+--- EDF Exact WCRT Analysis (Appendix-based hyperperiod schedule with WCET) ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+0     10       10    1             1        True
+1    100      100   10            28        True
+2     20       20    1             2        True
+3     40       40    2            18        True
+4    100      100   13            49        True
+5     30       30    3            10        True
+6    120      120   12            95        True
+7     25       25    2             5        True
+8     50       50    4            28        True
+9    100      100   16            74        True
+
+Task-set classification: Schedulable by RM/DM and EDF
+
+========================================
+          SIMULATION RESULTS
+========================================
+Hyperperiod (LCM): 600
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\mini-project-1\resultplots_customTest\gantt_RM_wcet_Unschedulable_High_Utilization_Unique_Periods_taskset.png
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\mini-project-1\resultplots_customTest\gantt_EDF_wcet_Unschedulable_High_Utilization_Unique_Periods_taskset.png
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\mini-project-1\resultplots_customTest\gantt_DM_wcet_Unschedulable_High_Utilization_Unique_Periods_taskset.png
+
+========================================
+          COMPARISON REPORT
+========================================
+Task  Analytic_WCRT(RM)  Analytic_WCRT(DM)  Analytic_WCRT(EDF)  Sim_WCRT_WCET(RM)  Sim_WCRT_WCET(DM)  Sim_WCRT_WCET(EDF)  RM_Missed_WCET  DM_Missed_WCET  EDF_Missed_WCET
+  T0                  1                  1                   1                  1                  1                   1               0               0                0
+  T1                 28                 28                  28                 28                 28                  28               0               0                0
+  T2                  2                  2                   2                  2                  2                   2               0               0                0
+  T3                  9                  9                  18                  9                  9                  18               0               0                0
+  T4                 49                 49                  49                 49                 49                  49               0               0                0
+  T5                  7                  7                  10                  7                  7                  10               0               0                0
+  T6                100                100                  95                100                100                  95               0               0                0
+  T7                  4                  4                   5                  4                  4                   5               0               0                0
+  T8                 14                 14                  28                 14                 14                  28               0               0                0
+  T9                 80                 80                  74                 80                 80                  74               0               0                0
+
+--- Upper-bound validation against WCET simulation ---
+Upper-bound validation passed for analytically schedulable tasks (30 checks, 0 skipped unschedulable/infinite cases).
+
+============================================================
+  TASK SETS SCHEDULABLE BY RM/DM AND EDF
+============================================================
+
+>>> Unschedulable_High_Utilization_Unique_Periods_taskset
+Loading task set...
+
+========================================
+          ANALYTICAL RESULTS
+========================================
+Total Utilization U   : 1.4700
+Liu & Layland Bound   : 0.7177
+Schedulable by LL Test: Inconclusive (Exact Analysis Required)
+WARNING: U > 1 — overloaded system; no algorithm can schedule all jobs on one CPU.
+
+--- RM Exact WCRT Analysis ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+0     10       10    1             1        True
+2     20       20   10            12        True
+7     25       25    2            14        True
+5     30       30    3            17        True
+3     40       40    2            19        True
+8     50       50    4            40        True
+1    100      100   10           104       False
+4    100      100   20           120       False
+9    100      100   16           120       False
+6    120      120   12           148       False
+
+--- DM Exact WCRT Analysis ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+0     10       10    1             1        True
+2     20       20   10            12        True
+7     25       25    2            14        True
+5     30       30    3            17        True
+3     40       40    2            19        True
+8     50       50    4            40        True
+1    100      100   10           104       False
+4    100      100   20           120       False
+9    100      100   16           120       False
+6    120      120   12           148       False
+
+--- EDF Exact WCRT Analysis (Appendix-based hyperperiod schedule with WCET) ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+0     10       10    1           inf       False
+1    100      100   10           inf       False
+2     20       20   10           inf       False
+3     40       40    2           inf       False
+4    100      100   20           inf       False
+5     30       30    3           inf       False
+6    120      120   12           inf       False
+7     25       25    2           inf       False
+8     50       50    4           inf       False
+9    100      100   16           inf       False
+
+Task-set classification: Overloaded: not schedulable on one CPU
+
+========================================
+          SIMULATION RESULTS
+========================================
+Hyperperiod (LCM): 600
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\mini-project-1\resultplots_customTest\gantt_RM_wcet_Unschedulable_High_Utilization_Unique_Periods_taskset.png
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\mini-project-1\resultplots_customTest\gantt_EDF_wcet_Unschedulable_High_Utilization_Unique_Periods_taskset.png
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\mini-project-1\resultplots_customTest\gantt_DM_wcet_Unschedulable_High_Utilization_Unique_Periods_taskset.png
+
+========================================
+          COMPARISON REPORT
+========================================
+Task  Analytic_WCRT(RM)  Analytic_WCRT(DM)  Analytic_WCRT(EDF)  Sim_WCRT_WCET(RM)  Sim_WCRT_WCET(DM)  Sim_WCRT_WCET(EDF)  RM_Missed_WCET  DM_Missed_WCET  EDF_Missed_WCET
+  T0                  1                  1                 inf                  1                  1                 193               0               0               33
+  T1                104                104                 inf                196                196                 228               6               6                3
+  T2                 12                 12                 inf                 12                 12                 202               0               0               17
+  T3                 19                 19                 inf                 19                 19                 210               0               0                8
+  T4                120                120                 inf                  0                  0                 248               0               0                4
+  T5                 17                 17                 inf                 17                 17                 197               0               0               11
+  T6                148                148                 inf                  0                  0                 244               0               0                3
+  T7                 14                 14                 inf                 14                 14                 200               0               0               14
+  T8                 40                 40                 inf                 40                 40                 218               0               0                7
+  T9                120                120                 inf                  0                  0                 264               0               0                4
+
+--- Upper-bound validation against WCET simulation ---
+Upper-bound validation passed for analytically schedulable tasks (12 checks, 18 skipped unschedulable/infinite cases).

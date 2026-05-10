@@ -114,7 +114,7 @@ class Scheduler:
 
         return global_wcrt
 
-    def run_until_wcrt_converges(self, patience=5, max_hyperperiods=100):
+    def run_until_wcrt_converges(self, patience=10, max_hyperperiods=100):
         global_wcrt = {t.id: 0 for t in self.tasks}
 
         no_improve = 0
