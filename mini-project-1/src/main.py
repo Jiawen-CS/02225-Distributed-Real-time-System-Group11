@@ -405,7 +405,7 @@ if __name__ == "__main__":
         if f.exists():
             observed_wcrt = main(f)
             if (observed_wcrt > max_wrct):
-                max_wcrt = observed_wcrt
+                max_wrct = observed_wcrt
         else:
             print_and_log(f"WARNING: File not found: {f}")
 
@@ -428,4 +428,4 @@ if __name__ == "__main__":
     #         main(f)
     #     else:
     #         print_and_log(f"WARNING: File not found: {f}")
-        print(max_wcrt)
+    print(max_wrct)
