@@ -23,7 +23,7 @@ warnings.filterwarnings("ignore", category=MatplotlibDeprecationWarning)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 LOG_FILE = BASE_DIR / "results.txt"
-PLOTS_DIR = BASE_DIR / "resultplots"
+PLOTS_DIR = BASE_DIR / "resultplots_customTest"
 PLOTS_DIR.mkdir(parents=True, exist_ok=True)
 MAX_HISTORY_FOR_PLOTS = 200_000
 
@@ -257,28 +257,31 @@ def main(task_file):
     if should_plot:
         plot_gantt(dm_hist_wcet, tasks, "DM", duration, prefix=prefix, mode="wcet")
 
-    # Random simulation: for BCET~WCET runtime behavior
-    print("=" * 40)
-    print('RANDOM SIMULATION MODE ACTIVATED')
-    print("=" * 40)
-    rm_sim_rand = Scheduler(tasks, algorithm="RM", execution_mode="random", seed=42)
-    # rm_sim_rand.run(duration, record_history=False)
-    rm_sim_rand.run_with_wcrt_tracking(10)
-    rm_stats_rand = rm_sim_rand.analyze_results()
+    # # Random simulation: for BCET~WCET runtime behavior
+    # print("=" * 40)
+    # print('RANDOM SIMULATION MODE ACTIVATED')
+    # print("=" * 40)
+    # rm_sim_rand = Scheduler(tasks, algorithm="RM", execution_mode="random", seed=42)
+    # # rm_sim_rand.run(duration, record_history=False)
+    # # rm_sim_rand.run_with_wcrt_tracking(10)
+    # rm_sim_rand.run_until_wcrt_converges()
+    # rm_stats_rand = rm_sim_rand.analyze_results()
+    #
+    # edf_sim_rand = Scheduler(tasks, algorithm="EDF", execution_mode="random", seed=42)
+    # # edf_sim_rand.run(duration, record_history=False)
+    # # edf_sim_rand.run_with_wcrt_tracking(10)
+    # edf_sim_rand.run_until_wcrt_converges(10)
+    # edf_stats_rand = edf_sim_rand.analyze_results()
+    #
+    # dm_sim_rand = Scheduler(tasks, algorithm="DM", execution_mode="random", seed=42)
+    # # dm_sim_rand.run(duration, record_history=False)
+    # # dm_sim_rand.run_with_wcrt_tracking(10)
+    # edf_sim_rand.run_until_wcrt_converges()
+    # dm_stats_rand = dm_sim_rand.analyze_results()
 
-    edf_sim_rand = Scheduler(tasks, algorithm="EDF", execution_mode="random", seed=42)
-    # edf_sim_rand.run(duration, record_history=False)
-    edf_sim_rand.run_with_wcrt_tracking(10)
-    edf_stats_rand = edf_sim_rand.analyze_results()
-
-    dm_sim_rand = Scheduler(tasks, algorithm="DM", execution_mode="random", seed=42)
-    # dm_sim_rand.run(duration, record_history=False)
-    dm_sim_rand.run_with_wcrt_tracking(10)
-    dm_stats_rand = dm_sim_rand.analyze_results()
-
-    # --------------------------------------------------------------
-    # Comparison report
-    # --------------------------------------------------------------
+    # # --------------------------------------------------------------
+    # # Comparison report
+    # # --------------------------------------------------------------
     print_and_log("\n" + "=" * 40)
     print_and_log("          COMPARISON REPORT")
     print_and_log("=" * 40)
@@ -297,18 +300,18 @@ def main(task_file):
             "Sim_WCRT_WCET(RM)": rm_stats_wcet[tid]["Sim_WCRT"],
             "Sim_WCRT_WCET(DM)": dm_stats_wcet[tid]["Sim_WCRT"],
             "Sim_WCRT_WCET(EDF)": edf_stats_wcet[tid]["Sim_WCRT"],
-
-            "Sim_WCRT_Random(RM)": rm_stats_rand[tid]["Sim_WCRT"],
-            "Sim_WCRT_Random(DM)": dm_stats_rand[tid]["Sim_WCRT"],
-            "Sim_WCRT_Random(EDF)": edf_stats_rand[tid]["Sim_WCRT"],
+            #
+            # "Sim_WCRT_Random(RM)": rm_stats_rand[tid]["Sim_WCRT"],
+            # "Sim_WCRT_Random(DM)": dm_stats_rand[tid]["Sim_WCRT"],
+            # "Sim_WCRT_Random(EDF)": edf_stats_rand[tid]["Sim_WCRT"],
 
             "RM_Missed_WCET": rm_stats_wcet[tid]["Missed"],
             "DM_Missed_WCET": dm_stats_wcet[tid]["Missed"],
             "EDF_Missed_WCET": edf_stats_wcet[tid]["Missed"],
-
-            "RM_Missed_Random": rm_stats_rand[tid]["Missed"],
-            "DM_Missed_Random": dm_stats_rand[tid]["Missed"],
-            "EDF_Missed_Random": edf_stats_rand[tid]["Missed"],
+            #
+            # "RM_Missed_Random": rm_stats_rand[tid]["Missed"],
+            # "DM_Missed_Random": dm_stats_rand[tid]["Missed"],
+            # "EDF_Missed_Random": edf_stats_rand[tid]["Missed"],
         })
 
     df_comp = pd.DataFrame(comparison_data)
@@ -367,10 +370,13 @@ if __name__ == "__main__":
     if LOG_FILE.exists():
         LOG_FILE.unlink()
 
-    TASKSETS_NS_DIR = BASE_DIR / "tasksets" / "not_schedulable"
-    TASKSETS_S_DIR = BASE_DIR / "tasksets" / "schedulable"
+    TASKSETS_NS_DIR = BASE_DIR / "tasksets" / "not_schedulable_all"
+    TASKSETS_S_DIR = BASE_DIR / "tasksets" / "schedulable" / "High_utilization"
 
-    schedulable_files = os.listdir(TASKSETS_S_DIR)
+    schedulable_files = [
+        f for f in os.listdir(TASKSETS_S_DIR)
+        if os.path.isfile(os.path.join(TASKSETS_S_DIR, f))
+    ]
 
     rm_unsched_but_edf_possible_files = [
         "Unschedulable_Full_Utilization_Unique_Periods_taskset.csv",
@@ -392,22 +398,22 @@ if __name__ == "__main__":
         else:
             print_and_log(f"WARNING: File not found: {f}")
 
-    print_and_log("\n" + "=" * 60)
-    print_and_log("  TASK SETS NOT SCHEDULABLE BY RM/DM (EDF MAY SUCCEED)")
-    print_and_log("=" * 60)
-    for name in rm_unsched_but_edf_possible_files:
-        f = TASKSETS_NS_DIR / name
-        if f.exists():
-            main(f)
-        else:
-            print_and_log(f"WARNING: File not found: {f}")
-
-    print_and_log("\n" + "=" * 60)
-    print_and_log("  OVERLOADED TASK SETS (NOT SCHEDULABLE ON ONE CPU)")
-    print_and_log("=" * 60)
-    for name in overloaded_files:
-        f = TASKSETS_NS_DIR / name
-        if f.exists():
-            main(f)
-        else:
-            print_and_log(f"WARNING: File not found: {f}")
+    # print_and_log("\n" + "=" * 60)
+    # print_and_log("  TASK SETS NOT SCHEDULABLE BY RM/DM (EDF MAY SUCCEED)")
+    # print_and_log("=" * 60)
+    # for name in rm_unsched_but_edf_possible_files:
+    #     f = TASKSETS_NS_DIR / name
+    #     if f.exists():
+    #         main(f)
+    #     else:
+    #         print_and_log(f"WARNING: File not found: {f}")
+    #
+    # print_and_log("\n" + "=" * 60)
+    # print_and_log("  OVERLOADED TASK SETS (NOT SCHEDULABLE ON ONE CPU)")
+    # print_and_log("=" * 60)
+    # for name in overloaded_files:
+    #     f = TASKSETS_NS_DIR / name
+    #     if f.exists():
+    #         main(f)
+    #     else:
+    #         print_and_log(f"WARNING: File not found: {f}")

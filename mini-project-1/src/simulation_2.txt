@@ -1,0 +1,93 @@
+from model import Job
+import math
+import copy
+import random
+import heapq
+
+
+from utils import print_and_log, log_only
+
+
+class Scheduler:
+    def __init__(self, tasks, algorithm="RM", execution_mode="wcet", seed=42):
+        """
+        execution_mode:
+            - "wcet": every job executes exactly WCET
+            - "random": execution time sampled uniformly from [BCET, WCET]
+
+        seed:
+            used for reproducibility in random mode
+        """
+        self.tasks = copy.deepcopy(tasks)
+        self.algorithm = algorithm
+        self.execution_mode = execution_mode
+        self.rng = random.Random(seed)
+        self.task_map = {}
+
+        self.time = 0
+        self.history = []          # (time, task_id)
+        self.completed_jobs = []
+
+        periods = [t.period for t in self.tasks]
+        self.hyperperiod = math.lcm(*periods) if periods else 0
+
+        # Static priorities for RM / DM
+        if algorithm == "RM":
+            self.tasks.sort(key=lambda t: (t.period, t.id))
+            for i, t in enumerate(self.tasks):
+                t.priority = i
+
+        elif algorithm == "DM":
+            self.tasks.sort(key=lambda t: (t.deadline, t.id))
+            for i, t in enumerate(self.tasks):
+                t.priority = i
+
+        elif algorithm == "EDF":
+            pass
+        else:
+            raise ValueError(f"Unknown algorithm: {algorithm}")
+
+        self.task_map = {t.id: t for t in self.tasks}
+
+    # ------------------------------------------------------------------
+    # Helpers
+    # ------------------------------------------------------------------
+
+    def _get_exec_time(self, task):
+        """
+        In discrete-time simulation, execution time must be at least 1.
+        This avoids jobs with 0 execution that would never complete correctly.
+        """
+        if self.execution_mode == "wcet":
+            return task.wcet
+        elif self.execution_mode == "random":
+            low = min(task.bcet, task.wcet)
+            high = max(task.bcet, task.wcet)
+            return max(1, self.rng.randint(low, high))
+        else:
+            raise ValueError(f"Unknown execution_mode: {self.execution_mode}")
+
+    def _job_priority(self, job):
+        if self.algorithm in ["RM", "DM"]:
+            return (
+                self.task_map[job.task_id].priority,
+                job.arrival_time,
+                job.task_id,
+                job.job_id,
+            )
+
+        if self.algorithm == "EDF":
+            return (
+                job.absolute_deadline,
+                job.arrival_time,
+                job.task_id,
+                job.job_id,
+            )
+
+        raise ValueError(f"Unknown algorithm: {self.algorithm}")
+
+    def get_task(self, task_id):
+        try:
+            return self.task_map[task_id]
+        except KeyError as exc:
+            raise ValueError(f"Task with ID {task_id} not found.") from exc

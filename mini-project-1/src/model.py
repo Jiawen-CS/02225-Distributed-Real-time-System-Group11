@@ -12,6 +12,7 @@ class Task:
     priority: int = 0  # Lower number = higher priority for RM/DM
 
     def utilization(self):
+        # print(self.wcet / self.period) ##Print for DEBUG.
         return self.wcet / self.period
 
 

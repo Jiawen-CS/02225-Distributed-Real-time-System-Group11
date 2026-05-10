@@ -21,11 +21,11 @@ def check_ll_bound(tasks):
     return u <= bound, u, bound
 
 
-def calculate_exact_wcrt_fp(task: Task, higher_priority_tasks: list[Task]):
+def calculate_exact_wcrt_fp(task: Task, previous_tasks: list[Task]):
     """
     Fixed-priority exact response-time analysis (used by RM and DM):
 
-        R_i = C_i + sum( ceil(R_i / T_j) * C_j )
+        R_i = C_i + sum( ceil(R_i / T_j) * C_j ) for 1 <= j <= i-1
 
     Returns:
         - converged WCRT if schedulable
@@ -36,7 +36,7 @@ def calculate_exact_wcrt_fp(task: Task, higher_priority_tasks: list[Task]):
     while True:
         interference = sum(
             math.ceil(R_curr / hp.period) * hp.wcet
-            for hp in higher_priority_tasks
+            for hp in previous_tasks
         )
         R_new = task.wcet + interference
 

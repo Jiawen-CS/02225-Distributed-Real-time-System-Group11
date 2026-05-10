@@ -2,7 +2,7 @@ from pathlib import Path
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-LOG_FILE = BASE_DIR / "results.txt"
+LOG_FILE = BASE_DIR / "logs" / "high_utilization_custom.txt"
 
 
 

@@ -114,6 +114,35 @@ class Scheduler:
 
         return global_wcrt
 
+    def run_until_wcrt_converges(self, patience=5, max_hyperperiods=100):
+        global_wcrt = {t.id: 0 for t in self.tasks}
+
+        no_improve = 0
+
+        for hp in range(max_hyperperiods):
+            self.run(duration=self.hyperperiod, record_history=False)
+            stats = self.analyze_results()
+
+            improved = False
+
+            for tid, s in stats.items():
+                if s["Sim_WCRT"] > global_wcrt[tid]:
+                    global_wcrt[tid] = s["Sim_WCRT"]
+                    improved = True
+
+            if improved:
+                no_improve = 0
+            else:
+                no_improve += 1
+
+            print(f"[HP {hp + 1}] global WCRT: {global_wcrt}")
+
+            if no_improve >= patience:
+                print("WCRT converged.")
+                break
+
+        return global_wcrt
+
     # def run(self, duration=None, record_history=True):
     #     if duration is None:
     #         duration = self.hyperperiod
