@@ -266,3 +266,4 @@ Task-set classification: Not schedulable by RM/DM, but schedulable by EDF
           SIMULATION RESULTS
 ========================================
 Hyperperiod (LCM): 57350
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\mini-project-1\resultplots_customTest\gantt_RM_wcet_Unschedulable_High_Utilization_NonUnique_Periods_taskset.png
