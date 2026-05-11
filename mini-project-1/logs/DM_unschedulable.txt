@@ -1,0 +1,113 @@
+
+============================================================
+  TASK SETS SCHEDULABLE BY RM/DM AND EDF
+============================================================
+
+>>> DM_unschedulable_not_pass_LL_bound
+Loading task set...
+
+========================================
+          ANALYTICAL RESULTS
+========================================
+Total Utilization U   : 0.5879
+Liu & Layland Bound   : 0.7348
+Schedulable by LL Test: Yes
+
+--- RM Exact WCRT Analysis ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+4     21       21    2             2        True
+2     40       16    2             4        True
+1     60       30   20            26        True
+5     65       21    2            26       False
+3     70       21    2            28       False
+0    100       20    5            33       False
+
+--- DM Exact WCRT Analysis ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+2     40       16    2             2        True
+0    100       20    5             7        True
+3     70       21    2             9        True
+4     21       21    2            11        True
+5     65       21    2            13        True
+1     60       30   20            33       False
+
+--- EDF Exact WCRT Analysis (Appendix-based hyperperiod schedule with WCET) ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+0    100       20    5            13        True
+1     60       30   20            33       False
+2     40       16    2            13        True
+3     70       21    2            23       False
+4     21       21    2            22       False
+5     65       21    2            23       False
+
+Task-set classification: Not schedulable under fixed-priority; EDF also fails
+
+========================================
+          SIMULATION RESULTS
+========================================
+Hyperperiod (LCM): 54600
+
+============================================================
+  TASK SETS SCHEDULABLE BY RM/DM AND EDF
+============================================================
+
+>>> DM_unschedulable_not_pass_LL_bound
+Loading task set...
+
+========================================
+          ANALYTICAL RESULTS
+========================================
+Total Utilization U   : 0.5879
+Liu & Layland Bound   : 0.7348
+Schedulable by LL Test: Yes
+
+--- RM Exact WCRT Analysis ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+4     21       21    2             2        True
+2     40       30    2             4        True
+1     60       33   20            26        True
+5     65       21    2            26       False
+3     70       21    2            28       False
+0    100       20    5            33       False
+
+--- DM Exact WCRT Analysis ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+0    100       20    5             5        True
+3     70       21    2             7        True
+4     21       21    2             9        True
+5     65       21    2            11        True
+2     40       30    2            13        True
+1     60       33   20            35       False
+
+--- EDF Exact WCRT Analysis (Appendix-based hyperperiod schedule with WCET) ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+0    100       20    5            13        True
+1     60       33   20            33        True
+2     40       30    2            15        True
+3     70       21    2            13        True
+4     21       21    2            19        True
+5     65       21    2            18        True
+
+Task-set classification: Not schedulable by RM/DM, but schedulable by EDF
+
+========================================
+          SIMULATION RESULTS
+========================================
+Hyperperiod (LCM): 54600
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\mini-project-1\resultplots_customTest\gantt_RM_wcet_DM_unschedulable_not_pass_LL_bound.png
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\mini-project-1\resultplots_customTest\gantt_EDF_wcet_DM_unschedulable_not_pass_LL_bound.png
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\mini-project-1\resultplots_customTest\gantt_DM_wcet_DM_unschedulable_not_pass_LL_bound.png
+
+========================================
+          COMPARISON REPORT
+========================================
+Task  Analytic_WCRT(RM)  Analytic_WCRT(DM)  Analytic_WCRT(EDF)  Sim_WCRT_WCET(RM)  Sim_WCRT_WCET(DM)  Sim_WCRT_WCET(EDF)  RM_Missed_WCET  DM_Missed_WCET  EDF_Missed_WCET
+  T0                 33                  5                  13                 35                  5                  13             182               0                0
+  T1                 26                 35                  33                 26                 35                  33               0             108                0
+  T2                  4                 13                  15                  4                 13                  15               0               0                0
+  T3                 28                  7                  13                 30                  7                  13             130               0                0
+  T4                  2                  9                  19                  2                  9                  19               0               0                0
+  T5                 26                 11                  18                 28                 11                  18              90               0                0
+
+--- Upper-bound validation against WCET simulation ---
+Upper-bound validation passed for analytically schedulable tasks (14 checks, 4 skipped unschedulable/infinite cases).

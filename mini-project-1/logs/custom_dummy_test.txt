@@ -1,0 +1,61 @@
+
+============================================================
+  TASK SETS SCHEDULABLE BY RM/DM AND EDF
+============================================================
+
+>>> Full_utilization_NonUnique_small_taskset
+Loading task set...
+
+========================================
+          ANALYTICAL RESULTS
+========================================
+Total Utilization U   : 1.0000
+Liu & Layland Bound   : 0.7435
+Schedulable by LL Test: Inconclusive (Exact Analysis Required)
+
+--- RM Exact WCRT Analysis ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+4     20       20    1             1        True
+2     25       25    5             6        True
+3     50       50   10            16        True
+0    100      100   45            90        True
+1    200      200   20           200        True
+
+--- DM Exact WCRT Analysis ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+4     20       20    1             1        True
+2     25       25    5             6        True
+3     50       50   10            16        True
+0    100      100   45            90        True
+1    200      200   20           200        True
+
+--- EDF Exact WCRT Analysis (Appendix-based hyperperiod schedule with WCET) ---
+  Period Deadline WCET WCRT_Analytic Schedulable
+0    100      100   45            84        True
+1    200      200   20           132        True
+2     25       25    5            24        True
+3     50       50   10            44        True
+4     20       20    1            20        True
+
+Task-set classification: Schedulable by RM/DM and EDF
+
+========================================
+          SIMULATION RESULTS
+========================================
+Hyperperiod (LCM): 200
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\mini-project-1\resultplots_customTest\gantt_RM_wcet_Full_utilization_NonUnique_small_taskset.png
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\mini-project-1\resultplots_customTest\gantt_EDF_wcet_Full_utilization_NonUnique_small_taskset.png
+Gantt chart saved to D:\DTU\distributed_RTS\02225-Distributed-Real-time-System-Group11\mini-project-1\resultplots_customTest\gantt_DM_wcet_Full_utilization_NonUnique_small_taskset.png
+
+========================================
+          COMPARISON REPORT
+========================================
+Task  Analytic_WCRT(RM)  Analytic_WCRT(DM)  Analytic_WCRT(EDF)  Sim_WCRT_WCET(RM)  Sim_WCRT_WCET(DM)  Sim_WCRT_WCET(EDF)  RM_Missed_WCET  DM_Missed_WCET  EDF_Missed_WCET
+  T0                 90                 90                  84                 90                 90                  84               0               0                0
+  T1                200                200                 132                200                200                 132               0               0                0
+  T2                  6                  6                  24                  6                  6                  24               0               0                0
+  T3                 16                 16                  44                 16                 16                  44               0               0                0
+  T4                  1                  1                  20                  1                  1                  20               0               0                0
+
+--- Upper-bound validation against WCET simulation ---
+Upper-bound validation passed for analytically schedulable tasks (15 checks, 0 skipped unschedulable/infinite cases).

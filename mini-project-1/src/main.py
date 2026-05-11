@@ -1,9 +1,12 @@
 import csv
 import math
+import os
+
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib import MatplotlibDeprecationWarning
 from pathlib import Path
+from utils import set_log_file, print_and_log, log_only
 import warnings
 
 from model import Task
@@ -19,24 +22,13 @@ from simulation import Scheduler
 warnings.filterwarnings("ignore", category=MatplotlibDeprecationWarning)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-LOG_FILE = BASE_DIR / "results.txt"
+LOG_FILE = BASE_DIR / "logs" / "results"
 PLOTS_DIR = BASE_DIR / "resultplots"
 PLOTS_DIR.mkdir(parents=True, exist_ok=True)
 MAX_HISTORY_FOR_PLOTS = 200_000
+set_log_file(LOG_FILE)
 
 
-# ----------------------------------------------------------------------
-# Logging
-# ----------------------------------------------------------------------
-def log_only(*args, sep=" ", end="\n"):
-    message = sep.join(str(a) for a in args) + end
-    with open(LOG_FILE, "a", encoding="utf-8") as f:
-        f.write(message)
-
-
-def print_and_log(text=""):
-    print(text)
-    log_only(text)
 
 
 # ----------------------------------------------------------------------
@@ -77,34 +69,22 @@ def load_tasks_from_csv(filename):
 
     return tasks
 
-
-# ----------------------------------------------------------------------
-# Gantt chart
-# ----------------------------------------------------------------------
 def plot_gantt(history, tasks, algorithm, duration, prefix="", mode="wcet"):
     fig, ax = plt.subplots(figsize=(12, 6))
 
     colors = plt.cm.get_cmap("tab10", len(tasks))
     task_colors = {t.id: colors(i) for i, t in enumerate(tasks)}
 
-    merged_blocks = []
-    if history:
-        current_start = history[0][0]
-        current_tid = history[0][1]
+    print(f"Length of history: {len(history)}")
+    for start, end, tid in history:
+        if tid is None:
+            continue
 
-        for t, tid in history:
-            if tid != current_tid:
-                if current_tid is not None:
-                    merged_blocks.append((current_start, t - current_start, current_tid))
-                current_tid = tid
-                current_start = t
-
-        if current_tid is not None:
-            last_t = history[-1][0] + 1
-            merged_blocks.append((current_start, last_t - current_start, current_tid))
-
-    for start, length, tid in merged_blocks:
-        ax.broken_barh([(start, length)], (tid * 10, 9), facecolors=task_colors[tid])
+        ax.broken_barh(
+            [(start, end - start)],
+            (tid * 10, 9),
+            facecolors=task_colors[tid]
+        )
 
     ax.set_ylim(0, max(t.id for t in tasks) * 10 + 10)
     ax.set_xlim(0, duration)
@@ -118,7 +98,6 @@ def plot_gantt(history, tasks, algorithm, duration, prefix="", mode="wcet"):
     out_path = PLOTS_DIR / f"gantt_{algorithm}_{mode}_{prefix}.png"
     plt.savefig(out_path)
     plt.close()
-
     print_and_log(f"Gantt chart saved to {out_path}")
 
 
@@ -233,22 +212,9 @@ def main(task_file):
     if should_plot:
         plot_gantt(dm_hist_wcet, tasks, "DM", duration, prefix=prefix, mode="wcet")
 
-    # Random simulation: for BCET~WCET runtime behavior
-    rm_sim_rand = Scheduler(tasks, algorithm="RM", execution_mode="random", seed=42)
-    rm_sim_rand.run(duration, record_history=False)
-    rm_stats_rand = rm_sim_rand.analyze_results()
-
-    edf_sim_rand = Scheduler(tasks, algorithm="EDF", execution_mode="random", seed=42)
-    edf_sim_rand.run(duration, record_history=False)
-    edf_stats_rand = edf_sim_rand.analyze_results()
-
-    dm_sim_rand = Scheduler(tasks, algorithm="DM", execution_mode="random", seed=42)
-    dm_sim_rand.run(duration, record_history=False)
-    dm_stats_rand = dm_sim_rand.analyze_results()
-
-    # --------------------------------------------------------------
-    # Comparison report
-    # --------------------------------------------------------------
+    # # --------------------------------------------------------------
+    # # Comparison report
+    # # --------------------------------------------------------------
     print_and_log("\n" + "=" * 40)
     print_and_log("          COMPARISON REPORT")
     print_and_log("=" * 40)
@@ -268,17 +234,9 @@ def main(task_file):
             "Sim_WCRT_WCET(DM)": dm_stats_wcet[tid]["Sim_WCRT"],
             "Sim_WCRT_WCET(EDF)": edf_stats_wcet[tid]["Sim_WCRT"],
 
-            "Sim_WCRT_Random(RM)": rm_stats_rand[tid]["Sim_WCRT"],
-            "Sim_WCRT_Random(DM)": dm_stats_rand[tid]["Sim_WCRT"],
-            "Sim_WCRT_Random(EDF)": edf_stats_rand[tid]["Sim_WCRT"],
-
             "RM_Missed_WCET": rm_stats_wcet[tid]["Missed"],
             "DM_Missed_WCET": dm_stats_wcet[tid]["Missed"],
             "EDF_Missed_WCET": edf_stats_wcet[tid]["Missed"],
-
-            "RM_Missed_Random": rm_stats_rand[tid]["Missed"],
-            "DM_Missed_Random": dm_stats_rand[tid]["Missed"],
-            "EDF_Missed_Random": edf_stats_rand[tid]["Missed"],
         })
 
     df_comp = pd.DataFrame(comparison_data)
@@ -330,6 +288,7 @@ def main(task_file):
         )
 
 
+
 # ----------------------------------------------------------------------
 # Batch runner
 # ----------------------------------------------------------------------
@@ -337,12 +296,12 @@ if __name__ == "__main__":
     if LOG_FILE.exists():
         LOG_FILE.unlink()
 
-    TASKSETS_NS_DIR = BASE_DIR / "tasksets" / "not_schedulable"
-    TASKSETS_S_DIR = BASE_DIR / "tasksets" / "schedulable"
+    TASKSETS_NS_DIR = BASE_DIR / "tasksets" / "unschedulable"
+    TASKSETS_S_DIR = BASE_DIR / "tasksets" / "schedulable" / "High_utilization"
 
     schedulable_files = [
-        "Full_Utilization_Unique_Periods_taskset.csv",
-        "High_Utilization_NonUnique_Periods_taskset.csv",
+        f for f in os.listdir(TASKSETS_S_DIR)
+        if os.path.isfile(os.path.join(TASKSETS_S_DIR, f))
     ]
 
     rm_unsched_but_edf_possible_files = [
