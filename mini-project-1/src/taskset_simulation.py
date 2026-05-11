@@ -15,12 +15,12 @@ from src.analysis import (
     check_ll_bound,
 )
 from src.simulation import Scheduler
-from src.utils import print_and_log, log_only
+from src.utils import print_and_log, log_only, set_log_file
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-LOG_FILE = BASE_DIR / "results_random_vs_analytic.txt"
+LOG_FILE = BASE_DIR / "logs" / "simulation.txt"
 
 PLOTS_DIR = BASE_DIR / "plots_random_vs_analytic"
 PLOTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -37,6 +37,8 @@ PLOT_SIMULATION_GANTT = False
 PLOT_ANALYTIC_GANTT = False
 
 MAX_GANTT_DURATION = 200000
+
+set_log_file(LOG_FILE)
 
 # ----------------------------------------------------------------------
 # Plot Gantt

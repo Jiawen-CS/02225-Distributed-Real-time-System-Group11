@@ -6,7 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib import MatplotlibDeprecationWarning
 from pathlib import Path
-from utils import print_and_log, log_only
+from src.utils import print_and_log, set_log_file
 import warnings
 
 from src.model import Task
@@ -15,10 +15,11 @@ from src.simulation import Scheduler
 warnings.filterwarnings("ignore", category=MatplotlibDeprecationWarning)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-LOG_FILE = BASE_DIR / "results.txt"
+LOG_FILE = BASE_DIR / "logs" /"pick_hyperiod_results.txt"
 PLOTS_DIR = BASE_DIR / "resultplots_customTest"
 PLOTS_DIR.mkdir(parents=True, exist_ok=True)
 MAX_HISTORY_FOR_PLOTS = 200_000
+set_log_file(LOG_FILE)
 
 
 

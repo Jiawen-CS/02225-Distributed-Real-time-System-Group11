@@ -44,7 +44,7 @@ The program prints:
 Generated files:
 
 - plots are saved in `resultplots/`
-- console output is also saved to `results.txt`
+- console output is also saved to `logs/results.txt`
 
 ### Notes
 
@@ -60,6 +60,9 @@ Run
 ```bash
 python -m src.pick_hyperiod
 ```
+
+- plots are saved in `resultplots_customTest/`
+- console output is also saved to `logs/pick_hyperiod_results.txt`
 
 ## Simulation
 To do simulation, you run:

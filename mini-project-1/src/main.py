@@ -22,7 +22,7 @@ from src.simulation import Scheduler
 warnings.filterwarnings("ignore", category=MatplotlibDeprecationWarning)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-LOG_FILE = BASE_DIR / "logs" / "results"
+LOG_FILE = BASE_DIR / "logs" / "results.txt"
 PLOTS_DIR = BASE_DIR / "resultplots"
 PLOTS_DIR.mkdir(parents=True, exist_ok=True)
 MAX_HISTORY_FOR_PLOTS = 200_000
