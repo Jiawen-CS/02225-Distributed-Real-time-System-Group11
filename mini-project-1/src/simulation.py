@@ -6,7 +6,7 @@ import heapq
 import Path
 
 
-from utils import print_and_log, set_log_file
+from src.utils import print_and_log, set_log_file
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 LOG_FILE = BASE_DIR / "logs" / "results.txt"

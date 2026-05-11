@@ -14,8 +14,8 @@ from analysis import (
     calculate_utilization,
     check_ll_bound,
 )
-from simulation import Scheduler
-from utils import print_and_log, log_only
+from src.simulation import Scheduler
+from src.utils import print_and_log, log_only
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
