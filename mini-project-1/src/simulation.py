@@ -14,6 +14,7 @@ class Scheduler:
         execution_mode:
             - "wcet": every job executes exactly WCET
             - "random": execution time sampled uniformly from [BCET, WCET]
+            - "bcet": every job executes exactly BCET
 
         seed:
             used for reproducibility in random mode
@@ -55,17 +56,76 @@ class Scheduler:
 
     def _get_exec_time(self, task):
         """
-        In discrete-time simulation, execution time must be at least 1.
-        This avoids jobs with 0 execution that would never complete correctly.
+        Execution-time generation modes.
+
+        Modes:
+            - wcet:
+                  deterministic WCET
+
+            - bcet:
+                  deterministic BCET
+
+            - random_uniform:
+                  uniform random in [BCET, WCET]
+
+            - random_bcet:
+                  random biased toward BCET
+
+            - random_wcet:
+                  random biased toward WCET
         """
+
+        low = min(task.bcet, task.wcet)
+        high = max(task.bcet, task.wcet)
+
+        # --------------------------------------------------------------
+        # Deterministic modes
+        # --------------------------------------------------------------
         if self.execution_mode == "wcet":
-            return task.wcet
-        elif self.execution_mode == "random":
-            low = min(task.bcet, task.wcet)
-            high = max(task.bcet, task.wcet)
-            return max(1, self.rng.randint(low, high))
+            return max(1, high)
+
+        elif self.execution_mode == "bcet":
+            return max(1, low)
+
+        # --------------------------------------------------------------
+        # Uniform random
+        # --------------------------------------------------------------
+        elif self.execution_mode == "random_uniform":
+
+            return max(
+                1,
+                self.rng.randint(low, high)
+            )
+
+        # --------------------------------------------------------------
+        # BCET-biased random
+        # Beta(2, 8)
+        # --------------------------------------------------------------
+        elif self.execution_mode == "random_bcet":
+
+            normalized = self.rng.betavariate(2, 8)
+
+            value = low + normalized * (high - low)
+
+            return max(1, round(value))
+
+        # --------------------------------------------------------------
+        # WCET-biased random
+        # Beta(8, 2)
+        # --------------------------------------------------------------
+        elif self.execution_mode == "random_wcet":
+
+            normalized = self.rng.betavariate(8, 2)
+
+            value = low + normalized * (high - low)
+
+            return max(1, round(value))
+
         else:
-            raise ValueError(f"Unknown execution_mode: {self.execution_mode}")
+            raise ValueError(
+                f"Unknown execution_mode: {self.execution_mode}"
+            )
+
 
     def _job_priority(self, job):
         if self.algorithm in ["RM", "DM"]:
@@ -256,7 +316,7 @@ class Scheduler:
                 heapq.heappush(ready_heap, (self._job_priority(job), job))
                 release_idx += 1
 
-            # If idle → jump to next release
+            # If idle => jump to next release
             if not ready_heap:
                 if release_idx < len(release_events):
                     next_time = release_events[release_idx][0]

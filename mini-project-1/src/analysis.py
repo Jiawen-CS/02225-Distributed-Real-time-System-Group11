@@ -128,19 +128,20 @@ def perform_edf_analysis(tasks):
     H = math.lcm(*periods)
 
     # Overloaded system: EDF cannot schedule all jobs on one CPU
-    if U > 1 + EPS:
-        return {
-            task.id: {
-                "Task": f"Task {task.id}",
-                "Period": task.period,
-                "Deadline": task.deadline,
-                "WCET": task.wcet,
-                "Hyperperiod": H,
-                "WCRT_Analytic": float("inf"),
-                "Schedulable": False,
-            }
-            for task in tasks
-        }
+    # if U > 1 + EPS:
+    #     return {
+    #         task.id: {
+    #             "Task": f"Task {task.id}",
+    #             "Period": task.period,
+    #             "Deadline": task.deadline,
+    #             "WCET": task.wcet,
+    #             "Hyperperiod": H,
+    #             "WCRT_Analytic": H + task.deadline + 1,
+    #             "Schedulable": False,
+    #         }
+    #         for task in tasks
+    #     }
+
 
     # Generate all jobs released in [0, H) and bucket them by release time
     all_jobs = []
@@ -197,18 +198,51 @@ def perform_edf_analysis(tasks):
 
         t += 1
 
-    # Compute per-task WCRT
+    # --------------------------------------------------------------
+    # Compute Per-task WCRT
+    # --------------------------------------------------------------
     results = {}
-    for task in tasks:
-        jobs = [j for j in all_jobs if j["task_id"] == task.id]
 
-        if not jobs or any(j["finish"] == -1 for j in jobs):
-            wcrt = float("inf")
+    for task in tasks:
+
+        jobs = [
+            j for j in all_jobs
+            if j["task_id"] == task.id
+        ]
+
+        observed_rts = []
+
+        violating_rt = None
+
+        for j in jobs:
+
+            # unfinished job
+            if j["finish"] == -1:
+
+                rt = (t + 1) - j["release"]
+
+            else:
+
+                rt = j["finish"] - j["release"]
+
+            observed_rts.append(rt)
+
+            # first violation semantics
+            if rt > task.deadline:
+                violating_rt = rt
+                break
+
+        # unschedulable
+        if violating_rt is not None:
+
+            wcrt = violating_rt
             schedulable = False
+
+        # schedulable
         else:
-            response_times = [j["finish"] - j["release"] for j in jobs]
-            wcrt = max(response_times)
-            schedulable = wcrt <= task.deadline
+
+            wcrt = max(observed_rts) if observed_rts else 0
+            schedulable = True
 
         results[task.id] = {
             "Task": f"Task {task.id}",

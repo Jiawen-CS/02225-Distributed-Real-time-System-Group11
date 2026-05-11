@@ -177,85 +177,85 @@ def main(task_file):
         print_and_log("No tasks loaded. Exiting.")
         return
 
-    # # --------------------------------------------------------------
-    # # Analytical results
-    # # --------------------------------------------------------------
-    # print_and_log("\n" + "=" * 40)
-    # print_and_log("          ANALYTICAL RESULTS")
-    # print_and_log("=" * 40)
-    #
-    # u = calculate_utilization(tasks)
-    # ll_ok, _, ll_bound = check_ll_bound(tasks)
-    #
-    # print_and_log(f"Total Utilization U   : {u:.4f}")
-    # print_and_log(f"Liu & Layland Bound   : {ll_bound:.4f}")
-    # print_and_log(
-    #     f"Schedulable by LL Test: {'Yes' if ll_ok else 'Inconclusive (Exact Analysis Required)'}"
-    # )
-    #
-    # if u > 1:
-    #     print_and_log("WARNING: U > 1 — overloaded system; no algorithm can schedule all jobs on one CPU.")
-    #
-    # rm_analysis = perform_rm_analysis(tasks)
-    # dm_analysis = perform_dm_analysis(tasks)
-    # edf_analysis = perform_edf_analysis(tasks)
-    #
-    # df_rm = pd.DataFrame(rm_analysis).T
-    # df_dm = pd.DataFrame(dm_analysis).T
-    # df_edf = pd.DataFrame(edf_analysis).T
-    #
-    # print_and_log("\n--- RM Exact WCRT Analysis ---")
-    # print(df_rm[["Period", "Deadline", "WCET", "WCRT_Analytic", "Schedulable"]])
-    # log_only(df_rm[["Period", "Deadline", "WCET", "WCRT_Analytic", "Schedulable"]].to_string())
-    #
-    # print_and_log("\n--- DM Exact WCRT Analysis ---")
-    # print(df_dm[["Period", "Deadline", "WCET", "WCRT_Analytic", "Schedulable"]])
-    # log_only(df_dm[["Period", "Deadline", "WCET", "WCRT_Analytic", "Schedulable"]].to_string())
-    #
-    # print_and_log("\n--- EDF Exact WCRT Analysis (Appendix-based hyperperiod schedule with WCET) ---")
-    # print(df_edf[["Period", "Deadline", "WCET", "WCRT_Analytic", "Schedulable"]])
-    # log_only(df_edf[["Period", "Deadline", "WCET", "WCRT_Analytic", "Schedulable"]].to_string())
-    #
-    # classification = classify_taskset(u, rm_analysis, dm_analysis, edf_analysis)
-    # print_and_log(f"\nTask-set classification: {classification}")
-    #
-    # # --------------------------------------------------------------
-    # # Simulation results
-    # # --------------------------------------------------------------
-    # print_and_log("\n" + "=" * 40)
-    # print_and_log("          SIMULATION RESULTS")
-    # print_and_log("=" * 40)
-    #
-    # duration = math.lcm(*[t.period for t in tasks]) if tasks else 100
-    # print_and_log(f"Hyperperiod (LCM): {duration}")
-    # should_plot = duration <= MAX_HISTORY_FOR_PLOTS
-    # if not should_plot:
-    #     print_and_log(
-    #         f"Skipping Gantt chart generation because hyperperiod {duration} "
-    #         f"exceeds plot threshold {MAX_HISTORY_FOR_PLOTS}."
-    #     )
-    #
-    # # WCET simulation: for validating analytic bounds
-    # rm_sim_wcet = Scheduler(tasks, algorithm="RM", execution_mode="wcet", seed=42)
-    # _, rm_hist_wcet = rm_sim_wcet.run(duration, record_history=should_plot)
-    # # _, rm_hist_wcet = rm_sim_wcet.run_with_wcrt_tracking(hyperperiods=2)
-    # rm_stats_wcet = rm_sim_wcet.analyze_results()
-    # if should_plot:
-    #     plot_gantt(rm_hist_wcet, tasks, "RM", duration, prefix=prefix, mode="wcet")
-    #
-    # edf_sim_wcet = Scheduler(tasks, algorithm="EDF", execution_mode="wcet", seed=42)
-    # _, edf_hist_wcet = edf_sim_wcet.run(duration, record_history=should_plot)
-    # # _, edf_hist_wcet = edf_sim_wcet.run_with_wcrt_tracking(hyperperiods=2)
-    # edf_stats_wcet = edf_sim_wcet.analyze_results()
-    # if should_plot:
-    #     plot_gantt(edf_hist_wcet, tasks, "EDF", duration, prefix=prefix, mode="wcet")
-    #
-    # dm_sim_wcet = Scheduler(tasks, algorithm="DM", execution_mode="wcet", seed=42)
-    # _, dm_hist_wcet = dm_sim_wcet.run(duration, record_history=should_plot)
-    # # _, dm_hist_wcet = dm_sim_wcet.run_with_wcrt_tracking(hyperperiods=2)
-    # dm_stats_wcet = dm_sim_wcet.analyze_results()
-    # if should_plot:
-    #     plot_gantt(dm_hist_wcet, tasks, "DM", duration, prefix=prefix, mode="wcet")
+    # --------------------------------------------------------------
+    # Analytical results
+    # --------------------------------------------------------------
+    print_and_log("\n" + "=" * 40)
+    print_and_log("          ANALYTICAL RESULTS")
+    print_and_log("=" * 40)
+
+    u = calculate_utilization(tasks)
+    ll_ok, _, ll_bound = check_ll_bound(tasks)
+
+    print_and_log(f"Total Utilization U   : {u:.4f}")
+    print_and_log(f"Liu & Layland Bound   : {ll_bound:.4f}")
+    print_and_log(
+        f"Schedulable by LL Test: {'Yes' if ll_ok else 'Inconclusive (Exact Analysis Required)'}"
+    )
+
+    if u > 1:
+        print_and_log("WARNING: U > 1 — overloaded system; no algorithm can schedule all jobs on one CPU.")
+
+    rm_analysis = perform_rm_analysis(tasks)
+    dm_analysis = perform_dm_analysis(tasks)
+    edf_analysis = perform_edf_analysis(tasks)
+
+    df_rm = pd.DataFrame(rm_analysis).T
+    df_dm = pd.DataFrame(dm_analysis).T
+    df_edf = pd.DataFrame(edf_analysis).T
+
+    print_and_log("\n--- RM Exact WCRT Analysis ---")
+    print(df_rm[["Period", "Deadline", "WCET", "WCRT_Analytic", "Schedulable"]])
+    log_only(df_rm[["Period", "Deadline", "WCET", "WCRT_Analytic", "Schedulable"]].to_string())
+
+    print_and_log("\n--- DM Exact WCRT Analysis ---")
+    print(df_dm[["Period", "Deadline", "WCET", "WCRT_Analytic", "Schedulable"]])
+    log_only(df_dm[["Period", "Deadline", "WCET", "WCRT_Analytic", "Schedulable"]].to_string())
+
+    print_and_log("\n--- EDF Exact WCRT Analysis (Appendix-based hyperperiod schedule with WCET) ---")
+    print(df_edf[["Period", "Deadline", "WCET", "WCRT_Analytic", "Schedulable"]])
+    log_only(df_edf[["Period", "Deadline", "WCET", "WCRT_Analytic", "Schedulable"]].to_string())
+
+    classification = classify_taskset(u, rm_analysis, dm_analysis, edf_analysis)
+    print_and_log(f"\nTask-set classification: {classification}")
+
+    # --------------------------------------------------------------
+    # Simulation results
+    # --------------------------------------------------------------
+    print_and_log("\n" + "=" * 40)
+    print_and_log("          SIMULATION RESULTS")
+    print_and_log("=" * 40)
+
+    duration = math.lcm(*[t.period for t in tasks]) if tasks else 100
+    print_and_log(f"Hyperperiod (LCM): {duration}")
+    should_plot = duration <= MAX_HISTORY_FOR_PLOTS
+    if not should_plot:
+        print_and_log(
+            f"Skipping Gantt chart generation because hyperperiod {duration} "
+            f"exceeds plot threshold {MAX_HISTORY_FOR_PLOTS}."
+        )
+
+    # WCET simulation: for validating analytic bounds
+    rm_sim_wcet = Scheduler(tasks, algorithm="RM", execution_mode="wcet", seed=42)
+    _, rm_hist_wcet = rm_sim_wcet.run(duration, record_history=should_plot)
+    # _, rm_hist_wcet = rm_sim_wcet.run_with_wcrt_tracking(hyperperiods=2)
+    rm_stats_wcet = rm_sim_wcet.analyze_results()
+    if should_plot:
+        plot_gantt(rm_hist_wcet, tasks, "RM", duration, prefix=prefix, mode="wcet")
+
+    edf_sim_wcet = Scheduler(tasks, algorithm="EDF", execution_mode="wcet", seed=42)
+    _, edf_hist_wcet = edf_sim_wcet.run(duration, record_history=should_plot)
+    # _, edf_hist_wcet = edf_sim_wcet.run_with_wcrt_tracking(hyperperiods=2)
+    edf_stats_wcet = edf_sim_wcet.analyze_results()
+    if should_plot:
+        plot_gantt(edf_hist_wcet, tasks, "EDF", duration, prefix=prefix, mode="wcet")
+
+    dm_sim_wcet = Scheduler(tasks, algorithm="DM", execution_mode="wcet", seed=42)
+    _, dm_hist_wcet = dm_sim_wcet.run(duration, record_history=should_plot)
+    # _, dm_hist_wcet = dm_sim_wcet.run_with_wcrt_tracking(hyperperiods=2)
+    dm_stats_wcet = dm_sim_wcet.analyze_results()
+    if should_plot:
+        plot_gantt(dm_hist_wcet, tasks, "DM", duration, prefix=prefix, mode="wcet")
 
     # # Random simulation: for BCET~WCET runtime behavior
     max_wcrt = -1
@@ -285,89 +285,89 @@ def main(task_file):
     if (observed_wcrt > max_wcrt):
         max_wcrt = observed_wcrt
     dm_stats_rand = dm_sim_rand.analyze_results()
-    #
-    # # # --------------------------------------------------------------
-    # # # Comparison report
-    # # # --------------------------------------------------------------
-    # print_and_log("\n" + "=" * 40)
-    # print_and_log("          COMPARISON REPORT")
-    # print_and_log("=" * 40)
-    #
-    # comparison_data = []
-    # for t in tasks:
-    #     tid = t.id
-    #
-    #     comparison_data.append({
-    #         "Task": f"T{tid}",
-    #
-    #         "Analytic_WCRT(RM)": rm_analysis[tid]["WCRT_Analytic"],
-    #         "Analytic_WCRT(DM)": dm_analysis[tid]["WCRT_Analytic"],
-    #         "Analytic_WCRT(EDF)": edf_analysis[tid]["WCRT_Analytic"],
-    #
-    #         "Sim_WCRT_WCET(RM)": rm_stats_wcet[tid]["Sim_WCRT"],
-    #         "Sim_WCRT_WCET(DM)": dm_stats_wcet[tid]["Sim_WCRT"],
-    #         "Sim_WCRT_WCET(EDF)": edf_stats_wcet[tid]["Sim_WCRT"],
-    #         #
-    #         # "Sim_WCRT_Random(RM)": rm_stats_rand[tid]["Sim_WCRT"],
-    #         # "Sim_WCRT_Random(DM)": dm_stats_rand[tid]["Sim_WCRT"],
-    #         # "Sim_WCRT_Random(EDF)": edf_stats_rand[tid]["Sim_WCRT"],
-    #
-    #         "RM_Missed_WCET": rm_stats_wcet[tid]["Missed"],
-    #         "DM_Missed_WCET": dm_stats_wcet[tid]["Missed"],
-    #         "EDF_Missed_WCET": edf_stats_wcet[tid]["Missed"],
-    #         #
-    #         # "RM_Missed_Random": rm_stats_rand[tid]["Missed"],
-    #         # "DM_Missed_Random": dm_stats_rand[tid]["Missed"],
-    #         # "EDF_Missed_Random": edf_stats_rand[tid]["Missed"],
-    #     })
-    #
-    # df_comp = pd.DataFrame(comparison_data)
-    # comp_text = df_comp.to_string(index=False)
-    # print(comp_text)
-    # log_only(comp_text)
-    #
+
     # # --------------------------------------------------------------
-    # # Validation
-    # # Only validate upper-bound property for schedulable tasks
+    # # Comparison report
     # # --------------------------------------------------------------
-    # print_and_log("\n--- Upper-bound validation against WCET simulation ---")
-    #
-    # valid = True
-    # checked = 0
-    # skipped = 0
-    # for t in tasks:
-    #     tid = t.id
-    #
-    #     checks = [
-    #         ("RM", rm_analysis[tid]["Schedulable"], rm_analysis[tid]["WCRT_Analytic"], rm_stats_wcet[tid]["Sim_WCRT"]),
-    #         ("DM", dm_analysis[tid]["Schedulable"], dm_analysis[tid]["WCRT_Analytic"], dm_stats_wcet[tid]["Sim_WCRT"]),
-    #         ("EDF", edf_analysis[tid]["Schedulable"], edf_analysis[tid]["WCRT_Analytic"], edf_stats_wcet[tid]["Sim_WCRT"]),
-    #     ]
-    #
-    #     for alg, schedulable, analytic, sim in checks:
-    #         if not schedulable or analytic == float("inf"):
-    #             skipped += 1
-    #             continue
-    #
-    #         checked += 1
-    #         if sim > analytic:
-    #             msg = (
-    #                 f"DISCREPANCY ({alg}): T{tid} "
-    #                 f"simulated WCRT {sim} > analytic WCRT {analytic}"
-    #             )
-    #             print_and_log(msg)
-    #             valid = False
-    #
-    # if valid:
-    #     print_and_log(
-    #         f"Upper-bound validation passed for analytically schedulable tasks "
-    #         f"({checked} checks, {skipped} skipped unschedulable/infinite cases)."
-    #     )
-    # else:
-    #     print_and_log(
-    #         f"Upper-bound validation FAILED "
-    #         f"({checked} checks, {skipped} skipped unschedulable/infinite cases)."
-    #     )
+    print_and_log("\n" + "=" * 40)
+    print_and_log("          COMPARISON REPORT")
+    print_and_log("=" * 40)
+
+    comparison_data = []
+    for t in tasks:
+        tid = t.id
+
+        comparison_data.append({
+            "Task": f"T{tid}",
+
+            "Analytic_WCRT(RM)": rm_analysis[tid]["WCRT_Analytic"],
+            "Analytic_WCRT(DM)": dm_analysis[tid]["WCRT_Analytic"],
+            "Analytic_WCRT(EDF)": edf_analysis[tid]["WCRT_Analytic"],
+
+            "Sim_WCRT_WCET(RM)": rm_stats_wcet[tid]["Sim_WCRT"],
+            "Sim_WCRT_WCET(DM)": dm_stats_wcet[tid]["Sim_WCRT"],
+            "Sim_WCRT_WCET(EDF)": edf_stats_wcet[tid]["Sim_WCRT"],
+            #
+            # "Sim_WCRT_Random(RM)": rm_stats_rand[tid]["Sim_WCRT"],
+            # "Sim_WCRT_Random(DM)": dm_stats_rand[tid]["Sim_WCRT"],
+            # "Sim_WCRT_Random(EDF)": edf_stats_rand[tid]["Sim_WCRT"],
+
+            "RM_Missed_WCET": rm_stats_wcet[tid]["Missed"],
+            "DM_Missed_WCET": dm_stats_wcet[tid]["Missed"],
+            "EDF_Missed_WCET": edf_stats_wcet[tid]["Missed"],
+            #
+            # "RM_Missed_Random": rm_stats_rand[tid]["Missed"],
+            # "DM_Missed_Random": dm_stats_rand[tid]["Missed"],
+            # "EDF_Missed_Random": edf_stats_rand[tid]["Missed"],
+        })
+
+    df_comp = pd.DataFrame(comparison_data)
+    comp_text = df_comp.to_string(index=False)
+    print(comp_text)
+    log_only(comp_text)
+
+    # --------------------------------------------------------------
+    # Validation
+    # Only validate upper-bound property for schedulable tasks
+    # --------------------------------------------------------------
+    print_and_log("\n--- Upper-bound validation against WCET simulation ---")
+
+    valid = True
+    checked = 0
+    skipped = 0
+    for t in tasks:
+        tid = t.id
+
+        checks = [
+            ("RM", rm_analysis[tid]["Schedulable"], rm_analysis[tid]["WCRT_Analytic"], rm_stats_wcet[tid]["Sim_WCRT"]),
+            ("DM", dm_analysis[tid]["Schedulable"], dm_analysis[tid]["WCRT_Analytic"], dm_stats_wcet[tid]["Sim_WCRT"]),
+            ("EDF", edf_analysis[tid]["Schedulable"], edf_analysis[tid]["WCRT_Analytic"], edf_stats_wcet[tid]["Sim_WCRT"]),
+        ]
+
+        for alg, schedulable, analytic, sim in checks:
+            if not schedulable or analytic == float("inf"):
+                skipped += 1
+                continue
+
+            checked += 1
+            if sim > analytic:
+                msg = (
+                    f"DISCREPANCY ({alg}): T{tid} "
+                    f"simulated WCRT {sim} > analytic WCRT {analytic}"
+                )
+                print_and_log(msg)
+                valid = False
+
+    if valid:
+        print_and_log(
+            f"Upper-bound validation passed for analytically schedulable tasks "
+            f"({checked} checks, {skipped} skipped unschedulable/infinite cases)."
+        )
+    else:
+        print_and_log(
+            f"Upper-bound validation FAILED "
+            f"({checked} checks, {skipped} skipped unschedulable/infinite cases)."
+        )
     return max_wcrt
 
 
@@ -403,9 +403,10 @@ if __name__ == "__main__":
     for name in schedulable_files:
         f = TASKSETS_S_DIR / name
         if f.exists():
-            observed_wcrt = main(f)
-            if (observed_wcrt > max_wrct):
-                max_wrct = observed_wcrt
+            # observed_wcrt = main(f)
+            # if (observed_wcrt > max_wrct):
+            #     max_wrct = observed_wcrt
+            main(f)
         else:
             print_and_log(f"WARNING: File not found: {f}")
 
