@@ -6,7 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib import MatplotlibDeprecationWarning
 from pathlib import Path
-from utils import print_and_log, log_only
+from utils import set_log_file, print_and_log, log_only
 import warnings
 
 from model import Task
@@ -22,10 +22,12 @@ from simulation import Scheduler
 warnings.filterwarnings("ignore", category=MatplotlibDeprecationWarning)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-LOG_FILE = BASE_DIR / "results.txt"
-PLOTS_DIR = BASE_DIR / "resultplots_customTest"
+LOG_FILE = BASE_DIR / "logs" / "results"
+PLOTS_DIR = BASE_DIR / "resultplots"
 PLOTS_DIR.mkdir(parents=True, exist_ok=True)
 MAX_HISTORY_FOR_PLOTS = 200_000
+set_log_file(LOG_FILE)
+
 
 
 
@@ -66,50 +68,6 @@ def load_tasks_from_csv(filename):
         print_and_log(f"CSV value error in {filename}: {e}")
 
     return tasks
-
-
-# ----------------------------------------------------------------------
-# Gantt chart
-# ----------------------------------------------------------------------
-# def plot_gantt(history, tasks, algorithm, duration, prefix="", mode="wcet"):
-#     fig, ax = plt.subplots(figsize=(12, 6))
-#
-#     colors = plt.cm.get_cmap("tab10", len(tasks))
-#     task_colors = {t.id: colors(i) for i, t in enumerate(tasks)}
-#
-#     merged_blocks = []
-#     if history:
-#         current_start = history[0][0]
-#         current_tid = history[0][1]
-#
-#         for t, tid in history:
-#             if tid != current_tid:
-#                 if current_tid is not None:
-#                     merged_blocks.append((current_start, t - current_start, current_tid))
-#                 current_tid = tid
-#                 current_start = t
-#
-#         if current_tid is not None:
-#             last_t = history[-1][0] + 1
-#             merged_blocks.append((current_start, last_t - current_start, current_tid))
-#
-#     for start, length, tid in merged_blocks:
-#         ax.broken_barh([(start, length)], (tid * 10, 9), facecolors=task_colors[tid])
-#
-#     ax.set_ylim(0, max(t.id for t in tasks) * 10 + 10)
-#     ax.set_xlim(0, duration)
-#     ax.set_xlabel("Time")
-#     ax.set_ylabel("Task ID")
-#     ax.set_yticks([x * 10 + 4.5 for x in [t.id for t in tasks]])
-#     ax.set_yticklabels([f"T{t.id}" for t in tasks])
-#     ax.set_title(f"Gantt Chart - {algorithm} ({mode}) - {prefix}")
-#     ax.grid(True, axis="x")
-#
-#     out_path = PLOTS_DIR / f"gantt_{algorithm}_{mode}_{prefix}.png"
-#     plt.savefig(out_path)
-#     plt.close()
-#
-#     print_and_log(f"Gantt chart saved to {out_path}")
 
 def plot_gantt(history, tasks, algorithm, duration, prefix="", mode="wcet"):
     fig, ax = plt.subplots(figsize=(12, 6))
@@ -238,53 +196,21 @@ def main(task_file):
     # WCET simulation: for validating analytic bounds
     rm_sim_wcet = Scheduler(tasks, algorithm="RM", execution_mode="wcet", seed=42)
     _, rm_hist_wcet = rm_sim_wcet.run(duration, record_history=should_plot)
-    # _, rm_hist_wcet = rm_sim_wcet.run_with_wcrt_tracking(hyperperiods=2)
     rm_stats_wcet = rm_sim_wcet.analyze_results()
     if should_plot:
         plot_gantt(rm_hist_wcet, tasks, "RM", duration, prefix=prefix, mode="wcet")
 
     edf_sim_wcet = Scheduler(tasks, algorithm="EDF", execution_mode="wcet", seed=42)
     _, edf_hist_wcet = edf_sim_wcet.run(duration, record_history=should_plot)
-    # _, edf_hist_wcet = edf_sim_wcet.run_with_wcrt_tracking(hyperperiods=2)
     edf_stats_wcet = edf_sim_wcet.analyze_results()
     if should_plot:
         plot_gantt(edf_hist_wcet, tasks, "EDF", duration, prefix=prefix, mode="wcet")
 
     dm_sim_wcet = Scheduler(tasks, algorithm="DM", execution_mode="wcet", seed=42)
     _, dm_hist_wcet = dm_sim_wcet.run(duration, record_history=should_plot)
-    # _, dm_hist_wcet = dm_sim_wcet.run_with_wcrt_tracking(hyperperiods=2)
     dm_stats_wcet = dm_sim_wcet.analyze_results()
     if should_plot:
         plot_gantt(dm_hist_wcet, tasks, "DM", duration, prefix=prefix, mode="wcet")
-
-    # # Random simulation: for BCET~WCET runtime behavior
-    max_wcrt = -1
-    print("=" * 40)
-    print('RANDOM SIMULATION MODE ACTIVATED')
-    print("=" * 40)
-    rm_sim_rand = Scheduler(tasks, algorithm="RM", execution_mode="random", seed=42)
-    # rm_sim_rand.run(duration, record_history=False)
-    # rm_sim_rand.run_with_wcrt_tracking(10)
-    _, observed_wcrt = rm_sim_rand.run_until_wcrt_converges()
-    if (observed_wcrt > max_wcrt):
-        max_wcrt = observed_wcrt
-    rm_stats_rand = rm_sim_rand.analyze_results()
-
-    edf_sim_rand = Scheduler(tasks, algorithm="EDF", execution_mode="random", seed=42)
-    # edf_sim_rand.run(duration, record_history=False)
-    # edf_sim_rand.run_with_wcrt_tracking(10)
-    _, observed_wcrt = edf_sim_rand.run_until_wcrt_converges()
-    if (observed_wcrt > max_wcrt):
-        max_wcrt = observed_wcrt
-    edf_stats_rand = edf_sim_rand.analyze_results()
-
-    dm_sim_rand = Scheduler(tasks, algorithm="DM", execution_mode="random", seed=42)
-    # dm_sim_rand.run(duration, record_history=False)
-    # dm_sim_rand.run_with_wcrt_tracking(10)
-    _, observed_wcrt = edf_sim_rand.run_until_wcrt_converges()
-    if (observed_wcrt > max_wcrt):
-        max_wcrt = observed_wcrt
-    dm_stats_rand = dm_sim_rand.analyze_results()
 
     # # --------------------------------------------------------------
     # # Comparison report
@@ -307,18 +233,10 @@ def main(task_file):
             "Sim_WCRT_WCET(RM)": rm_stats_wcet[tid]["Sim_WCRT"],
             "Sim_WCRT_WCET(DM)": dm_stats_wcet[tid]["Sim_WCRT"],
             "Sim_WCRT_WCET(EDF)": edf_stats_wcet[tid]["Sim_WCRT"],
-            #
-            # "Sim_WCRT_Random(RM)": rm_stats_rand[tid]["Sim_WCRT"],
-            # "Sim_WCRT_Random(DM)": dm_stats_rand[tid]["Sim_WCRT"],
-            # "Sim_WCRT_Random(EDF)": edf_stats_rand[tid]["Sim_WCRT"],
 
             "RM_Missed_WCET": rm_stats_wcet[tid]["Missed"],
             "DM_Missed_WCET": dm_stats_wcet[tid]["Missed"],
             "EDF_Missed_WCET": edf_stats_wcet[tid]["Missed"],
-            #
-            # "RM_Missed_Random": rm_stats_rand[tid]["Missed"],
-            # "DM_Missed_Random": dm_stats_rand[tid]["Missed"],
-            # "EDF_Missed_Random": edf_stats_rand[tid]["Missed"],
         })
 
     df_comp = pd.DataFrame(comparison_data)
@@ -368,7 +286,7 @@ def main(task_file):
             f"Upper-bound validation FAILED "
             f"({checked} checks, {skipped} skipped unschedulable/infinite cases)."
         )
-    return max_wcrt
+
 
 
 # ----------------------------------------------------------------------
@@ -379,7 +297,7 @@ if __name__ == "__main__":
         LOG_FILE.unlink()
 
     TASKSETS_NS_DIR = BASE_DIR / "tasksets" / "unschedulable"
-    TASKSETS_S_DIR = BASE_DIR / "tasksets" / "simulation_tasksets"
+    TASKSETS_S_DIR = BASE_DIR / "tasksets" / "schedulable" / "High_utilization"
 
     schedulable_files = [
         f for f in os.listdir(TASKSETS_S_DIR)
@@ -399,34 +317,29 @@ if __name__ == "__main__":
     print_and_log("\n" + "=" * 60)
     print_and_log("  TASK SETS SCHEDULABLE BY RM/DM AND EDF")
     print_and_log("=" * 60)
-    max_wrct = -1
     for name in schedulable_files:
         f = TASKSETS_S_DIR / name
         if f.exists():
-            # observed_wcrt = main(f)
-            # if (observed_wcrt > max_wrct):
-            #     max_wrct = observed_wcrt
             main(f)
         else:
             print_and_log(f"WARNING: File not found: {f}")
 
-    # print_and_log("\n" + "=" * 60)
-    # print_and_log("  TASK SETS NOT SCHEDULABLE BY RM/DM (EDF MAY SUCCEED)")
-    # print_and_log("=" * 60)
-    # for name in rm_unsched_but_edf_possible_files:
-    #     f = TASKSETS_NS_DIR / name
-    #     if f.exists():
-    #         main(f)
-    #     else:
-    #         print_and_log(f"WARNING: File not found: {f}")
-    #
-    # print_and_log("\n" + "=" * 60)
-    # print_and_log("  OVERLOADED TASK SETS (NOT SCHEDULABLE ON ONE CPU)")
-    # print_and_log("=" * 60)
-    # for name in overloaded_files:
-    #     f = TASKSETS_NS_DIR / name
-    #     if f.exists():
-    #         main(f)
-    #     else:
-    #         print_and_log(f"WARNING: File not found: {f}")
-    print(max_wrct)
+    print_and_log("\n" + "=" * 60)
+    print_and_log("  TASK SETS NOT SCHEDULABLE BY RM/DM (EDF MAY SUCCEED)")
+    print_and_log("=" * 60)
+    for name in rm_unsched_but_edf_possible_files:
+        f = TASKSETS_NS_DIR / name
+        if f.exists():
+            main(f)
+        else:
+            print_and_log(f"WARNING: File not found: {f}")
+
+    print_and_log("\n" + "=" * 60)
+    print_and_log("  OVERLOADED TASK SETS (NOT SCHEDULABLE ON ONE CPU)")
+    print_and_log("=" * 60)
+    for name in overloaded_files:
+        f = TASKSETS_NS_DIR / name
+        if f.exists():
+            main(f)
+        else:
+            print_and_log(f"WARNING: File not found: {f}")

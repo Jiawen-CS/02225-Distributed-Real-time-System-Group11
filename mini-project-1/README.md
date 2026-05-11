@@ -18,7 +18,7 @@ The implementation is located in [src/main.py](/Users/powerbear/Documents/dtu/02
 pip install -r requirements.txt
 ```
 
-## Run
+## Run the analytical
 
 From the project root:
 
@@ -28,7 +28,10 @@ python src/main.py
 
 This runs the selected schedulable, RM/DM-unschedulable, and overloaded task sets from the `tasksets/` directory.
 
-## Output
+If you want to run custom test sets, then change the variable TASKSETS_NS_DIR for custom unschedulable task sets,
+or TASKSETS_S_DIR for custom schedulable task sets. The custom task sets lie within the sub-directories.
+
+### Output
 
 The program prints:
 
@@ -43,8 +46,33 @@ Generated files:
 - plots are saved in `resultplots/`
 - console output is also saved to `results.txt`
 
-## Notes
+### Notes
 
 - For very large hyperperiods, Gantt chart generation is skipped automatically to avoid excessive runtime and memory use.
-- Random simulations do not store full execution histories, which keeps large task sets practical to run.
 - `Validation passed` means the simulated WCET response time did not exceed the analytic bound for tasks that were analytically schedulable. Unschedulable or infinite-WCRT cases are reported separately and skipped from that upper-bound check.
+
+## Choosing a reasonable number of hyper-periods for simulation
+
+We have chosen some tasks for simulation. We first simulate all the chosen task sets such that we observe
+there is no new WCRT observed for each task set, then choosing the maximum one.
+
+Run 
+```bash
+python src/pick_hyperiod.py
+```
+
+## Simulation
+To do simulation, you run:
+```bash
+python src/simulation.py
+```
+
+The simulation contains five simulations mode:
+1. Deterministic WCET.
+2. Deterministic BCET.
+3. Uniformly random execution time.
+4. BCET-biased execution time.
+5. WCET-biased execution time.
+
+All results will be log into logs/simulation.txt. Moreover, the code will saves the Gantt chart and the running time
+distribution of each job of each task within a task set, according to each schedulers.

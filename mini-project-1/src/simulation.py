@@ -3,9 +3,14 @@ import math
 import copy
 import random
 import heapq
+import Path
 
 
-from utils import print_and_log, log_only
+from utils import print_and_log, set_log_file
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+LOG_FILE = BASE_DIR / "logs" / "results.txt"
+set_log_file(LOG_FILE)
 
 
 class Scheduler:
@@ -205,74 +210,6 @@ class Scheduler:
                 break
 
         return global_wcrt, max_hp
-
-    # def run(self, duration=None, record_history=True):
-    #     if duration is None:
-    #         duration = self.hyperperiod
-    #
-    #     print(
-    #         f"--- Running {self.algorithm} simulation "
-    #         f"({self.execution_mode}) for {duration} cycles ---"
-    #     )
-    #
-    #     self.time = 0
-    #     self.history = []
-    #     self.completed_jobs = []
-    #
-    #     release_buckets = {}
-    #     for task in self.tasks:
-    #         job_id = 0
-    #         while job_id * task.period < duration:
-    #             release_time = job_id * task.period
-    #             exec_time = self._get_exec_time(task)
-    #             release_buckets.setdefault(release_time, []).append(
-    #                 Job(
-    #                     task_id=task.id,
-    #                     job_id=job_id,
-    #                     arrival_time=release_time,
-    #                     absolute_deadline=release_time + task.deadline,
-    #                     remaining_time=exec_time,
-    #                 )
-    #             )
-    #             job_id += 1
-    #
-    #     ready_heap = []
-    #
-    #     for t in range(duration):
-    #         self.time = t
-    #
-    #         # Release new jobs
-    #         for job in release_buckets.get(t, []):
-    #             heapq.heappush(ready_heap, (self._job_priority(job), job))
-    #
-    #         # Execute one time unit
-    #         if ready_heap:
-    #             _, current_job = heapq.heappop(ready_heap)
-    #
-    #             if current_job.start_time == -1:
-    #                 current_job.start_time = t
-    #
-    #             if record_history:
-    #                 self.history.append((t, current_job.task_id))
-    #             current_job.remaining_time -= 1
-    #
-    #             if current_job.remaining_time == 0:
-    #                 current_job.finish_time = t + 1
-    #                 current_job.force_finished = False
-    #                 self.completed_jobs.append(current_job)
-    #             else:
-    #                 heapq.heappush(ready_heap, (self._job_priority(current_job), current_job))
-    #         else:
-    #             if record_history:
-    #                 self.history.append((t, None))
-    #
-    #     # Jobs still unfinished at simulation end
-    #     for _, job in ready_heap:
-    #         job.force_finished = True
-    #         job.finish_time = -1
-    #         self.completed_jobs.append(job)
-    #     return self.completed_jobs, self.history
-
 
     def run(self, duration=None, record_history=True):
         if duration is None:
