@@ -61,7 +61,6 @@ Run
 python -m src.pick_hyperiod
 ```
 
-- plots are saved in `resultplots_customTest/`
 - console output is also saved to `logs/pick_hyperiod_results.txt`
 
 ## Simulation
@@ -77,5 +76,8 @@ The simulation contains five simulations mode:
 4. BCET-biased execution time.
 5. WCET-biased execution time.
 
-All results will be log into logs/simulation.txt. Moreover, the code will saves the Gantt chart and the running time
+- console output is also saved to `logs/simulation.txt`
+- plots are saved in `plots_random_vs_analytic/`
+
+Moreover, the code will saves the Gantt chart and the running time
 distribution of each job of each task within a task set, according to each schedulers.

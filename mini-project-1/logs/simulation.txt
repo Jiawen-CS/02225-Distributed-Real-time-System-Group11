@@ -3765,3 +3765,1510 @@ Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-D
 Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_wcet_Task_9_distribution.png
 
 Finished.
+
+============================================================
+TASK SET: Full_utilization_NonUnique_small_taskset
+============================================================
+
+========================================
+ANALYTICAL RESULTS
+========================================
+Utilization U        : 1.0000
+LL Bound             : 0.7435
+LL Test Passed       : False
+
+--- RM ANALYSIS ---
+     Task Period Deadline WCET WCRT_Analytic Schedulable
+4  Task 4     20       20    1             1        True
+2  Task 2     25       25    5             6        True
+3  Task 3     50       50   10            16        True
+0  Task 0    100      100   45            90        True
+1  Task 1    200      200   20           200        True
+
+--- DM ANALYSIS ---
+     Task Period Deadline WCET WCRT_Analytic Schedulable
+4  Task 4     20       20    1             1        True
+2  Task 2     25       25    5             6        True
+3  Task 3     50       50   10            16        True
+0  Task 0    100      100   45            90        True
+1  Task 1    200      200   20           200        True
+
+--- EDF ANALYSIS ---
+     Task Period Deadline WCET Hyperperiod WCRT_Analytic Schedulable
+0  Task 0    100      100   45         200            84        True
+1  Task 1    200      200   20         200           132        True
+2  Task 2     25       25    5         200            24        True
+3  Task 3     50       50   10         200            44        True
+4  Task 4     20       20    1         200            20        True
+
+========================================
+SIMULATION RESULTS
+========================================
+
+----------------------------------------
+BCET SIMULATION
+----------------------------------------
+Running RM (BCET) simulation for 45 hyperperiods
+Running DM (BCET) simulation for 45 hyperperiods
+Running EDF (BCET) simulation for 45 hyperperiods
+
+----------------------------------------
+WCET SIMULATION
+----------------------------------------
+Running RM (WCET) simulation for 45 hyperperiods
+Running DM (WCET) simulation for 45 hyperperiods
+Running EDF (WCET) simulation for 45 hyperperiods
+
+----------------------------------------
+RANDOM_UNIFORM SIMULATION
+----------------------------------------
+Running RM (RANDOM UNIFORM) simulation for 45 hyperperiods
+Running DM (RANDOM UNIFORM) simulation for 45 hyperperiods
+Running EDF (RANDOM UNIFORM) simulation for 45 hyperperiods
+
+----------------------------------------
+RANDOM_BCET SIMULATION
+----------------------------------------
+Running RM (RANDOM BCET) simulation for 45 hyperperiods
+Running DM (RANDOM BCET) simulation for 45 hyperperiods
+Running EDF (RANDOM BCET) simulation for 45 hyperperiods
+
+----------------------------------------
+RANDOM_WCET SIMULATION
+----------------------------------------
+Running RM (RANDOM WCET) simulation for 45 hyperperiods
+Running DM (RANDOM WCET) simulation for 45 hyperperiods
+Running EDF (RANDOM WCET) simulation for 45 hyperperiods
+
+========================================
+COMPARISON REPORT
+========================================
+
+------------------------------------------------------------
+ANALYTICAL vs BCET
+------------------------------------------------------------
+Task  RM_Analytic  RM_Observed  RM_Gap  RM_Missed  DM_Analytic  DM_Observed  DM_Gap  DM_Missed  EDF_Analytic  EDF_Observed  EDF_Gap  EDF_Missed
+  T0           90           10      80          0           90           10      80          0            84            10       74           0
+  T1          200           16     184          0          200           16     184          0           132            16      116           0
+  T2            6            2       4          0            6            2       4          0            24             2       22           0
+  T3           16            4      12          0           16            4      12          0            44             4       40           0
+  T4            1            1       0          0            1            1       0          0            20             1       19           0
+
+Saved CSV: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/comparison_csv/Full_utilization_NonUnique_small_taskset_bcet_comparison.csv
+
+Gap Statistics:
+
+RM:
+  Gaps     : [80, 184, 4, 12, 0]
+  Mean Gap : 56.0000
+  Variance : 4947.2000
+
+DM:
+  Gaps     : [80, 184, 4, 12, 0]
+  Mean Gap : 56.0000
+  Variance : 4947.2000
+
+EDF:
+  Gaps     : [74, 116, 22, 40, 19]
+  Mean Gap : 54.2000
+  Variance : 1337.7600
+
+------------------------------------------------------------
+ANALYTICAL vs WCET
+------------------------------------------------------------
+Task  RM_Analytic  RM_Observed  RM_Gap  RM_Missed  DM_Analytic  DM_Observed  DM_Gap  DM_Missed  EDF_Analytic  EDF_Observed  EDF_Gap  EDF_Missed
+  T0           90           90       0          0           90           90       0          0            84            84        0           0
+  T1          200          200       0          0          200          200       0          0           132           132        0           0
+  T2            6            6       0          0            6            6       0          0            24            24        0           0
+  T3           16           16       0          0           16           16       0          0            44            44        0           0
+  T4            1            1       0          0            1            1       0          0            20            20        0           0
+
+Saved CSV: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/comparison_csv/Full_utilization_NonUnique_small_taskset_wcet_comparison.csv
+
+Gap Statistics:
+
+RM:
+  Gaps     : [0, 0, 0, 0, 0]
+  Mean Gap : 0.0000
+  Variance : 0.0000
+
+DM:
+  Gaps     : [0, 0, 0, 0, 0]
+  Mean Gap : 0.0000
+  Variance : 0.0000
+
+EDF:
+  Gaps     : [0, 0, 0, 0, 0]
+  Mean Gap : 0.0000
+  Variance : 0.0000
+
+------------------------------------------------------------
+ANALYTICAL vs RANDOM UNIFORM
+------------------------------------------------------------
+Task  RM_Analytic  RM_Observed  RM_Gap  RM_Missed  DM_Analytic  DM_Observed  DM_Gap  DM_Missed  EDF_Analytic  EDF_Observed  EDF_Gap  EDF_Missed
+  T0           90           82       8          0           90           82       8          0            84            64       20           0
+  T1          200           89     111          0          200           89     111          0           132            91       41           0
+  T2            6            6       0          0            6            6       0          0            24             6       18           0
+  T3           16           16       0          0           16           16       0          0            44            22       22           0
+  T4            1            1       0          0            1            1       0          0            20             1       19           0
+
+Saved CSV: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/comparison_csv/Full_utilization_NonUnique_small_taskset_random_uniform_comparison.csv
+
+Gap Statistics:
+
+RM:
+  Gaps     : [8, 111, 0, 0, 0]
+  Mean Gap : 23.8000
+  Variance : 1910.5600
+
+DM:
+  Gaps     : [8, 111, 0, 0, 0]
+  Mean Gap : 23.8000
+  Variance : 1910.5600
+
+EDF:
+  Gaps     : [20, 41, 18, 22, 19]
+  Mean Gap : 24.0000
+  Variance : 74.0000
+
+------------------------------------------------------------
+ANALYTICAL vs RANDOM BCET
+------------------------------------------------------------
+Task  RM_Analytic  RM_Observed  RM_Gap  RM_Missed  DM_Analytic  DM_Observed  DM_Gap  DM_Missed  EDF_Analytic  EDF_Observed  EDF_Gap  EDF_Missed
+  T0           90           37      53          0           90           37      53          0            84            39       45           0
+  T1          200           44     156          0          200           44     156          0           132            48       84           0
+  T2            6            4       2          0            6            4       2          0            24             4       20           0
+  T3           16           10       6          0           16           10       6          0            44             9       35           0
+  T4            1            1       0          0            1            1       0          0            20             1       19           0
+
+Saved CSV: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/comparison_csv/Full_utilization_NonUnique_small_taskset_random_bcet_comparison.csv
+
+Gap Statistics:
+
+RM:
+  Gaps     : [53, 156, 2, 6, 0]
+  Mean Gap : 43.4000
+  Variance : 3553.4400
+
+DM:
+  Gaps     : [53, 156, 2, 6, 0]
+  Mean Gap : 43.4000
+  Variance : 3553.4400
+
+EDF:
+  Gaps     : [45, 84, 20, 35, 19]
+  Mean Gap : 40.6000
+  Variance : 565.0400
+
+------------------------------------------------------------
+ANALYTICAL vs RANDOM WCET
+------------------------------------------------------------
+Task  RM_Analytic  RM_Observed  RM_Gap  RM_Missed  DM_Analytic  DM_Observed  DM_Gap  DM_Missed  EDF_Analytic  EDF_Observed  EDF_Gap  EDF_Missed
+  T0           90           85       5          0           90           85       5          0            84            72       12           0
+  T1          200          165      35          0          200          165      35          0           132           115       17           0
+  T2            6            6       0          0            6            6       0          0            24            10       14           0
+  T3           16           16       0          0           16           16       0          0            44            31       13           0
+  T4            1            1       0          0            1            1       0          0            20             6       14           0
+
+Saved CSV: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/comparison_csv/Full_utilization_NonUnique_small_taskset_random_wcet_comparison.csv
+
+Gap Statistics:
+
+RM:
+  Gaps     : [5, 35, 0, 0, 0]
+  Mean Gap : 8.0000
+  Variance : 186.0000
+
+DM:
+  Gaps     : [5, 35, 0, 0, 0]
+  Mean Gap : 8.0000
+  Variance : 186.0000
+
+EDF:
+  Gaps     : [12, 17, 14, 13, 14]
+  Mean Gap : 14.0000
+  Variance : 2.8000
+
+Generating distribution plots...
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_random_uniform_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_random_uniform_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_random_uniform_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_random_uniform_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_random_uniform_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_random_uniform_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_random_uniform_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_random_uniform_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_random_uniform_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_random_uniform_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_random_uniform_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_random_uniform_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_random_uniform_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_random_uniform_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_random_uniform_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_random_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_random_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_random_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_random_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_random_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_random_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_random_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_random_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_random_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_random_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_random_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_random_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_random_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_random_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_random_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_random_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_random_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_random_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_random_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_RM_random_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_random_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_random_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_random_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_random_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_DM_random_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_random_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_random_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_random_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_random_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Full_utilization_NonUnique_small_taskset_EDF_random_wcet_Task_4_distribution.png
+
+Finished.
+
+============================================================
+TASK SET: DM_unschedulable
+============================================================
+
+========================================
+ANALYTICAL RESULTS
+========================================
+Utilization U        : 0.5879
+LL Bound             : 0.7348
+LL Test Passed       : True
+
+--- RM ANALYSIS ---
+     Task Period Deadline WCET WCRT_Analytic Schedulable
+4  Task 4     21       21    2             2        True
+2  Task 2     40       30    2             4        True
+1  Task 1     60       33   20            26        True
+5  Task 5     65       21    2            26       False
+3  Task 3     70       21    2            28       False
+0  Task 0    100       20    5            33       False
+
+--- DM ANALYSIS ---
+     Task Period Deadline WCET WCRT_Analytic Schedulable
+0  Task 0    100       20    5             5        True
+3  Task 3     70       21    2             7        True
+4  Task 4     21       21    2             9        True
+5  Task 5     65       21    2            11        True
+2  Task 2     40       30    2            13        True
+1  Task 1     60       33   20            35       False
+
+--- EDF ANALYSIS ---
+     Task Period Deadline WCET Hyperperiod WCRT_Analytic Schedulable
+0  Task 0    100       20    5       54600            13        True
+1  Task 1     60       33   20       54600            33        True
+2  Task 2     40       30    2       54600            15        True
+3  Task 3     70       21    2       54600            13        True
+4  Task 4     21       21    2       54600            19        True
+5  Task 5     65       21    2       54600            18        True
+
+========================================
+SIMULATION RESULTS
+========================================
+
+----------------------------------------
+BCET SIMULATION
+----------------------------------------
+Running RM (BCET) simulation for 45 hyperperiods
+Running DM (BCET) simulation for 45 hyperperiods
+Running EDF (BCET) simulation for 45 hyperperiods
+
+----------------------------------------
+WCET SIMULATION
+----------------------------------------
+Running RM (WCET) simulation for 45 hyperperiods
+Running DM (WCET) simulation for 45 hyperperiods
+Running EDF (WCET) simulation for 45 hyperperiods
+
+----------------------------------------
+RANDOM_UNIFORM SIMULATION
+----------------------------------------
+Running RM (RANDOM UNIFORM) simulation for 45 hyperperiods
+Running DM (RANDOM UNIFORM) simulation for 45 hyperperiods
+Running EDF (RANDOM UNIFORM) simulation for 45 hyperperiods
+
+----------------------------------------
+RANDOM_BCET SIMULATION
+----------------------------------------
+Running RM (RANDOM BCET) simulation for 45 hyperperiods
+Running DM (RANDOM BCET) simulation for 45 hyperperiods
+Running EDF (RANDOM BCET) simulation for 45 hyperperiods
+
+----------------------------------------
+RANDOM_WCET SIMULATION
+----------------------------------------
+Running RM (RANDOM WCET) simulation for 45 hyperperiods
+Running DM (RANDOM WCET) simulation for 45 hyperperiods
+Running EDF (RANDOM WCET) simulation for 45 hyperperiods
+
+========================================
+COMPARISON REPORT
+========================================
+
+------------------------------------------------------------
+ANALYTICAL vs BCET
+------------------------------------------------------------
+Task  RM_Analytic  RM_Observed  RM_Gap  RM_Missed  DM_Analytic  DM_Observed  DM_Gap  DM_Missed  EDF_Analytic  EDF_Observed  EDF_Gap  EDF_Missed
+  T0           33            6      27          0            5            1       4          0            13             1       12           0
+  T1           26            3      23          0           35            6      29          0            33             6       27           0
+  T2            4            2       2          0           13            5       8          0            15             5       10           0
+  T3           28            5      23          0            7            2       5          0            13             2       11           0
+  T4            2            1       1          0            9            3       6          0            19             3       16           0
+  T5           26            4      22          0           11            4       7          0            18             4       14           0
+
+Saved CSV: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/comparison_csv/DM_unschedulable_bcet_comparison.csv
+
+Gap Statistics:
+
+RM:
+  Gaps     : [27, 23, 2, 23, 1, 22]
+  Mean Gap : 16.3333
+  Variance : 112.5556
+
+DM:
+  Gaps     : [4, 29, 8, 5, 6, 7]
+  Mean Gap : 9.8333
+  Variance : 75.1389
+
+EDF:
+  Gaps     : [12, 27, 10, 11, 16, 14]
+  Mean Gap : 15.0000
+  Variance : 32.6667
+
+------------------------------------------------------------
+ANALYTICAL vs WCET
+------------------------------------------------------------
+Task  RM_Analytic  RM_Observed  RM_Gap  RM_Missed  DM_Analytic  DM_Observed  DM_Gap  DM_Missed  EDF_Analytic  EDF_Observed  EDF_Gap  EDF_Missed
+  T0           33           35      -2       8190            5            5       0          0            13            13        0           0
+  T1           26           26       0          0           35           35       0       4860            33            33        0           0
+  T2            4            4       0          0           13           13       0          0            15            15        0           0
+  T3           28           30      -2       5850            7            7       0          0            13            13        0           0
+  T4            2            2       0          0            9            9       0          0            19            19        0           0
+  T5           26           28      -2       4050           11           11       0          0            18            18        0           0
+
+Saved CSV: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/comparison_csv/DM_unschedulable_wcet_comparison.csv
+
+Gap Statistics:
+
+RM:
+  Gaps     : [-2, 0, 0, -2, 0, -2]
+  Mean Gap : -1.0000
+  Variance : 1.0000
+
+DM:
+  Gaps     : [0, 0, 0, 0, 0, 0]
+  Mean Gap : 0.0000
+  Variance : 0.0000
+
+EDF:
+  Gaps     : [0, 0, 0, 0, 0, 0]
+  Mean Gap : 0.0000
+  Variance : 0.0000
+
+------------------------------------------------------------
+ANALYTICAL vs RANDOM UNIFORM
+------------------------------------------------------------
+Task  RM_Analytic  RM_Observed  RM_Gap  RM_Missed  DM_Analytic  DM_Observed  DM_Gap  DM_Missed  EDF_Analytic  EDF_Observed  EDF_Gap  EDF_Missed
+  T0           33           34      -1       2258            5            5       0          0            13            12        1           0
+  T1           26           26       0          0           35           35       0         10            33            33        0           0
+  T2            4            4       0          0           13           13       0          0            15            15        0           0
+  T3           28           30      -2       1054            7            7       0          0            13            11        2           0
+  T4            2            2       0          0            9            9       0          0            19            17        2           0
+  T5           26           28      -2        518           11           10       1          0            18            16        2           0
+
+Saved CSV: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/comparison_csv/DM_unschedulable_random_uniform_comparison.csv
+
+Gap Statistics:
+
+RM:
+  Gaps     : [-1, 0, 0, -2, 0, -2]
+  Mean Gap : -0.8333
+  Variance : 0.8056
+
+DM:
+  Gaps     : [0, 0, 0, 0, 0, 1]
+  Mean Gap : 0.1667
+  Variance : 0.1389
+
+EDF:
+  Gaps     : [1, 0, 0, 2, 2, 2]
+  Mean Gap : 1.1667
+  Variance : 0.8056
+
+------------------------------------------------------------
+ANALYTICAL vs RANDOM BCET
+------------------------------------------------------------
+Task  RM_Analytic  RM_Observed  RM_Gap  RM_Missed  DM_Analytic  DM_Observed  DM_Gap  DM_Missed  EDF_Analytic  EDF_Observed  EDF_Gap  EDF_Missed
+  T0           33           18      15          0            5            4       1          0            13             4        9           0
+  T1           26           18       8          0           35           19      16          0            33            21       12           0
+  T2            4            4       0          0           13            7       6          0            15             8        7           0
+  T3           28           19       9          0            7            5       2          0            13             5        8           0
+  T4            2            2       0          0            9            6       3          0            19             6       13           0
+  T5           26           17       9          0           11            6       5          0            18             7       11           0
+
+Saved CSV: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/comparison_csv/DM_unschedulable_random_bcet_comparison.csv
+
+Gap Statistics:
+
+RM:
+  Gaps     : [15, 8, 0, 9, 0, 9]
+  Mean Gap : 6.8333
+  Variance : 28.4722
+
+DM:
+  Gaps     : [1, 16, 6, 2, 3, 5]
+  Mean Gap : 5.5000
+  Variance : 24.9167
+
+EDF:
+  Gaps     : [9, 12, 7, 8, 13, 11]
+  Mean Gap : 10.0000
+  Variance : 4.6667
+
+------------------------------------------------------------
+ANALYTICAL vs RANDOM WCET
+------------------------------------------------------------
+Task  RM_Analytic  RM_Observed  RM_Gap  RM_Missed  DM_Analytic  DM_Observed  DM_Gap  DM_Missed  EDF_Analytic  EDF_Observed  EDF_Gap  EDF_Missed
+  T0           33           35      -2       7198            5            5       0          0            13            13        0           0
+  T1           26           26       0          0           35           35       0        141            33            32        1           0
+  T2            4            4       0          0           13           13       0          0            15            15        0           0
+  T3           28           30      -2       3696            7            7       0          0            13            13        0           0
+  T4            2            2       0          0            9            9       0          0            19            19        0           0
+  T5           26           28      -2       1868           11           11       0          0            18            17        1           0
+
+Saved CSV: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/comparison_csv/DM_unschedulable_random_wcet_comparison.csv
+
+Gap Statistics:
+
+RM:
+  Gaps     : [-2, 0, 0, -2, 0, -2]
+  Mean Gap : -1.0000
+  Variance : 1.0000
+
+DM:
+  Gaps     : [0, 0, 0, 0, 0, 0]
+  Mean Gap : 0.0000
+  Variance : 0.0000
+
+EDF:
+  Gaps     : [0, 1, 0, 0, 0, 1]
+  Mean Gap : 0.3333
+  Variance : 0.2222
+
+Generating distribution plots...
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_bcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_bcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_bcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_wcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_wcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_wcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_random_uniform_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_random_uniform_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_random_uniform_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_random_uniform_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_random_uniform_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_random_uniform_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_random_uniform_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_random_uniform_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_random_uniform_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_random_uniform_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_random_uniform_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_random_uniform_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_random_uniform_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_random_uniform_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_random_uniform_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_random_uniform_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_random_uniform_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_random_uniform_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_random_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_random_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_random_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_random_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_random_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_random_bcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_random_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_random_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_random_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_random_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_random_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_random_bcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_random_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_random_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_random_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_random_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_random_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_random_bcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_random_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_random_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_random_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_random_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_random_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_RM_random_wcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_random_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_random_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_random_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_random_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_random_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_DM_random_wcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_random_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_random_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_random_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_random_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_random_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/DM_unschedulable_EDF_random_wcet_Task_5_distribution.png
+
+Finished.
+
+============================================================
+TASK SET: Midium_utilization_Unique_period_different_deadline_smaller_taskset
+============================================================
+
+========================================
+ANALYTICAL RESULTS
+========================================
+Utilization U        : 0.5143
+LL Bound             : 0.7136
+LL Test Passed       : True
+
+--- RM ANALYSIS ---
+       Task Period Deadline WCET WCRT_Analytic Schedulable
+4    Task 4     20       20    1             1        True
+2    Task 2     35       10    4             5        True
+3    Task 3     60       50    6            11        True
+5    Task 5     60       60    3            14        True
+11  Task 11     60       40    3            17        True
+0    Task 0    120      100    3            20        True
+8    Task 8    120      100    6            27        True
+1    Task 1    240      200    6            33        True
+6    Task 6    240      240    2            35        True
+7    Task 7    240      105    2            42        True
+9    Task 9    360      279    6            48        True
+10  Task 10    360      300    6            54        True
+
+--- DM ANALYSIS ---
+       Task Period Deadline WCET WCRT_Analytic Schedulable
+2    Task 2     35       10    4             4        True
+4    Task 4     20       20    1             5        True
+11  Task 11     60       40    3             8        True
+3    Task 3     60       50    6            14        True
+5    Task 5     60       60    3            17        True
+0    Task 0    120      100    3            20        True
+8    Task 8    120      100    6            27        True
+7    Task 7    240      105    2            29        True
+1    Task 1    240      200    6            35        True
+6    Task 6    240      240    2            42        True
+9    Task 9    360      279    6            48        True
+10  Task 10    360      300    6            54        True
+
+--- EDF ANALYSIS ---
+       Task Period Deadline WCET Hyperperiod WCRT_Analytic Schedulable
+0    Task 0    120      100    3        5040            20        True
+1    Task 1    240      200    6        5040            35        True
+2    Task 2     35       10    4        5040             4        True
+3    Task 3     60       50    6        5040            14        True
+4    Task 4     20       20    1        5040             5        True
+5    Task 5     60       60    3        5040            17        True
+6    Task 6    240      240    2        5040            42        True
+7    Task 7    240      105    2        5040            29        True
+8    Task 8    120      100    6        5040            27        True
+9    Task 9    360      279    6        5040            48        True
+10  Task 10    360      300    6        5040            54        True
+11  Task 11     60       40    3        5040             8        True
+
+========================================
+SIMULATION RESULTS
+========================================
+
+----------------------------------------
+BCET SIMULATION
+----------------------------------------
+Running RM (BCET) simulation for 45 hyperperiods
+Running DM (BCET) simulation for 45 hyperperiods
+Running EDF (BCET) simulation for 45 hyperperiods
+
+----------------------------------------
+WCET SIMULATION
+----------------------------------------
+Running RM (WCET) simulation for 45 hyperperiods
+Running DM (WCET) simulation for 45 hyperperiods
+Running EDF (WCET) simulation for 45 hyperperiods
+
+----------------------------------------
+RANDOM_UNIFORM SIMULATION
+----------------------------------------
+Running RM (RANDOM UNIFORM) simulation for 45 hyperperiods
+Running DM (RANDOM UNIFORM) simulation for 45 hyperperiods
+Running EDF (RANDOM UNIFORM) simulation for 45 hyperperiods
+
+----------------------------------------
+RANDOM_BCET SIMULATION
+----------------------------------------
+Running RM (RANDOM BCET) simulation for 45 hyperperiods
+Running DM (RANDOM BCET) simulation for 45 hyperperiods
+Running EDF (RANDOM BCET) simulation for 45 hyperperiods
+
+----------------------------------------
+RANDOM_WCET SIMULATION
+----------------------------------------
+Running RM (RANDOM WCET) simulation for 45 hyperperiods
+Running DM (RANDOM WCET) simulation for 45 hyperperiods
+Running EDF (RANDOM WCET) simulation for 45 hyperperiods
+
+========================================
+COMPARISON REPORT
+========================================
+
+------------------------------------------------------------
+ANALYTICAL vs BCET
+------------------------------------------------------------
+Task  RM_Analytic  RM_Observed  RM_Gap  RM_Missed  DM_Analytic  DM_Observed  DM_Gap  DM_Missed  EDF_Analytic  EDF_Observed  EDF_Gap  EDF_Missed
+  T0           20            7      13          0           20            7      13          0            20             7       13           0
+  T1           33           12      21          0           35           13      22          0            35            13       22           0
+  T2            5            2       3          0            4            1       3          0             4             1        3           0
+  T3           11            4       7          0           14            5       9          0            14             5        9           0
+  T4            1            1       0          0            5            2       3          0             5             2        3           0
+  T5           14            5       9          0           17            6      11          0            17             6       11           0
+  T6           35           13      22          0           42           14      28          0            42            14       28           0
+  T7           42           14      28          0           29           10      19          0            29            10       19           0
+  T8           27            9      18          0           27            9      18          0            27             9       18           0
+  T9           48           19      29          0           48           19      29          0            48            19       29           0
+ T10           54           25      29          0           54           25      29          0            54            25       29           0
+ T11           17            6      11          0            8            3       5          0             8             3        5           0
+
+Saved CSV: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/comparison_csv/Midium_utilization_Unique_period_different_deadline_smaller_taskset_bcet_comparison.csv
+
+Gap Statistics:
+
+RM:
+  Gaps     : [13, 21, 3, 7, 0, 9, 22, 28, 18, 29, 29, 11]
+  Mean Gap : 15.8333
+  Variance : 94.6389
+
+DM:
+  Gaps     : [13, 22, 3, 9, 3, 11, 28, 19, 18, 29, 29, 5]
+  Mean Gap : 15.7500
+  Variance : 89.3542
+
+EDF:
+  Gaps     : [13, 22, 3, 9, 3, 11, 28, 19, 18, 29, 29, 5]
+  Mean Gap : 15.7500
+  Variance : 89.3542
+
+------------------------------------------------------------
+ANALYTICAL vs WCET
+------------------------------------------------------------
+Task  RM_Analytic  RM_Observed  RM_Gap  RM_Missed  DM_Analytic  DM_Observed  DM_Gap  DM_Missed  EDF_Analytic  EDF_Observed  EDF_Gap  EDF_Missed
+  T0           20           20       0          0           20           20       0          0            20            20        0           0
+  T1           33           33       0          0           35           35       0          0            35            35        0           0
+  T2            5            5       0          0            4            4       0          0             4             4        0           0
+  T3           11           11       0          0           14           14       0          0            14            14        0           0
+  T4            1            1       0          0            5            5       0          0             5             5        0           0
+  T5           14           14       0          0           17           17       0          0            17            17        0           0
+  T6           35           35       0          0           42           42       0          0            42            42        0           0
+  T7           42           42       0          0           29           29       0          0            29            29        0           0
+  T8           27           27       0          0           27           27       0          0            27            27        0           0
+  T9           48           48       0          0           48           48       0          0            48            48        0           0
+ T10           54           54       0          0           54           54       0          0            54            54        0           0
+ T11           17           17       0          0            8            8       0          0             8             8        0           0
+
+Saved CSV: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/comparison_csv/Midium_utilization_Unique_period_different_deadline_smaller_taskset_wcet_comparison.csv
+
+Gap Statistics:
+
+RM:
+  Gaps     : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Mean Gap : 0.0000
+  Variance : 0.0000
+
+DM:
+  Gaps     : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Mean Gap : 0.0000
+  Variance : 0.0000
+
+EDF:
+  Gaps     : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Mean Gap : 0.0000
+  Variance : 0.0000
+
+------------------------------------------------------------
+ANALYTICAL vs RANDOM UNIFORM
+------------------------------------------------------------
+Task  RM_Analytic  RM_Observed  RM_Gap  RM_Missed  DM_Analytic  DM_Observed  DM_Gap  DM_Missed  EDF_Analytic  EDF_Observed  EDF_Gap  EDF_Missed
+  T0           20           20       0          0           20           20       0          0            20            20        0           0
+  T1           33           33       0          0           35           33       2          0            35            34        1           0
+  T2            5            5       0          0            4            4       0          0             4             4        0           0
+  T3           11           11       0          0           14           14       0          0            14            14        0           0
+  T4            1            1       0          0            5            5       0          0             5             5        0           0
+  T5           14           14       0          0           17           17       0          0            17            17        0           0
+  T6           35           35       0          0           42           35       7          0            42            36        6           0
+  T7           42           36       6          0           29           28       1          0            29            29        0           0
+  T8           27           27       0          0           27           26       1          0            27            27        0           0
+  T9           48           42       6          0           48           40       8          0            48            43        5           0
+ T10           54           48       6          0           54           47       7          0            54            51        3           0
+ T11           17           17       0          0            8            8       0          0             8             8        0           0
+
+Saved CSV: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/comparison_csv/Midium_utilization_Unique_period_different_deadline_smaller_taskset_random_uniform_comparison.csv
+
+Gap Statistics:
+
+RM:
+  Gaps     : [0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 6, 0]
+  Mean Gap : 1.5000
+  Variance : 6.7500
+
+DM:
+  Gaps     : [0, 2, 0, 0, 0, 0, 7, 1, 1, 8, 7, 0]
+  Mean Gap : 2.1667
+  Variance : 9.3056
+
+EDF:
+  Gaps     : [0, 1, 0, 0, 0, 0, 6, 0, 0, 5, 3, 0]
+  Mean Gap : 1.2500
+  Variance : 4.3542
+
+------------------------------------------------------------
+ANALYTICAL vs RANDOM BCET
+------------------------------------------------------------
+Task  RM_Analytic  RM_Observed  RM_Gap  RM_Missed  DM_Analytic  DM_Observed  DM_Gap  DM_Missed  EDF_Analytic  EDF_Observed  EDF_Gap  EDF_Missed
+  T0           20           13       7          0           20           13       7          0            20            13        7           0
+  T1           33           20      13          0           35           20      15          0            35            22       13           0
+  T2            5            4       1          0            4            3       1          0             4             3        1           0
+  T3           11            8       3          0           14           10       4          0            14            10        4           0
+  T4            1            1       0          0            5            4       1          0             5             4        1           0
+  T5           14           10       4          0           17           12       5          0            17            11        6           0
+  T6           35           22      13          0           42           22      20          0            42            23       19           0
+  T7           42           23      19          0           29           17      12          0            29            18       11           0
+  T8           27           16      11          0           27           16      11          0            27            17       10           0
+  T9           48           27      21          0           48           28      20          0            48            28       20           0
+ T10           54           32      22          0           54           33      21          0            54            33       21           0
+ T11           17           11       6          0            8            6       2          0             8             6        2           0
+
+Saved CSV: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/comparison_csv/Midium_utilization_Unique_period_different_deadline_smaller_taskset_random_bcet_comparison.csv
+
+Gap Statistics:
+
+RM:
+  Gaps     : [7, 13, 1, 3, 0, 4, 13, 19, 11, 21, 22, 6]
+  Mean Gap : 10.0000
+  Variance : 54.6667
+
+DM:
+  Gaps     : [7, 15, 1, 4, 1, 5, 20, 12, 11, 20, 21, 2]
+  Mean Gap : 9.9167
+  Variance : 53.9097
+
+EDF:
+  Gaps     : [7, 13, 1, 4, 1, 6, 19, 11, 10, 20, 21, 2]
+  Mean Gap : 9.5833
+  Variance : 49.7431
+
+------------------------------------------------------------
+ANALYTICAL vs RANDOM WCET
+------------------------------------------------------------
+Task  RM_Analytic  RM_Observed  RM_Gap  RM_Missed  DM_Analytic  DM_Observed  DM_Gap  DM_Missed  EDF_Analytic  EDF_Observed  EDF_Gap  EDF_Missed
+  T0           20           20       0          0           20           20       0          0            20            20        0           0
+  T1           33           33       0          0           35           35       0          0            35            35        0           0
+  T2            5            5       0          0            4            4       0          0             4             4        0           0
+  T3           11           11       0          0           14           14       0          0            14            14        0           0
+  T4            1            1       0          0            5            5       0          0             5             5        0           0
+  T5           14           14       0          0           17           17       0          0            17            17        0           0
+  T6           35           35       0          0           42           40       2          0            42            40        2           0
+  T7           42           40       2          0           29           29       0          0            29            29        0           0
+  T8           27           27       0          0           27           27       0          0            27            27        0           0
+  T9           48           47       1          0           48           47       1          0            48            46        2           0
+ T10           54           53       1          0           54           53       1          0            54            54        0           0
+ T11           17           17       0          0            8            8       0          0             8             8        0           0
+
+Saved CSV: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/comparison_csv/Midium_utilization_Unique_period_different_deadline_smaller_taskset_random_wcet_comparison.csv
+
+Gap Statistics:
+
+RM:
+  Gaps     : [0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 1, 0]
+  Mean Gap : 0.3333
+  Variance : 0.3889
+
+DM:
+  Gaps     : [0, 0, 0, 0, 0, 0, 2, 0, 0, 1, 1, 0]
+  Mean Gap : 0.3333
+  Variance : 0.3889
+
+EDF:
+  Gaps     : [0, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0]
+  Mean Gap : 0.3333
+  Variance : 0.5556
+
+Generating distribution plots...
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_bcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_bcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_bcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_bcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_bcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_bcet_Task_10_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_bcet_Task_11_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_bcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_bcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_bcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_bcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_bcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_bcet_Task_10_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_bcet_Task_11_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_bcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_bcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_bcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_bcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_bcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_bcet_Task_10_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_bcet_Task_11_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_wcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_wcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_wcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_wcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_wcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_wcet_Task_10_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_wcet_Task_11_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_wcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_wcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_wcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_wcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_wcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_wcet_Task_10_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_wcet_Task_11_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_wcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_wcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_wcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_wcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_wcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_wcet_Task_10_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_wcet_Task_11_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_uniform_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_uniform_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_uniform_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_uniform_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_uniform_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_uniform_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_uniform_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_uniform_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_uniform_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_uniform_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_uniform_Task_10_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_uniform_Task_11_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_uniform_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_uniform_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_uniform_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_uniform_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_uniform_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_uniform_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_uniform_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_uniform_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_uniform_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_uniform_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_uniform_Task_10_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_uniform_Task_11_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_uniform_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_uniform_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_uniform_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_uniform_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_uniform_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_uniform_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_uniform_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_uniform_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_uniform_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_uniform_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_uniform_Task_10_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_uniform_Task_11_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_bcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_bcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_bcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_bcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_bcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_bcet_Task_10_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_bcet_Task_11_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_bcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_bcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_bcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_bcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_bcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_bcet_Task_10_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_bcet_Task_11_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_bcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_bcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_bcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_bcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_bcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_bcet_Task_10_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_bcet_Task_11_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_wcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_wcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_wcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_wcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_wcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_wcet_Task_10_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_RM_random_wcet_Task_11_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_wcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_wcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_wcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_wcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_wcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_wcet_Task_10_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_DM_random_wcet_Task_11_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_wcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_wcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_wcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_wcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_wcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_wcet_Task_10_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Midium_utilization_Unique_period_different_deadline_smaller_taskset_EDF_random_wcet_Task_11_distribution.png
+
+Finished.
+
+============================================================
+TASK SET: Unschedulable_Unique_Periods_taskset
+============================================================
+
+========================================
+ANALYTICAL RESULTS
+========================================
+Utilization U        : 1.4700
+LL Bound             : 0.7177
+LL Test Passed       : False
+
+--- RM ANALYSIS ---
+     Task Period Deadline WCET WCRT_Analytic Schedulable
+0  Task 0     10       10    1             1        True
+2  Task 2     20       20   10            12        True
+7  Task 7     25       25    2            14        True
+5  Task 5     30       30    3            17        True
+3  Task 3     40       40    2            19        True
+8  Task 8     50       50    4            40        True
+1  Task 1    100      100   10           104       False
+4  Task 4    100      100   20           120       False
+9  Task 9    100      100   16           120       False
+6  Task 6    120      120   12           148       False
+
+--- DM ANALYSIS ---
+     Task Period Deadline WCET WCRT_Analytic Schedulable
+0  Task 0     10       10    1             1        True
+2  Task 2     20       20   10            12        True
+7  Task 7     25       25    2            14        True
+5  Task 5     30       30    3            17        True
+3  Task 3     40       40    2            19        True
+8  Task 8     50       50    4            40        True
+1  Task 1    100      100   10           104       False
+4  Task 4    100      100   20           120       False
+9  Task 9    100      100   16           120       False
+6  Task 6    120      120   12           148       False
+
+--- EDF ANALYSIS ---
+     Task Period Deadline WCET Hyperperiod WCRT_Analytic Schedulable
+0  Task 0     10       10    1         600            45       False
+1  Task 1    100      100   10         600           129       False
+2  Task 2     20       20   10         600            54       False
+3  Task 3     40       40    2         600            70       False
+4  Task 4    100      100   20         600           102       False
+5  Task 5     30       30    3         600            63       False
+6  Task 6    120      120   12         600           148       False
+7  Task 7     25       25    2         600            49       False
+8  Task 8     50       50    4         600            72       False
+9  Task 9    100      100   16         600           118       False
+
+========================================
+SIMULATION RESULTS
+========================================
+
+----------------------------------------
+BCET SIMULATION
+----------------------------------------
+Running RM (BCET) simulation for 45 hyperperiods
+Running DM (BCET) simulation for 45 hyperperiods
+Running EDF (BCET) simulation for 45 hyperperiods
+
+----------------------------------------
+WCET SIMULATION
+----------------------------------------
+Running RM (WCET) simulation for 45 hyperperiods
+Running DM (WCET) simulation for 45 hyperperiods
+Running EDF (WCET) simulation for 45 hyperperiods
+
+----------------------------------------
+RANDOM_UNIFORM SIMULATION
+----------------------------------------
+Running RM (RANDOM UNIFORM) simulation for 45 hyperperiods
+Running DM (RANDOM UNIFORM) simulation for 45 hyperperiods
+Running EDF (RANDOM UNIFORM) simulation for 45 hyperperiods
+
+----------------------------------------
+RANDOM_BCET SIMULATION
+----------------------------------------
+Running RM (RANDOM BCET) simulation for 45 hyperperiods
+Running DM (RANDOM BCET) simulation for 45 hyperperiods
+Running EDF (RANDOM BCET) simulation for 45 hyperperiods
+
+----------------------------------------
+RANDOM_WCET SIMULATION
+----------------------------------------
+Running RM (RANDOM WCET) simulation for 45 hyperperiods
+Running DM (RANDOM WCET) simulation for 45 hyperperiods
+Running EDF (RANDOM WCET) simulation for 45 hyperperiods
+
+========================================
+COMPARISON REPORT
+========================================
+
+------------------------------------------------------------
+ANALYTICAL vs BCET
+------------------------------------------------------------
+Task  RM_Analytic  RM_Observed  RM_Gap  RM_Missed  DM_Analytic  DM_Observed  DM_Gap  DM_Missed  EDF_Analytic  EDF_Observed  EDF_Gap  EDF_Missed
+  T0            1            1       0          0            1            1       0          0            45             1       44           0
+  T1          104           12      92          0          104           12      92          0           129            12      117           0
+  T2           12            2      10          0           12            2      10          0            54             2       52           0
+  T3           19            5      14          0           19            5      14          0            70             5       65           0
+  T4          120           16     104          0          120           16     104          0           102            16       86           0
+  T5           17            4      13          0           17            4      13          0            63             4       59           0
+  T6          148           28     120          0          148           28     120          0           148            28      120           0
+  T7           14            3      11          0           14            3      11          0            49             3       46           0
+  T8           40            6      34          0           40            6      34          0            72             6       66           0
+  T9          120           20     100          0          120           20     100          0           118            20       98           0
+
+Saved CSV: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/comparison_csv/Unschedulable_Unique_Periods_taskset_bcet_comparison.csv
+
+Gap Statistics:
+
+RM:
+  Gaps     : [0, 92, 10, 14, 104, 13, 120, 11, 34, 100]
+  Mean Gap : 49.8000
+  Variance : 2062.1600
+
+DM:
+  Gaps     : [0, 92, 10, 14, 104, 13, 120, 11, 34, 100]
+  Mean Gap : 49.8000
+  Variance : 2062.1600
+
+EDF:
+  Gaps     : [44, 117, 52, 65, 86, 59, 120, 46, 66, 98]
+  Mean Gap : 75.3000
+  Variance : 720.6100
+
+------------------------------------------------------------
+ANALYTICAL vs WCET
+------------------------------------------------------------
+Task  RM_Analytic  RM_Observed  RM_Gap  RM_Missed  DM_Analytic  DM_Observed  DM_Gap  DM_Missed  EDF_Analytic  EDF_Observed  EDF_Gap  EDF_Missed
+  T0            1            1       0          0            1            1       0          0            45          8610    -8565        1830
+  T1          104         2838   -2734        243          104         2838   -2734        243           129          8688    -8559         183
+  T2           12           12       0          0           12           12       0          0            54          8619    -8565         915
+  T3           19           19       0          0           19           19       0          0            70          8626    -8556         457
+  T4          120            0     120          0          120            0     120          0           102          8708    -8606         184
+  T5           17           17       0          0           17           17       0          0            63          8619    -8556         610
+  T6          148            0     148          0          148            0     148          0           148          8704    -8556         153
+  T7           14           14       0          0           14           14       0          0            49          8613    -8564         732
+  T8           40           40       0          0           40           40       0          0            72          8629    -8557         366
+  T9          120            0     120          0          120            0     120          0           118          8674    -8556         183
+
+Saved CSV: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/comparison_csv/Unschedulable_Unique_Periods_taskset_wcet_comparison.csv
+
+Gap Statistics:
+
+RM:
+  Gaps     : [0, -2734, 0, 0, 120, 0, 148, 0, 0, 120]
+  Mean Gap : -234.6000
+  Variance : 697508.8400
+
+DM:
+  Gaps     : [0, -2734, 0, 0, 120, 0, 148, 0, 0, 120]
+  Mean Gap : -234.6000
+  Variance : 697508.8400
+
+EDF:
+  Gaps     : [-8565, -8559, -8565, -8556, -8606, -8556, -8556, -8564, -8557, -8556]
+  Mean Gap : -8564.0000
+  Variance : 209.6000
+
+------------------------------------------------------------
+ANALYTICAL vs RANDOM UNIFORM
+------------------------------------------------------------
+Task  RM_Analytic  RM_Observed  RM_Gap  RM_Missed  DM_Analytic  DM_Observed  DM_Gap  DM_Missed  EDF_Analytic  EDF_Observed  EDF_Gap  EDF_Missed
+  T0            1            1       0          0            1            1       0          0            45            32       13          62
+  T1          104           69      35          0          104           69      35          0           129            87       42           0
+  T2           12           12       0          0           12           12       0          0            54            41       13          40
+  T3           19           19       0          0           19           19       0          0            70            50       20           6
+  T4          120          159     -39          3          120          159     -39          3           102            95        7           0
+  T5           17           17       0          0           17           17       0          0            63            41       22           8
+  T6          148          636    -488         84          148          636    -488         84           148           128       20           2
+  T7           14           14       0          0           14           14       0          0            49            44        5          16
+  T8           40           36       4          0           40           36       4          0            72            60       12           7
+  T9          120          275    -155         25          120          275    -155         25           118           109        9           3
+
+Saved CSV: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/comparison_csv/Unschedulable_Unique_Periods_taskset_random_uniform_comparison.csv
+
+Gap Statistics:
+
+RM:
+  Gaps     : [0, 35, 0, 0, -39, 0, -488, 0, 4, -155]
+  Mean Gap : -64.3000
+  Variance : 22358.6100
+
+DM:
+  Gaps     : [0, 35, 0, 0, -39, 0, -488, 0, 4, -155]
+  Mean Gap : -64.3000
+  Variance : 22358.6100
+
+EDF:
+  Gaps     : [13, 42, 13, 20, 7, 22, 20, 5, 12, 9]
+  Mean Gap : 16.3000
+  Variance : 102.8100
+
+------------------------------------------------------------
+ANALYTICAL vs RANDOM BCET
+------------------------------------------------------------
+Task  RM_Analytic  RM_Observed  RM_Gap  RM_Missed  DM_Analytic  DM_Observed  DM_Gap  DM_Missed  EDF_Analytic  EDF_Observed  EDF_Gap  EDF_Missed
+  T0            1            1       0          0            1            1       0          0            45             1       44           0
+  T1          104           19      85          0          104           19      85          0           129            19      110           0
+  T2           12            8       4          0           12            8       4          0            54             8       46           0
+  T3           19           10       9          0           19           10       9          0            70            10       60           0
+  T4          120           38      82          0          120           38      82          0           102            37       65           0
+  T5           17            9       8          0           17            9       8          0            63             9       54           0
+  T6          148           57      91          0          148           57      91          0           148            59       89           0
+  T7           14            9       5          0           14            9       5          0            49             9       40           0
+  T8           40           13      27          0           40           13      27          0            72            12       60           0
+  T9          120           49      71          0          120           49      71          0           118            49       69           0
+
+Saved CSV: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/comparison_csv/Unschedulable_Unique_Periods_taskset_random_bcet_comparison.csv
+
+Gap Statistics:
+
+RM:
+  Gaps     : [0, 85, 4, 9, 82, 8, 91, 5, 27, 71]
+  Mean Gap : 38.2000
+  Variance : 1359.3600
+
+DM:
+  Gaps     : [0, 85, 4, 9, 82, 8, 91, 5, 27, 71]
+  Mean Gap : 38.2000
+  Variance : 1359.3600
+
+EDF:
+  Gaps     : [44, 110, 46, 60, 65, 54, 89, 40, 60, 69]
+  Mean Gap : 63.7000
+  Variance : 419.8100
+
+------------------------------------------------------------
+ANALYTICAL vs RANDOM WCET
+------------------------------------------------------------
+Task  RM_Analytic  RM_Observed  RM_Gap  RM_Missed  DM_Analytic  DM_Observed  DM_Gap  DM_Missed  EDF_Analytic  EDF_Observed  EDF_Gap  EDF_Missed
+  T0            1            1       0          0            1            1       0          0            45          5715    -5670        2119
+  T1          104           95       9          0          104           95       9          0           129          5786    -5657         211
+  T2           12           12       0          0           12           12       0          0            54          5724    -5670        1060
+  T3           19           19       0          0           19           19       0          0            70          5732    -5662         530
+  T4          120         6999   -6879        202          120         6999   -6879        202           102          5802    -5700         212
+  T5           17           17       0          0           17           17       0          0            63          5726    -5663         705
+  T6          148            0     148          0          148            0     148          0           148          5810    -5662         177
+  T7           14           14       0          0           14           14       0          0            49          5725    -5676         848
+  T8           40           38       2          0           40           38       2          0            72          5748    -5676         424
+  T9          120            0     120          0          120            0     120          0           118          5785    -5667         212
+
+Saved CSV: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/comparison_csv/Unschedulable_Unique_Periods_taskset_random_wcet_comparison.csv
+
+Gap Statistics:
+
+RM:
+  Gaps     : [0, 9, 0, 0, -6879, 0, 148, 0, 2, 120]
+  Mean Gap : -660.0000
+  Variance : 4300103.0000
+
+DM:
+  Gaps     : [0, 9, 0, 0, -6879, 0, 148, 0, 2, 120]
+  Mean Gap : -660.0000
+  Variance : 4300103.0000
+
+EDF:
+  Gaps     : [-5670, -5657, -5670, -5662, -5700, -5663, -5662, -5676, -5676, -5667]
+  Mean Gap : -5670.3000
+  Variance : 132.6100
+
+Generating distribution plots...
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_bcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_bcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_bcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_bcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_bcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_bcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_bcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_bcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_bcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_bcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_bcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_bcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_bcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_bcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_bcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_wcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_wcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_wcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_wcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_wcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_wcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_wcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_wcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_wcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_wcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_wcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_wcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_wcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_wcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_wcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_uniform_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_uniform_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_uniform_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_uniform_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_uniform_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_uniform_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_uniform_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_uniform_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_uniform_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_uniform_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_uniform_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_uniform_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_uniform_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_uniform_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_uniform_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_uniform_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_uniform_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_uniform_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_uniform_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_uniform_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_uniform_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_uniform_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_uniform_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_uniform_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_uniform_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_uniform_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_uniform_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_uniform_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_uniform_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_uniform_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_bcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_bcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_bcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_bcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_bcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_bcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_bcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_bcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_bcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_bcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_bcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_bcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_bcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_bcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_bcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_bcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_bcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_bcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_bcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_bcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_wcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_wcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_wcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_wcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_RM_random_wcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_wcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_wcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_wcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_wcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_DM_random_wcet_Task_9_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_wcet_Task_0_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_wcet_Task_1_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_wcet_Task_2_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_wcet_Task_3_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_wcet_Task_4_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_wcet_Task_5_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_wcet_Task_6_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_wcet_Task_7_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_wcet_Task_8_distribution.png
+Saved plot: /Users/blackbear/Desktop/dtu/semester3/DistributedS/project1/02225-Distributed-Real-time-System-Group11/mini-project-1/plots_random_vs_analytic/Unschedulable_Unique_Periods_taskset_EDF_random_wcet_Task_9_distribution.png
+
+Finished.
