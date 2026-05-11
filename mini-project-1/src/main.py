@@ -6,18 +6,18 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib import MatplotlibDeprecationWarning
 from pathlib import Path
-from utils import set_log_file, print_and_log, log_only
+from src.utils import set_log_file, print_and_log, log_only
 import warnings
 
-from model import Task
-from analysis import (
+from src.model import Task
+from src.analysis import (
     perform_rm_analysis,
     perform_dm_analysis,
     perform_edf_analysis,
     calculate_utilization,
     check_ll_bound,
 )
-from simulation import Scheduler
+from src.simulation import Scheduler
 
 warnings.filterwarnings("ignore", category=MatplotlibDeprecationWarning)
 

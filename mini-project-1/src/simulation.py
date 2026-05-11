@@ -1,12 +1,11 @@
-from model import Job
+from src.model import Job
 import math
 import copy
 import random
 import heapq
-import Path
+from pathlib import Path
 
-
-from utils import print_and_log, set_log_file
+from src.utils import print_and_log, set_log_file
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 LOG_FILE = BASE_DIR / "logs" / "results.txt"

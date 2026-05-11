@@ -6,16 +6,16 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
-from model import Task
-from analysis import (
+from src.model import Task
+from src.analysis import (
     perform_rm_analysis,
     perform_dm_analysis,
     perform_edf_analysis,
     calculate_utilization,
     check_ll_bound,
 )
-from simulation import Scheduler
-from utils import print_and_log, log_only
+from src.simulation import Scheduler
+from src.utils import print_and_log, log_only
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent

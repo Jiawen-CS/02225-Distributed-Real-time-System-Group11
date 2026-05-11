@@ -23,7 +23,7 @@ pip install -r requirements.txt
 From the project root:
 
 ```bash
-python src/main.py
+python -m src.main
 ```
 
 This runs the selected schedulable, RM/DM-unschedulable, and overloaded task sets from the `tasksets/` directory.
@@ -58,13 +58,13 @@ there is no new WCRT observed for each task set, then choosing the maximum one.
 
 Run 
 ```bash
-python src/pick_hyperiod.py
+python -m src.pick_hyperiod
 ```
 
 ## Simulation
 To do simulation, you run:
 ```bash
-python src/simulation.py
+python -m src.taskset_simulation
 ```
 
 The simulation contains five simulations mode:

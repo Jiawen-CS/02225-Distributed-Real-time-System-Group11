@@ -9,8 +9,8 @@ from pathlib import Path
 from utils import print_and_log, log_only
 import warnings
 
-from model import Task
-from simulation import Scheduler
+from src.model import Task
+from src.simulation import Scheduler
 
 warnings.filterwarnings("ignore", category=MatplotlibDeprecationWarning)
 

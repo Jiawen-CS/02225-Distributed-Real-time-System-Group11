@@ -1,7 +1,6 @@
 import math
 import heapq
-from model import Task
-
+from src.model import Task
 
 def calculate_utilization(tasks):
     """Sum of Ci/Ti for all tasks."""
