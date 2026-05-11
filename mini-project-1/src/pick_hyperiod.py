@@ -6,7 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib import MatplotlibDeprecationWarning
 from pathlib import Path
-from src.utils import print_and_log, set_log_file
+from src.utils import print_and_log, set_log_file, log_only
 import warnings
 
 from src.model import Task
