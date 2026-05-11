@@ -1,10 +1,9 @@
-from model import Job
+from src.model import Job
 import math
 import copy
 import random
 import heapq
-import Path
-
+from pathlib import Path
 
 from src.utils import print_and_log, set_log_file
 
